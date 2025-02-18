@@ -20,8 +20,7 @@
       errored = true;
     }
 
-    window.addEventListener("message", function (e) {
-      console.log(event.data);
+    window.addEventListener("message", function (event) {
       if (!event.data || !event.data.lua) return;
 
       const luaCode = event.data.lua;

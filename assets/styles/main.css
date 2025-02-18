@@ -76,6 +76,10 @@ a:hover {
   grid-column: 2 / 4;
 }
 
+.guide-content iframe {
+  border: none;
+}
+
 .guide-toc {
   background-color: var(--altbg);
   border-radius: 5px;
@@ -89,7 +93,7 @@ a:hover {
     padding: 0;
   }
 
-  ul > li > a {
+  ul>li>a {
     text-decoration: none;
   }
 
