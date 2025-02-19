@@ -10,5 +10,12 @@
         "guide_urls": [
             "/guides/basic/drawing-image/"
         ]
-    }
+    },
+	{
+	  "name": "Installation",
+	  "summary_url": "/guides/installation/",
+	  "guide_urls": [
+		"/guides/installation/LÖVE/"
+	  ]
+	}
 ]
