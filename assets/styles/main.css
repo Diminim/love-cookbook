@@ -95,9 +95,11 @@ a:hover {
 
   ul>li>a {
     text-decoration: none;
+    margin-left: 1rem;
   }
 
   width: max-content;
+  min-width: 200px;
   height: auto;
 }
 
@@ -107,4 +109,8 @@ a:hover {
   width: 100%;
   padding: 0.5rem;
   color: #595959;
+}
+
+.group-header {
+  color: #222;
 }
