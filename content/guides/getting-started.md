@@ -1,42 +1,19 @@
 ---
 title: "Getting started"
-authors: [Nykenik24]
-date: 2025-02-15
-tags: [guide]
+authors: [Nykenik]
+date: 2025-02-19
 ---
 
-Hi there! LÖVE is an *awesome* framework you can use to make 2D games in Lua. It's free, open-source, and works on Windows, macOS, Linux, Android and iOS.
+## What is the *LÖVE Cookbook*?
+If you came here from the LÖVE community, then you will probably know what this is made for. If you just found this, then **no**, the *LÖVE Cookbook* is not a guide to help you in love.
 
-## Community
-If you get stuck, many friendly people are ready to help you at the forums. Be warned, however, that it sometimes gets too friendly.
+But, jokes aside, the LÖVE Cookbook (or LÖVE cookbook) is a series of guides, articles, etc. talking about the [LÖVE game engine](https://love2d.org) and how to use it. It talks about the basics and the advanced, and also even explains the basics of [Lua](https://lua.org)!
 
-People also post their games and projects on [the forums](https://love2d.org/forums/), so it's a nice way of exploring what LÖVE can do. Or at least what people choose to use it for.
+## Now, where should i start?
+To read the complete book, you might take two paths:
+- If you know how to code in Lua, start by going to the *Installation* page. 
+- If you don't know how to code in Lua, go to the *Lua* section.
 
-There is also a [Discord server](https://discord.gg/rhUets9) and a [subreddit](https://www.reddit.com/r/love2d).
-
-Get in touch with us on twitter [@obey_love](https://twitter.com/obey_love).
-
-## Open source
-LÖVE is licensed under the liberal zlib/libpng license. This means that:
-
-- It costs nothing.
-- You can use it freely for commercial purposes with no limitations.
-
-The source can be found on [GitHub](https://github.com/love2d/love).
-
-## A little example
-
-In this example we will see how to draw text to the screen!
-```lua
--- in main.lua
-function love.draw()
-    love.graphics.print("Hello, World!", 400, 300)
-end
-```
-This will show this:
-
-{% love 600, 450 %}
-function love.draw()
-    love.graphics.print("Hello, World!", 300, 225)
-end
-{% endlove %}
+Wait! Don't go yet, there are some things about the LÖVE Cookbook you have to know first:
+- It doesn't teach you game development. If you want to learn that, there are a lot of fantastic articles, cookbooks and videos talking about it!
+- It is completely open source, so you can contribute to it if you want. To contribute, read the `CONTRIBUTING.md` in [the repository](https://github.com/Diminim/love-cookbook/).
