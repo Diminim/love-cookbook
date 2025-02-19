@@ -40,8 +40,9 @@
     <h1 class="guide-title">Drawing an image</h1>
   </header>
 
-  <p>In this tutorial we will draw this whale. Right click to download it.</p>
+  <p>In this tutorial we will draw this whale.</p>
 <img src="/love-cookbook/assets/love/assets/whale.png">
+<p>Create an <code>assets</code> folder in the same directory as your <code>main.lua</code>. Then right click the image to save it in your assets folder. This way we keep scripts and assets nicely separated.</p>
 <p>To draw the image, we first need to load it. We do this with <a href="https://love2d.org/wiki/love.graphics.newImage" target="_blank"><code>love.graphics.newImage(image)</code></a>.</p>
 <pre><code class="language-lua">local image
 
@@ -50,7 +51,7 @@ function love.load()
 end
 </code></pre>
 <p>The variable <code>image</code> is now our <a href="https://love2d.org/wiki/Image" target="_blank"><code>Image</code></a> object.</p>
-<p>We can draw the image with <a href="https://love2d.org/wiki/love.graphics.draw" target="_blank"><code>love.graphics.draw(image, x, y)</code></a></p>
+<p>We can draw the image with <a href="https://love2d.org/wiki/love.graphics.draw" target="_blank"><code>love.graphics.draw(image, x, y)</code></a>.</p>
 <pre><code class="language-lua">local image
 
 function love.load()
@@ -62,52 +63,52 @@ function love.draw()
     love.graphics.draw(image, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-544" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
+<iframe id="love-iframe-883" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_544 = document.getElementById('love-iframe-544');
-iframe_544.addEventListener('load', function() {
-iframe_544.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
+const iframe_883 = document.getElementById('love-iframe-883');
+iframe_883.addEventListener('load', function() {
+iframe_883.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
-<p>function love.load()
-image = love.graphics.newImage(&quot;assets/whale.png&quot;)
-end</p>
-<p>function love.draw()
--- Draw the image on position 100, 100
-love.graphics.draw(image, 100, 100)
+function love.load()
+    image = love.graphics.newImage("assets/whale.png")
+end
+function love.draw()
+    -- Draw the image on position 100, 100
+    love.graphics.draw(image, 100, 100)
 end
 `}, '*');
 });
-</script><p></p>
+</script>
 <p>Whale done! ;)</p>
 <h2>Bonus challenge</h2>
 <p>Make the whale move back and forth!</p>
-<iframe id="love-iframe-377" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
+<iframe id="love-iframe-964" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_377 = document.getElementById('love-iframe-377');
-iframe_377.addEventListener('load', function() {
-iframe_377.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
+const iframe_964 = document.getElementById('love-iframe-964');
+iframe_964.addEventListener('load', function() {
+iframe_964.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
-<p>function love.load()
-image = love.graphics.newImage(&quot;assets/whale.png&quot;)
-width, height = image:getDimensions()
-end</p>
-<p>function love.update(dt)
-x = x + 300 * dt * dir
-if x &gt; 500 then
-x = 500
-dir = -1
-elseif x &lt; 0 then
-x = 0
-dir = 1
+function love.load()
+    image = love.graphics.newImage("assets/whale.png")
+    width, height = image:getDimensions()
 end
-end</p>
-<p>function love.draw()
-love.graphics.draw(image, x, 100)
+function love.update(dt)
+    x = x + 400 * dt * dir
+    if x > 700 then
+        x = 700
+        dir = -1
+    elseif x < 0 then
+        x = 0
+        dir = 1
+    end
+end
+function love.draw()
+    love.graphics.draw(image, x, 100)
 end
 `}, '*');
 });
-</script><p></p>
+</script>
 
 </section>
 
