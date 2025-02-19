@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
@@ -41,8 +42,10 @@
   </header>
 
   <p>In this tutorial we will draw this whale.</p>
-<img src="/love-cookbook/assets/love/assets/whale.png">
+<p><img src="/love-cookbook/assets/love/assets/whale.png" alt=""></p>
 <p>Create an <code>assets</code> folder in the same directory as your <code>main.lua</code>. Then right click the image to save it in your assets folder. This way we keep scripts and assets nicely separated.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>It is not mandatory to put your images in a folder. You can place your files wherever you like, as long as they are somewhere in your project folder.</p>
+</div>
 <p>To draw the image, we first need to load it. We do this with <a href="https://love2d.org/wiki/love.graphics.newImage" target="_blank"><code>love.graphics.newImage(image)</code></a>.</p>
 <pre><code class="language-lua">local image
 
@@ -63,11 +66,11 @@ function love.draw()
     love.graphics.draw(image, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-883" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-646" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_883 = document.getElementById('love-iframe-883');
-iframe_883.addEventListener('load', function() {
-iframe_883.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_646 = document.getElementById('love-iframe-646');
+iframe_646.addEventListener('load', function() {
+iframe_646.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
     image = love.graphics.newImage("assets/whale.png")
@@ -82,11 +85,11 @@ end
 <p>Whale done! ;)</p>
 <h2>Bonus challenge</h2>
 <p>Make the whale move back and forth!</p>
-<iframe id="love-iframe-964" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-867" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_964 = document.getElementById('love-iframe-964');
-iframe_964.addEventListener('load', function() {
-iframe_964.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_867 = document.getElementById('love-iframe-867');
+iframe_867.addEventListener('load', function() {
+iframe_867.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()
