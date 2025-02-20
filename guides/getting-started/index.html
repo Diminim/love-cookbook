@@ -30,6 +30,8 @@
                 <a href="/love-cookbook/">Introduction</a>
             </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
             </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/drawing-image/">Drawing an image</a>
+            </li><li><a href="/love-cookbook/guides/basic/variables/">Variables</a>
+            </li><li><a href="/love-cookbook/guides/basic/functions/">Functions</a>
             </li></ul>
       </section>
       <article class="guide">
@@ -60,11 +62,11 @@ function love.draw()
 end
 </code></pre>
 <p>This will show this:</p>
-<iframe id="love-iframe-293" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
+<iframe id="love-iframe-627" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
 <script>
-const iframe_293 = document.getElementById('love-iframe-293');
-iframe_293.addEventListener('load', function() {
-iframe_293.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
+const iframe_627 = document.getElementById('love-iframe-627');
+iframe_627.addEventListener('load', function() {
+iframe_627.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
 function love.draw()
     love.graphics.print("Hello, World!", 300, 225)
 end

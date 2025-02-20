@@ -30,6 +30,8 @@
                 <a href="/love-cookbook/">Introduction</a>
             </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
             </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/drawing-image/">Drawing an image</a>
+            </li><li><a href="/love-cookbook/guides/basic/variables/">Variables</a>
+            </li><li><a href="/love-cookbook/guides/basic/functions/">Functions</a>
             </li></ul>
       </section>
       <article class="guide">
@@ -64,11 +66,11 @@ function love.draw()
     love.graphics.draw(image, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-686" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-747" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_686 = document.getElementById('love-iframe-686');
-iframe_686.addEventListener('load', function() {
-iframe_686.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_747 = document.getElementById('love-iframe-747');
+iframe_747.addEventListener('load', function() {
+iframe_747.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
     image = love.graphics.newImage("assets/whale.png")
@@ -83,11 +85,11 @@ end
 <p>Whale done! ;)</p>
 <h2>Bonus challenge</h2>
 <p>Make the whale move back and forth!</p>
-<iframe id="love-iframe-253" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-52" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_253 = document.getElementById('love-iframe-253');
-iframe_253.addEventListener('load', function() {
-iframe_253.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_52 = document.getElementById('love-iframe-52');
+iframe_52.addEventListener('load', function() {
+iframe_52.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()

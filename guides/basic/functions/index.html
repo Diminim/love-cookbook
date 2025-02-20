@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LÖVE cookbook | Functions</title>
+
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar">
+      <h1>LÖVE Cookbook</h1>
+    </div>
+
+    <div class="container">
+      <section class="guide-toc">
+        <ul>
+            <li>
+                <a href="/love-cookbook/">Introduction</a>
+            </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
+            </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/drawing-image/">Drawing an image</a>
+            </li><li><a href="/love-cookbook/guides/basic/variables/">Variables</a>
+            </li><li><a href="/love-cookbook/guides/basic/functions/">Functions</a>
+            </li></ul>
+      </section>
+      <article class="guide">
+        
+<section class="guide-content">
+  <header class="guide-header">
+    <h1 class="guide-title">Functions</h1>
+  </header>
+
+  <p>With <strong>functions</strong> you can store a piece of code to be executed at different times, and multiple times.</p>
+<p>There are two ways to create a function:</p>
+<pre><code class="language-lua">-- A function is a type of value, like a number and a string.
+local hello = function ()
+    print(&quot;Hello world!&quot;)
+end
+
+-- This is the common way!
+local function hello()
+    print(&quot;Hello world!&quot;)
+end
+</code></pre>
+<p>We have now created a function that, when executed, will print <code>Hello world!</code>. We can execute our function like so:</p>
+<pre><code class="language-lua">local function hello()
+    print(&quot;Hello world!&quot;)
+end
+
+hello() -- Output: Hello world!
+</code></pre>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Executing a function is called a <strong>function call</strong>. So in the example above we <ins>call</ins> the function <code>hello</code>.</p>
+</div>
+<h2>Parameters</h2>
+<p>Parameters are special kind of variables that functions can have. In the example below, the function has the parameter <code>animal</code>. What we put inbetween the parantheses when we call the function decides the value of the parameter for that function call.</p>
+<pre><code class="language-lua">local function favorite(animal)
+    print(&quot;My favorite animal is the &quot; .. animal .. &quot;.&quot;)
+end
+
+favorite(&quot;whale&quot;) -- Output: My favorite animal is the whale.
+favorite(&quot;bear&quot;) -- Output: My favorite animal is the bear.
+favorite(&quot;tiger&quot;) -- Output: My favorite animal is the tiger.
+print(animal) -- Output: nil
+</code></pre>
+<p>At the end we print <code>animal</code>, and it outputs <code>nil</code>. This is because parameters are automatically <ins>local variables</ins>. They are only available inside that function.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>The value we put inbetween the parantheses is called the <strong>argument</strong>.</p>
+<p>Adding an argument to your function call is called <strong>passing</strong>.</p>
+<p>So in the example above we <ins>pass</ins> the <ins>argument</ins> <code>&quot;whale&quot;</code>, <code>&quot;bear&quot;</code>, and <code>&quot;tiger&quot;</code>.</p>
+</div>
+<h2>Return</h2>
+<p>Functions can <strong>return</strong> a value. This means that, upon calling the function, it will give us a value back.</p>
+<pre><code class="language-lua">-- We can create multiple parameters by separating them with a comma.
+local function give_me_five()
+    return 5
+end
+
+local five = give_me_five()
+print(five) -- Output: 5
+</code></pre>
+<p>When a function reaches the <code>return</code> keyword, it is the end of that function call, and <code>end</code> should follow. Trying to place code after the <code>return</code> will cause an error.</p>
+<pre><code class="language-lua">local function sum(a, b)
+    return a + b
+    print(a, b) -- Error!
+end
+
+sum(10, 20)
+</code></pre>
+<p>A function can have multiple parameters, arguments, and return values, by separating them with a comma.</p>
+<pre><code class="language-lua">local function arithmetics(a, b)
+    -- 'a' becomes the value of 'a' multiplied by 2.
+    a = a * 2
+    -- 'b' becomes the value of 'b'  divided by 2.
+    b = b / 2
+
+    return a, b
+end
+
+print(arithmetics(5, 40)) -- Ouput: 10, 20
+</code></pre>
+<h2>Usage</h2>
+<p>Functions allow us to execute the same code in different places, without having to copy that code. Instead we can call the function. If we ever want to change how the code works, we only need to change the function.</p>
+<p>In the example below we draw multiple rectangles. If we ever want to change the shape of the rectangle, we only need to change the function.</p>
+<pre><code class="language-lua">local function draw_rectangle(x)
+    love.graphics.rectangle(&quot;fill&quot;, x, 10, 100, 75)
+end
+
+function love.draw()
+    draw_rectangle(10)
+    draw_rectangle(130)
+    draw_rectangle(250)
+    draw_rectangle(370)
+end
+</code></pre>
+<iframe id="love-iframe-461" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_461 = document.getElementById('love-iframe-461');
+iframe_461.addEventListener('load', function() {
+iframe_461.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+local function draw_rectangle(x)
+    love.graphics.rectangle("fill", x, 10, 100, 75)
+end
+function love.draw()
+    draw_rectangle(10)
+    draw_rectangle(130)
+    draw_rectangle(250)
+    draw_rectangle(370)
+end
+`}, '*');
+});
+</script>
+<h2>Challenge</h2>
+<p>Can you figure out what the code below will output?</p>
+<pre><code class="language-lua">local function sum(a, b)
+    return a + b
+end
+
+local function subtract(a, b)
+    return a - b
+end
+
+-- The returned values of 'sum' are passed as arguments for 'subtract'.
+local result = subtract(sum(6, 4), sum(1, 2))
+print(result)
+</code></pre>
+
+</section>
+
+<footer class="guide-footer">
+  <p>
+    Created on: <em>Wed Feb 19 2025</em>
+  </p>
+
+  <p>By: 
+  
+    <em>Sheepolution</em>
+  
+  </p>
+</footer>
+      </article>
+    </div>
+  </body>
+</html>

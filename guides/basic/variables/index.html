@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LÖVE cookbook | Variables</title>
+
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar">
+      <h1>LÖVE Cookbook</h1>
+    </div>
+
+    <div class="container">
+      <section class="guide-toc">
+        <ul>
+            <li>
+                <a href="/love-cookbook/">Introduction</a>
+            </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
+            </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/drawing-image/">Drawing an image</a>
+            </li><li><a href="/love-cookbook/guides/basic/variables/">Variables</a>
+            </li><li><a href="/love-cookbook/guides/basic/functions/">Functions</a>
+            </li></ul>
+      </section>
+      <article class="guide">
+        
+<section class="guide-content">
+  <header class="guide-header">
+    <h1 class="guide-title">Variables</h1>
+  </header>
+
+  <p><strong>Variables</strong> are words that contain a value, like a number for example.</p>
+<p>We can make a variable like so:</p>
+<pre><code class="language-lua">a = 10
+</code></pre>
+<p>We created the variable <code>a</code> and gave it the value <code>10</code>. We can see the value of a variable by printing it.</p>
+<pre><code class="language-lua">a = 10
+print(a) -- Output: 10
+</code></pre>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>When you create a variable, we call that a <strong>declaration</strong>.</p>
+<p>When you give a variable a value, we call that an <strong>assignment</strong>.</p>
+<p>So we <ins>declared</ins> the variable <code>a</code> and <ins>assigned</ins> it the value <code>10</code>.</p>
+</div>
+<p>We can change the value of a variable, hence the name <em>variable</em>.</p>
+<pre><code class="language-lua">a = 10
+print(a) -- Output: 10
+a = 20
+print(a) -- Output: 20
+</code></pre>
+<p>With numbers we can do arithmetics.</p>
+<pre><code class="language-lua">print(12 + 4) -- Output: 16
+</code></pre>
+<p>This means that, if a variable has a number as its value, we can do arithmetics with it.</p>
+<pre><code class="language-lua">a = 12
+b = 4
+print(a + b) -- Output: 16
+print(a - b) -- Output: 8
+print(a * b) -- Output: 48
+print(a / b) -- Output: 3
+</code></pre>
+<p>When we use a variable, there is no reference to the variable itself, only its value. In this code we change the values of <code>a</code> and <code>b</code>, but that does not affect the value of <code>c</code>. The value of <code>c</code> becomes <code>16</code>, and not <code>a + b</code>.</p>
+<pre><code class="language-lua">-- Tip: This way you can declare multiple variables on a single line.
+a, b = 12, 4
+c = a + b
+a, b = 0, 0
+print(c) -- Output: 16
+</code></pre>
+<h2>Strings</h2>
+<p>Besides numbers, we can also store text. In programming, text is called a <strong>string</strong> because it's a <em>string of characters</em>.</p>
+<pre><code class="language-lua">animal = &quot;whale&quot;
+color = &quot;blue&quot;
+
+-- By separating them with a comma we can print multiple values at once.
+print(&quot;My favorite animal:&quot;, animal)
+print(&quot;My favorite color:&quot;, color)
+</code></pre>
+<p>We can connect strings by using two dots. This is called <em>string concatenation</em>.</p>
+<pre><code class="language-lua">animal = &quot;whale&quot;
+color = &quot;blue&quot;
+
+print(&quot;The &quot; .. animal .. &quot; is &quot; .. color .. &quot;.&quot;)
+-- Output: The whale is blue.
+</code></pre>
+<h2>nil</h2>
+<p>When a variable has no value, we say it is <code>nil</code>. We can also assign <code>nil</code> to a variable to remove its value.</p>
+<pre><code class="language-lua">print(test) -- Output: nil
+
+test = 10
+print(test) -- Output: 10
+
+test = nil -- We assign nil to remove the value.
+print(test) -- Output: nil
+</code></pre>
+<h2>Using variables</h2>
+<p>By using variables we can keep track of a value. For example, your ammo can be a variable, and when you shoot we subtract from that value to keep track of how many bullets you have left.</p>
+<p>Another great thing about variables is that when we use one in multiple places, we only need to change one value for it to be applied those place. In the code below we can change the <code>width</code> and <code>height</code> variables to change the width and height of all rectangles.</p>
+<pre><code class="language-lua">function love.load()
+    width = 100
+    height = 75
+end
+
+function love.draw()
+    love.graphics.rectangle(&quot;fill&quot;, 10, 10, width, height)
+    love.graphics.rectangle(&quot;fill&quot;, 130, 10, width, height)
+    love.graphics.rectangle(&quot;fill&quot;, 250, 10, width, height)
+    love.graphics.rectangle(&quot;fill&quot;, 370, 10, width, height)
+end
+</code></pre>
+<iframe id="love-iframe-692" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_692 = document.getElementById('love-iframe-692');
+iframe_692.addEventListener('load', function() {
+iframe_692.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+function love.load()
+    width = 100
+    height = 75
+end
+function love.draw()
+    love.graphics.rectangle("fill", 10, 10, width, height)
+    love.graphics.rectangle("fill", 130, 10, width, height)
+    love.graphics.rectangle("fill", 250, 10, width, height)
+    love.graphics.rectangle("fill", 370, 10, width, height)
+end
+`}, '*');
+});
+</script>
+<h2>Naming variables</h2>
+<p>The word in which you store a value can be almost anything.</p>
+<pre><code class="language-lua">whale = 3
+cOoKbOoK = 1040
+asdfghjkl = 42
+</code></pre>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Lua doesn't care what you name your variables. Earlier we used the variables <code>width</code> and <code>height</code>, but we also could have called them <code>chocolate</code> and <code>apple</code>. Of course, you would want to use names that make sense for their usage.</p>
+</div>
+<p>Variables are case-sensitive. This means that when you have the same word, but with different casing, it's not treated as the same.</p>
+<pre><code class="language-lua">-- These are three different variables, each with their own value.
+whale = 3
+WHALE = 10
+wHaLe = 200
+</code></pre>
+<div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>There are a few rules when naming a variable.</p>
+<ol>
+<li>The name may not start with a number</li>
+</ol>
+<pre><code class="language-lua">test8 --Good
+te8st --Good
+8test --Bad, error!
+</code></pre>
+<ol start="2">
+<li>The only allowed special character is an underscore.</li>
+</ol>
+<pre><code class="language-lua">my_variable -- Good
+my@variable -- Bad, error!
+my$variable -- Bad, error!
+</code></pre>
+<ol start="3">
+<li>It can't be a keyword. A keyword is a word that the programming language uses.</li>
+</ol>
+<p>Here is a list of all the Lua keywords:</p>
+<pre><code>and       break     do        else      elseif
+end       false     for       function  if
+in        local     nil       not       or
+repeat    return    then      true      until     while
+</code></pre>
+</div>
+<h2>Local variables</h2>
+<p>By default, all variables are <strong>global</strong>. This means that they can be used everywhere in your project. That sounds like a good thing, but it can get messy when you have a big project with many variables.</p>
+<p>With <strong>local</strong> variables, we can create a variable that is only accessible where it is declared. We call this its <em>scope</em>. In a later chapter you will learn more about scope, but in simple terms it means the <em>code block</em> it is in, or otherwise the file.</p>
+<pre><code class="language-lua">-- This variable is not defined inside a code block
+-- Because of that, it's accessible in all of main.lua
+local one = 1
+
+function love.load()
+    -- A function is an example of a code block.
+    -- The variable is only accessible in this function.
+    local two = 2
+    print(one, two) -- Output: 1, 2
+end -- 'end' closes the code block.
+
+-- We are outside of the code block the local variable 'two' was declared in.
+-- Because of that, 'two' is not accessible.
+print(one, two) -- Output: 1, nil
+</code></pre>
+<p>Because it is good practice, we will use local variables throughout this codebook.</p>
+
+</section>
+
+<footer class="guide-footer">
+  <p>
+    Created on: <em>Wed Feb 19 2025</em>
+  </p>
+
+  <p>By: 
+  
+    <em>Sheepolution</em>
+  
+  </p>
+</footer>
+      </article>
+    </div>
+  </body>
+</html>
