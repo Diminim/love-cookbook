@@ -89,13 +89,12 @@ function love.draw()
 end
 </code></pre>
 <p>This will show this:</p>
-<iframe id="love-iframe-57" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
+<iframe id="love-iframe-393" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
 <script>
-const iframe_57 = document.getElementById('love-iframe-57');
-iframe_57.addEventListener('load', function() {
-iframe_57.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
-function love.draw()
-    love.graphics.print("Hello, World!", 300, 225)
+const iframe_393 = document.getElementById('love-iframe-393');
+iframe_393.addEventListener('load', function() {
+iframe_393.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
+function love.draw() love.graphics.print("Hello, World!", 300, 225)
 end
 `}, '*');
 });

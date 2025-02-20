@@ -149,19 +149,14 @@ function love.draw()
     draw_rectangle(370)
 end
 </code></pre>
-<iframe id="love-iframe-526" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-459" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_526 = document.getElementById('love-iframe-526');
-iframe_526.addEventListener('load', function() {
-iframe_526.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
-local function draw_rectangle(x)
-    love.graphics.rectangle("fill", x, 10, 100, 75)
+const iframe_459 = document.getElementById('love-iframe-459');
+iframe_459.addEventListener('load', function() {
+iframe_459.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+local function draw_rectangle(x) love.graphics.rectangle("fill", x, 10, 100, 75)
 end
-function love.draw()
-    draw_rectangle(10)
-    draw_rectangle(130)
-    draw_rectangle(250)
-    draw_rectangle(370)
+function love.draw() draw_rectangle(10) draw_rectangle(130) draw_rectangle(250) draw_rectangle(370)
 end
 `}, '*');
 });

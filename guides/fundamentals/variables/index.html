@@ -130,39 +130,6 @@ print(test) -- Output: 10
 test = nil -- We assign nil to remove the value.
 print(test) -- Output: nil
 </code></pre>
-<h2>Using variables</h2>
-<p>By using variables we can keep track of a value. For example, your ammo can be a variable, and when you shoot we subtract from that value to keep track of how many bullets you have left.</p>
-<p>Another great thing about variables is that when we use one in multiple places, we only need to change one value for it to be applied those place. In the code below we can change the <code>width</code> and <code>height</code> variables to change the width and height of all rectangles.</p>
-<pre><code class="language-lua">function love.load()
-    width = 100
-    height = 75
-end
-
-function love.draw()
-    love.graphics.rectangle(&quot;fill&quot;, 10, 10, width, height)
-    love.graphics.rectangle(&quot;fill&quot;, 130, 10, width, height)
-    love.graphics.rectangle(&quot;fill&quot;, 250, 10, width, height)
-    love.graphics.rectangle(&quot;fill&quot;, 370, 10, width, height)
-end
-</code></pre>
-<iframe id="love-iframe-55" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
-<script>
-const iframe_55 = document.getElementById('love-iframe-55');
-iframe_55.addEventListener('load', function() {
-iframe_55.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
-function love.load()
-    width = 100
-    height = 75
-end
-function love.draw()
-    love.graphics.rectangle("fill", 10, 10, width, height)
-    love.graphics.rectangle("fill", 130, 10, width, height)
-    love.graphics.rectangle("fill", 250, 10, width, height)
-    love.graphics.rectangle("fill", 370, 10, width, height)
-end
-`}, '*');
-});
-</script>
 <h2>Naming variables</h2>
 <p>The word in which you store a value can be almost anything.</p>
 <pre><code class="language-lua">whale = 3
@@ -201,26 +168,100 @@ end       false     for       function  if
 in        local     nil       not       or
 repeat    return    then      true      until     while
 </code></pre>
+<p>Note that <code>print</code> is not a keyword. It is a standard variable. You want to avoid overriding these standard variables.</p>
+<pre><code class="language-lua">print = &quot;hello&quot;
+a = 5
+print(a) -- Error!
+</code></pre>
 </div>
 <h2>Local variables</h2>
 <p>By default, all variables are <strong>global</strong>. This means that they can be used everywhere in your project. That sounds like a good thing, but it can get messy when you have a big project with many variables.</p>
-<p>With <strong>local</strong> variables, we can create a variable that is only accessible where it is declared. We call this its <em>scope</em>. In a later chapter you will learn more about scope, but in simple terms it means the <em>code block</em> it is in, or otherwise the file.</p>
-<pre><code class="language-lua">-- This variable is not defined inside a code block
+<p>Because of that, we often use <strong>local</strong> variables. We can create a local variable by putting the keyword <code>local</code> in front.</p>
+<pre><code class="language-lua">local a = 0
+-- We can reassign a value to our local variable, and it will remain local.
+a = 10
+
+-- You can declare a local variable without assigning it a value right away.
+local b
+b = 20
+</code></pre>
+<p>Local variables are only accessible where they are declared. We call this its <em>scope</em>. In a later chapter you will learn more about scope, but in simple terms it means the <em>code block</em> it is in, or otherwise the file.</p>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Every time you see and <code>end</code>, then that is the end of a <em>code block</em>.</p>
+</div>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Scope can be complicated as a beginner. Don't worry if you have trouble understanding it. In a later chapter we will talk about scope in more detail.</p>
+</div>
+<pre><code class="language-lua">-- This variable is not declared inside a code block
 -- Because of that, it's accessible in all of main.lua
 local one = 1
 
+-- A function is an example of a code block.
 function love.load()
-    -- A function is an example of a code block.
-    -- The variable is only accessible in this function.
+    -- The variable 'two' is only accessible in this code block.
     local two = 2
     print(one, two) -- Output: 1, 2
 end -- 'end' closes the code block.
 
--- We are outside of the code block the local variable 'two' was declared in.
--- Because of that, 'two' is not accessible.
-print(one, two) -- Output: 1, nil
+function love.draw()
+    -- We are inside a different code block.
+    love.graphics.print(one, 10, 10)
+
+    -- This would give an error, because 'two' holds no value.
+    -- love.graphics.print(two, 10, 30) -- Error!
+
+    -- Careful! This is now declared as a global variable!
+    -- Because the original declaration was inside a different code block.
+    two = 20
+
+    love.graphics.print(two, 10, 50)
+end
 </code></pre>
+<iframe id="love-iframe-425" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
+<script>
+const iframe_425 = document.getElementById('love-iframe-425');
+iframe_425.addEventListener('load', function() {
+iframe_425.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
+-- This variable is not declared inside a code block
+-- Because of that, it's accessible in all of main.lua
+local one = 1
+-- A function is an example of a code block.
+function love.load() -- The variable 'two' is only accessible in this code block. local two = 2 print(one, two) -- Output: 1, 2
+end -- 'end' closes the code block.
+function love.draw() -- We are inside a different code block. love.graphics.print(one, 10, 10) -- This would give an error, because 'two' holds no value. -- love.graphics.print(two, 10, 30) -- Error! -- Careful! This is now declared as a global variable! -- Because the original declaration was inside a different code block. two = 20 love.graphics.print(two, 10, 50)
+end
+`}, '*');
+});
+</script>
 <p>Because it is good practice, we will use local variables throughout this codebook.</p>
+<h2>Usage</h2>
+<p>By using variables we can keep track of a value. For example, your ammo can be a variable, and when you shoot we subtract from that value to keep track of how many bullets you have left.</p>
+<p>Another great thing about variables is that when we use one in multiple places, we only need to change one value for it to be applied those place. In the code below we can change the <code>width</code> and <code>height</code> variables to change the width and height of all rectangles.</p>
+<pre><code class="language-lua">local width, height
+
+function love.load()
+    width = 100
+    height = 75
+end
+
+function love.draw()
+    love.graphics.rectangle(&quot;fill&quot;, 10, 10, width, height)
+    love.graphics.rectangle(&quot;fill&quot;, 130, 10, width, height)
+    love.graphics.rectangle(&quot;fill&quot;, 250, 10, width, height)
+    love.graphics.rectangle(&quot;fill&quot;, 370, 10, width, height)
+end
+</code></pre>
+<iframe id="love-iframe-920" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_920 = document.getElementById('love-iframe-920');
+iframe_920.addEventListener('load', function() {
+iframe_920.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+local width, height
+function love.load() width = 100 height = 75
+end
+function love.draw() love.graphics.rectangle("fill", 10, 10, width, height) love.graphics.rectangle("fill", 130, 10, width, height) love.graphics.rectangle("fill", 250, 10, width, height) love.graphics.rectangle("fill", 370, 10, width, height)
+end
+`}, '*');
+});
+</script>
 
 </section>
 
