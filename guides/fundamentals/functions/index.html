@@ -29,9 +29,35 @@
             <li>
                 <a href="/love-cookbook/">Introduction</a>
             </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
-            </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/drawing-image/">Drawing an image</a>
-            </li><li><a href="/love-cookbook/guides/basic/variables/">Variables</a>
-            </li><li><a href="/love-cookbook/guides/basic/functions/">Functions</a>
+            </li><span class="group-header">Installation</span><li><a href="/love-cookbook/guides/installation/love/">LÖVE</a>
+            </li><li><a href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+            </li><span class="group-header">Fundamentals</span><li><a href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/tables/">Tables</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/for-loops/">For-loops</a>
+            </li><span class="group-header">LÖVE</span><li><a href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
+            </li><li><a href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+            </li><li><a href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
+            </li><li><a href="/love-cookbook/guides/love/input/">Input</a>
+            </li><li><a href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
+            </li><li><a href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
+            </li><li><a href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
+            </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/aabb/">AABB</a>
+            </li><li><a href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
+            </li><li><a href="/love-cookbook/guides/basic/tiles/">Tiles</a>
+            </li><li><a href="/love-cookbook/guides/basic/animation/">Animation</a>
+            </li><li><a href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
+            </li><li><a href="/love-cookbook/guides/basic/canvases/">Canvases</a>
+            </li><li><a href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
+            </li><span class="group-header">Intermediate</span><li><a href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+            </li><li><a href="/love-cookbook/guides/intermediate/metatables/">Metatables</a>
+            </li><li><a href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
+            </li><li><a href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
+            </li><li><a href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
+            </li><span class="group-header">Advanced</span><li><a href="/love-cookbook/guides/advanced/physics/">Physics</a>
+            </li><li><a href="/love-cookbook/guides/advanced/threads/">Threads</a>
             </li></ul>
       </section>
       <article class="guide">
@@ -122,11 +148,11 @@ function love.draw()
     draw_rectangle(370)
 end
 </code></pre>
-<iframe id="love-iframe-461" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-40" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_461 = document.getElementById('love-iframe-461');
-iframe_461.addEventListener('load', function() {
-iframe_461.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_40 = document.getElementById('love-iframe-40');
+iframe_40.addEventListener('load', function() {
+iframe_40.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local function draw_rectangle(x)
     love.graphics.rectangle("fill", x, 10, 100, 75)
 end

@@ -29,9 +29,35 @@
             <li>
                 <a href="/love-cookbook/">Introduction</a>
             </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
-            </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/drawing-image/">Drawing an image</a>
-            </li><li><a href="/love-cookbook/guides/basic/variables/">Variables</a>
-            </li><li><a href="/love-cookbook/guides/basic/functions/">Functions</a>
+            </li><span class="group-header">Installation</span><li><a href="/love-cookbook/guides/installation/love/">LÖVE</a>
+            </li><li><a href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+            </li><span class="group-header">Fundamentals</span><li><a href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/tables/">Tables</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/for-loops/">For-loops</a>
+            </li><span class="group-header">LÖVE</span><li><a href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
+            </li><li><a href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+            </li><li><a href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
+            </li><li><a href="/love-cookbook/guides/love/input/">Input</a>
+            </li><li><a href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
+            </li><li><a href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
+            </li><li><a href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
+            </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/aabb/">AABB</a>
+            </li><li><a href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
+            </li><li><a href="/love-cookbook/guides/basic/tiles/">Tiles</a>
+            </li><li><a href="/love-cookbook/guides/basic/animation/">Animation</a>
+            </li><li><a href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
+            </li><li><a href="/love-cookbook/guides/basic/canvases/">Canvases</a>
+            </li><li><a href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
+            </li><span class="group-header">Intermediate</span><li><a href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+            </li><li><a href="/love-cookbook/guides/intermediate/metatables/">Metatables</a>
+            </li><li><a href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
+            </li><li><a href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
+            </li><li><a href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
+            </li><span class="group-header">Advanced</span><li><a href="/love-cookbook/guides/advanced/physics/">Physics</a>
+            </li><li><a href="/love-cookbook/guides/advanced/threads/">Threads</a>
             </li></ul>
       </section>
       <article class="guide">
@@ -66,11 +92,11 @@ function love.draw()
     love.graphics.draw(image, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-747" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-266" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_747 = document.getElementById('love-iframe-747');
-iframe_747.addEventListener('load', function() {
-iframe_747.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_266 = document.getElementById('love-iframe-266');
+iframe_266.addEventListener('load', function() {
+iframe_266.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
     image = love.graphics.newImage("assets/whale.png")
@@ -85,11 +111,11 @@ end
 <p>Whale done! ;)</p>
 <h2>Bonus challenge</h2>
 <p>Make the whale move back and forth!</p>
-<iframe id="love-iframe-52" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-911" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_52 = document.getElementById('love-iframe-52');
-iframe_52.addEventListener('load', function() {
-iframe_52.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_911 = document.getElementById('love-iframe-911');
+iframe_911.addEventListener('load', function() {
+iframe_911.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()
