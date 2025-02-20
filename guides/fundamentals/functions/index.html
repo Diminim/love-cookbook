@@ -31,6 +31,7 @@
             </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
             </li><span class="group-header">Installation</span><li><a href="/love-cookbook/guides/installation/love/">LÖVE</a>
             </li><li><a href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+            </li><li><a href="/love-cookbook/guides/installation/neovim/">NeoVim</a>
             </li><span class="group-header">Fundamentals</span><li><a href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
             </li><li><a href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
             </li><li><a href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
@@ -148,11 +149,11 @@ function love.draw()
     draw_rectangle(370)
 end
 </code></pre>
-<iframe id="love-iframe-40" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-526" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_40 = document.getElementById('love-iframe-40');
-iframe_40.addEventListener('load', function() {
-iframe_40.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_526 = document.getElementById('love-iframe-526');
+iframe_526.addEventListener('load', function() {
+iframe_526.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local function draw_rectangle(x)
     love.graphics.rectangle("fill", x, 10, 100, 75)
 end

@@ -31,6 +31,7 @@
             </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
             </li><span class="group-header">Installation</span><li><a href="/love-cookbook/guides/installation/love/">LÖVE</a>
             </li><li><a href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+            </li><li><a href="/love-cookbook/guides/installation/neovim/">NeoVim</a>
             </li><span class="group-header">Fundamentals</span><li><a href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
             </li><li><a href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
             </li><li><a href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
@@ -92,11 +93,11 @@ function love.draw()
     love.graphics.draw(image, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-266" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-750" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_266 = document.getElementById('love-iframe-266');
-iframe_266.addEventListener('load', function() {
-iframe_266.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_750 = document.getElementById('love-iframe-750');
+iframe_750.addEventListener('load', function() {
+iframe_750.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
     image = love.graphics.newImage("assets/whale.png")
@@ -111,11 +112,11 @@ end
 <p>Whale done! ;)</p>
 <h2>Bonus challenge</h2>
 <p>Make the whale move back and forth!</p>
-<iframe id="love-iframe-911" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-872" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_911 = document.getElementById('love-iframe-911');
-iframe_911.addEventListener('load', function() {
-iframe_911.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_872 = document.getElementById('love-iframe-872');
+iframe_872.addEventListener('load', function() {
+iframe_872.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()

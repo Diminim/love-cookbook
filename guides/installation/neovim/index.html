@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LÖVE cookbook | Metatables</title>
+    <title>LÖVE cookbook | NeoVim</title>
 
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
@@ -65,19 +65,91 @@
         
 <section class="guide-content">
   <header class="guide-header">
-    <h1 class="guide-title">Metatables</h1>
+    <h1 class="guide-title">NeoVim</h1>
   </header>
 
-  <p>Not yet written: contribute to this page on <a href="https://github.com/Diminim/love-cookbook">GitHub</a>.</p>
+  <p>When using NeoVim for LÖVE we need to use S1M0N38's <a href="https://github.com/S1M0N38/love2d.nvim"><code>love2d.nvim</code></a> plugin.</p>
+<h2>Disclaimer</h2>
+<p>This guide already supposes you have a proper <a href="https://github.com/neovim/nvim-lspconfig">lsp configuration</a>, <code>lua_lsp</code> installed and a plugin manager.</p>
+<p>If you don't have any of these, the easiest way is to install an already made NeoVim configuration, or a &quot;NeoVim distribution&quot;.</p>
+<h2>Setup</h2>
+<h3>Installation</h3>
+<p>To setup the plugin, first we have to install it. The author of the plugin recommends to use <code>lazy.nvim</code>, so we are going to use it.</p>
+<p>If you have a single-file setup, go to your <code>init.lua</code> and add this to your lazy setup:</p>
+<pre><code class="language-lua">require(&quot;lazy&quot;).setup({
+  -- Other plugins...
+  {
+    &quot;S1M0N38/love2d.nvim&quot;,
+    cmd = &quot;LoveRun&quot;,
+    opts = {},
+    keys = {
+      { &quot;&lt;leader&gt;v&quot;,   desc = &quot;LÖVE&quot;, ft = &quot;lua&quot; },
+      { &quot;&lt;leader&gt;vv&quot;,  &quot;&lt;cmd&gt;LoveRun&lt;cr&gt;&quot;, desc = &quot;Run LÖVE&quot;, ft = &quot;lua&quot; },
+      { &quot;&lt;leader&gt;vs&quot;,  &quot;&lt;cmd&gt;LoveStop&lt;cr&gt;&quot;, desc = &quot;Stop LÖVE&quot;, ft = &quot;lua&quot; },
+    },
+  },
+})
+</code></pre>
+<p>Otherwise, if you have a multi-file setup, create a new file in your plugins folder called <code>love2d.lua</code> and copy this into it:</p>
+<pre><code class="language-lua">return {
+  &quot;S1M0N38/love2d.nvim&quot;,
+  cmd = &quot;LoveRun&quot;,
+  opts = {},
+  keys = {
+    { &quot;&lt;leader&gt;v&quot;, ft = &quot;lua&quot;, desc = &quot;LÖVE&quot; },
+    { &quot;&lt;leader&gt;vv&quot;, &quot;&lt;cmd&gt;LoveRun&lt;cr&gt;&quot;, ft = &quot;lua&quot;, desc = &quot;Run LÖVE&quot; },
+    { &quot;&lt;leader&gt;vs&quot;, &quot;&lt;cmd&gt;LoveStop&lt;cr&gt;&quot;, ft = &quot;lua&quot;, desc = &quot;Stop LÖVE&quot; },
+  },
+}
+</code></pre>
+<h3>Post-installation</h3>
+<p>After installing the plugin, we must configure it. It has three options:</p>
+<ul>
+<li><code>path_to_love_bin</code>: The path to the <code>love</code> binary. Leave it empty if love is installed system-wide.</li>
+<li><code>path_to_love_library</code>: The path to <a href="https://github.com/LuaCATS/love2d/tree/main/library">the love lua annotation library</a>. Obligatory if you want lsp to automatically setup love annotations. Otherwise, leave it empty.</li>
+<li><code>restart_on_save</code>: If you want open love instances to restart when saving to any file, set this option to true.</li>
+</ul>
+<p>To change this values, modify the <code>opts</code> table in the plugin installation:</p>
+<pre><code class="language-lua">return {
+  -- other..
+  opts = {
+    -- this are the default values
+    path_to_love_bin = &quot;love&quot;,
+    path_to_love_library = vim.fn.globpath(vim.o.runtimepath, &quot;love2d/library&quot;),
+    restart_on_save = false,
+  },
+  -- keys...
+}
+</code></pre>
+<h2>Usage</h2>
+<p>After completing the plugin's setup, we now can use it to develop games with LÖVE and NeoVim.</p>
+<p>To run a new LÖVE instance, run the command <code>:LoveRun</code> to start. You have to do this in the same directory with the <code>main.lua</code> file. To stop LÖVE, run the <code>:LoveStop</code> command.</p>
+<p>The plugin will load when running <code>:LoveRun</code> by default, so it will not recognize the <code>love</code> variable until you run a LÖVE instance. To make it load when NeoVim is started, comment (or completely remove) the <code>cmd</code> line:</p>
+<pre><code class="language-lua">{
+  &quot;S1M0N38/love2d.nvim&quot;,
+  --cmd = &quot;LoveRun&quot;,
+  opts = {},
+  keys = {
+    { &quot;&lt;leader&gt;v&quot;, ft = &quot;lua&quot;, desc = &quot;LÖVE&quot; },
+    { &quot;&lt;leader&gt;vv&quot;, &quot;&lt;cmd&gt;LoveRun&lt;cr&gt;&quot;, ft = &quot;lua&quot;, desc = &quot;Run LÖVE&quot; },
+    { &quot;&lt;leader&gt;vs&quot;, &quot;&lt;cmd&gt;LoveStop&lt;cr&gt;&quot;, ft = &quot;lua&quot;, desc = &quot;Stop LÖVE&quot; },
+  },
+}
+</code></pre>
+<h2>GLSL highlighting</h2>
+<p>As a bonus, we can also get shader syntax highlighting.</p>
+<p>To do this, just install the parser for GLSL with <code>:TSInstall</code>. After doing so, NeoVim will recognize the strings passed to <code>love.graphics.newShader()</code> as GLSL code.</p>
 
 </section>
 
 <footer class="guide-footer">
   <p>
-    Created on: <em>Wed Feb 19 2025</em>
+    Created on: <em>Thu Feb 20 2025</em>
   </p>
 
   <p>By: 
+  
+    <em>Nykenik</em>
   
   </p>
 </footer>
