@@ -93,15 +93,18 @@ function love.draw()
     love.graphics.draw(image, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-128" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-314" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_128 = document.getElementById('love-iframe-128');
-iframe_128.addEventListener('load', function() {
-iframe_128.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_314 = document.getElementById('love-iframe-314');
+iframe_314.addEventListener('load', function() {
+iframe_314.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
-function love.load() image = love.graphics.newImage("assets/whale.png")
+function love.load()
+ image = love.graphics.newImage("assets/whale.png")
 end
-function love.draw() -- Draw the image on position 100, 100 love.graphics.draw(image, 100, 100)
+function love.draw()
+ -- Draw the image on position 100, 100
+ love.graphics.draw(image, 100, 100)
 end
 `}, '*');
 });
@@ -109,18 +112,29 @@ end
 <p>Whale done! ;)</p>
 <h2>Bonus challenge</h2>
 <p>Make the whale move back and forth!</p>
-<iframe id="love-iframe-424" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-886" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_424 = document.getElementById('love-iframe-424');
-iframe_424.addEventListener('load', function() {
-iframe_424.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_886 = document.getElementById('love-iframe-886');
+iframe_886.addEventListener('load', function() {
+iframe_886.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
-function love.load() image = love.graphics.newImage("assets/whale.png") width, height = image:getDimensions()
+function love.load()
+ image = love.graphics.newImage("assets/whale.png")
+ width, height = image:getDimensions()
 end
-function love.update(dt) x = x + 400 * dt * dir if x > 700 then x = 700 dir = -1 elseif x < 0 then x = 0 dir = 1 end
+function love.update(dt)
+ x = x + 400 * dt * dir
+ if x > 700 then
+ x = 700
+ dir = -1
+ elseif x < 0 then
+ x = 0
+ dir = 1
+ end
 end
-function love.draw() love.graphics.draw(image, x, 100)
+function love.draw()
+ love.graphics.draw(image, x, 100)
 end
 `}, '*');
 });

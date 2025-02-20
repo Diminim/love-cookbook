@@ -245,16 +245,25 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, x, 50, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-70" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-502" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_70 = document.getElementById('love-iframe-70');
-iframe_70.addEventListener('load', function() {
-iframe_70.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_502 = document.getElementById('love-iframe-502');
+iframe_502.addEventListener('load', function() {
+iframe_502.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local frame = 0
 local x = 0
-function love.update() frame = frame + 1 if x < 700 then x = x + 1 end if frame > 1000 then frame = 0 x = 0 end
+function love.update()
+ frame = frame + 1
+ if x < 700 then
+ x = x + 1
+ end
+ if frame > 1000 then
+ frame = 0
+ x = 0
+ end
 end
-function love.draw() love.graphics.rectangle("fill", x, 50, 100, 100)
+function love.draw()
+ love.graphics.rectangle("fill", x, 50, 100, 100)
 end
 `}, '*');
 });
@@ -274,15 +283,21 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, x, 50, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-225" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-775" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_225 = document.getElementById('love-iframe-225');
-iframe_225.addEventListener('load', function() {
-iframe_225.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_775 = document.getElementById('love-iframe-775');
+iframe_775.addEventListener('load', function() {
+iframe_775.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local x = 0
-function love.update() if love.keyboard.isDown("right") then x = x + 1 elseif x > 0 then x = x - 1 end
+function love.update()
+ if love.keyboard.isDown("right") then
+ x = x + 1
+ elseif x > 0 then
+ x = x - 1
+ end
 end
-function love.draw() love.graphics.rectangle("fill", x, 50, 100, 100)
+function love.draw()
+ love.graphics.rectangle("fill", x, 50, 100, 100)
 end
 `}, '*');
 });

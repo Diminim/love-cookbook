@@ -215,18 +215,29 @@ function love.draw()
     love.graphics.print(two, 10, 50)
 end
 </code></pre>
-<iframe id="love-iframe-425" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
+<iframe id="love-iframe-174" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
 <script>
-const iframe_425 = document.getElementById('love-iframe-425');
-iframe_425.addEventListener('load', function() {
-iframe_425.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
+const iframe_174 = document.getElementById('love-iframe-174');
+iframe_174.addEventListener('load', function() {
+iframe_174.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
 -- This variable is not declared inside a code block
 -- Because of that, it's accessible in all of main.lua
 local one = 1
 -- A function is an example of a code block.
-function love.load() -- The variable 'two' is only accessible in this code block. local two = 2 print(one, two) -- Output: 1, 2
+function love.load()
+ -- The variable 'two' is only accessible in this code block.
+ local two = 2
+ print(one, two) -- Output: 1, 2
 end -- 'end' closes the code block.
-function love.draw() -- We are inside a different code block. love.graphics.print(one, 10, 10) -- This would give an error, because 'two' holds no value. -- love.graphics.print(two, 10, 30) -- Error! -- Careful! This is now declared as a global variable! -- Because the original declaration was inside a different code block. two = 20 love.graphics.print(two, 10, 50)
+function love.draw()
+ -- We are inside a different code block.
+ love.graphics.print(one, 10, 10)
+ -- This would give an error, because 'two' holds no value.
+ -- love.graphics.print(two, 10, 30) -- Error!
+ -- Careful! This is now declared as a global variable!
+ -- Because the original declaration was inside a different code block.
+ two = 20
+ love.graphics.print(two, 10, 50)
 end
 `}, '*');
 });
@@ -249,15 +260,21 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, 370, 10, width, height)
 end
 </code></pre>
-<iframe id="love-iframe-920" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-812" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_920 = document.getElementById('love-iframe-920');
-iframe_920.addEventListener('load', function() {
-iframe_920.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_812 = document.getElementById('love-iframe-812');
+iframe_812.addEventListener('load', function() {
+iframe_812.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local width, height
-function love.load() width = 100 height = 75
+function love.load()
+ width = 100
+ height = 75
 end
-function love.draw() love.graphics.rectangle("fill", 10, 10, width, height) love.graphics.rectangle("fill", 130, 10, width, height) love.graphics.rectangle("fill", 250, 10, width, height) love.graphics.rectangle("fill", 370, 10, width, height)
+function love.draw()
+ love.graphics.rectangle("fill", 10, 10, width, height)
+ love.graphics.rectangle("fill", 130, 10, width, height)
+ love.graphics.rectangle("fill", 250, 10, width, height)
+ love.graphics.rectangle("fill", 370, 10, width, height)
 end
 `}, '*');
 });

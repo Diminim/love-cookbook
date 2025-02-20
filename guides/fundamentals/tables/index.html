@@ -68,7 +68,189 @@
     <h1 class="guide-title">Tables</h1>
   </header>
 
-  <p>Not yet written: contribute to this page on <a href="https://github.com/Diminim/love-cookbook">GitHub</a>.</p>
+  <p>Tables are a type of value in which you can store multiple values. We create a table by using curly braces.</p>
+<pre><code class="language-lua">local fruits = {}
+</code></pre>
+<p>Now that we have a table, we can fill it with values. There are multiple ways to do this. We can put in the values as we create the table.</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+</code></pre>
+<p>Or we can use <code>table.insert(table, value)</code>. The first argument we pass is the table, and the second argument is the value you want to insert.</p>
+<pre><code class="language-lua">local fruits = {}
+
+table.insert(fruits, &quot;apple&quot;)
+table.insert(fruits, &quot;pear&quot;)
+table.insert(fruits, &quot;tomato&quot;)
+</code></pre>
+<p>If you print <code>fruits</code>, you will see something like this:</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+print(fruits) -- Output: table: 0x02b857e46f68
+</code></pre>
+<p><code>table: 0x02b857e46f68</code> tells us that this is a table, and where in your memory it is located. That is not very useful to us. We want to know what is <em>inside</em> the table.</p>
+<p>Our table is like a sequence, or a list. Instead of printing the entire table, let's print the first item in the list. We can do this by using square brackets.</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+print(fruits[1]) -- Output: &quot;apple&quot;
+</code></pre>
+<p>The number at which an item is stored is called the <ins>index</ins>. So <code>&quot;apple&quot;</code> is on the first index.</p>
+<p>If we want to print all the values, we <em>could</em> print them one by one.</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+print(fruits[1]) -- Output: &quot;apple&quot;
+print(fruits[2]) -- Output: &quot;pear&quot;
+print(fruits[3]) -- Output: &quot;tomato&quot;
+</code></pre>
+<p>But this is very inefficient. Imagine if we had a hundred items. Luckily, there is a better way.</p>
+<h2>For-loops</h2>
+<p>A for-loop is a type of statement that allows you to repeat certain code a number of times.</p>
+<pre><code class="language-lua">for i = 1, 10 do
+    print(&quot;Hello!&quot;) -- Output: Hello! (x10)
+end
+</code></pre>
+<p>This for-loop repeats 10 times. A single repetition is called an <ins>iteration</ins>.</p>
+<p>An if-statement asks for one parameter, a condition. A for-loop asks for two parameters, separated by a comma.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>&quot;Parameter&quot; here is not to be confused with function parameters. In this context it means what we provide to the statement.</p>
+</div>
+<ul>
+<li>With <code>i = 1</code>, the <code>i</code> is the variable we will be using, and <code>1</code> is the starting number.</li>
+<li><code>10</code> is the number up to which the for-loop will repeat.</li>
+</ul>
+<p>The variable <code>i</code> will increase by 1 for each iteration</p>
+<pre><code class="language-lua">for i = 1, 3 do
+    print(i) -- Output: 1, 2, 3
+end
+</code></pre>
+<p>Because <code>i</code> is a variable, we can name it whatever we want.</p>
+<pre><code class="language-lua">for whale = 4, 8 do
+    print(whale) -- Output: 4, 5, 6, 7, 8
+end
+</code></pre>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>There is a third, optional parameter. This sets by how much the variable <code>i</code> increases.</p>
+<pre><code class="language-lua">for i = -5, 20, 5 do
+    print(i) -- Output: -5, 0, 5, 10, 15, 20
+end
+</code></pre>
+</div>
+<p>The variable is only available inside the for-loop.</p>
+<pre><code class="language-lua">for i = 1, 5 do
+    print(i) -- Output: 1, 2, 3, 4, 5
+end
+
+print(i) -- Output: nil
+</code></pre>
+<h2>Looping through tables</h2>
+<p>Now that we understand for-loops, we can use them to loop through our table.</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+
+for i = 1, 3 do
+    print(fruits[i]) -- Output: apple, pear, tomato
+end
+</code></pre>
+<p>Now, even if we have a hundred items, we can go over them with ease.</p>
+<p>We can get the number of items in our table by using a number sign. We can use this to dynamically set how often the for-loop should repeat.</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+
+print(#fruits) -- Output: 3
+
+for i = 1, #fruits do
+    print(fruits[i]) -- Output: apple, pear, tomato
+end
+</code></pre>
+<h2>Editing tables</h2>
+<p>We have already learned that we can use <code>table.insert(table, value)</code> to insert value into our table. Similarly, we can use <code>table.remove(table, index)</code> to remove a value.</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+
+table.remove(fruits, 2) -- This removes &quot;pear&quot;
+
+for i = 1, #fruits do
+    print(fruits[i]) -- Output: apple, tomato
+end
+</code></pre>
+<p>We can edit a value, by accessing refering to that values index.</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+
+-- Change the value on the second index to &quot;banana&quot;.
+fruits[2] = &quot;banana&quot;
+
+for i = 1, #fruits do
+    print(fruits[i]) -- Output: apple, banana, tomato
+end
+</code></pre>
+<p>This is also yet another way to add a value to your table.</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+
+-- Change the value on the fourth index to &quot;banana&quot;.
+fruits[4] = &quot;banana&quot;
+
+for i = 1, #fruits do
+    print(fruits[i]) -- Output: apple, banana, tomato, banana
+end
+</code></pre>
+<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>Be careful when you set a value this way. If you leave a gap in the sequence, then Lua will be confused about how many items are in your table.</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+fruits[10] = &quot;banana&quot;
+print(#fruits) -- Output: 3
+</code></pre>
+</div>
+<h2>ipairs</h2>
+<p>Because looping through a table is so common, Lua provides a shortcut for this. Using a <ins>for-in</ins> loop, and the standard function <code>ipairs</code> we can do the following:</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+
+for i, v in ipairs(fruits) do
+    print(i, v)
+end
+
+-- Output:
+-- 1, apple
+-- 2, pear
+-- 3, tomato
+</code></pre>
+<p>This is the equivalent to:</p>
+<pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
+
+for i = 1, #fruits do
+    local v = fruits[i]
+    print(i, v)
+end
+</code></pre>
+<p>The variable <code>i</code> becomes the index of that iteration, and the variable <code>v</code> becomes the value on that index.</p>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Again, <code>i</code> and <code>v</code> are variables, so we can name them whatever we want.</p>
+<pre><code class="language-lua">for index, value of ipairs(fruits) do
+</code></pre>
+</div>
+<h2>Usage</h2>
+<p>By using tables, we can store multiple items in a single variable. If we have multiple enemies in our game, we won't need to make a separate variable for each of them. We can store these enemies inside our table (and remove them when defeated).</p>
+<p>In the demo below we add a string &quot;hello&quot; to our table each time we press space (make sure you click on it first). We use the variable <code>i</code> to position all the strings. For example, the fourth &quot;hello&quot; will be drawn on position <code>50 * 4</code>.</p>
+<pre><code class="language-lua">local hellos = {}
+
+function love.keypressed(key)
+    if key == &quot;space&quot; then
+        table.insert(hellos, &quot;hello&quot;)
+    end
+end
+
+function love.draw()
+    for i, v in ipairs(hellos) do
+        love.graphics.print(v .. i, 50 * i, 40)
+    end
+end
+</code></pre>
+<iframe id="love-iframe-429" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
+<script>
+const iframe_429 = document.getElementById('love-iframe-429');
+iframe_429.addEventListener('load', function() {
+iframe_429.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
+local hellos = {}
+function love.keypressed(key)
+ if key == "space" then
+ table.insert(hellos, "hello")
+ end
+end
+function love.draw()
+ for i, v in ipairs(hellos) do
+ love.graphics.print(v .. i, 50 * i, 40)
+ end
+end
+`}, '*');
+});
+</script>
 
 </section>
 
@@ -78,6 +260,8 @@
   </p>
 
   <p>By: 
+  
+    <em>Sheepolution</em>
   
   </p>
 </footer>
