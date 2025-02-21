@@ -36,8 +36,7 @@
             </li><li><a href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
             </li><li><a href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
             </li><li><a href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/tables/">Tables</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/for-loops/">For-loops</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
             </li><span class="group-header">LÖVE</span><li><a href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
             </li><li><a href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
             </li><li><a href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
@@ -215,11 +214,11 @@ function love.draw()
     love.graphics.print(two, 10, 50)
 end
 </code></pre>
-<iframe id="love-iframe-174" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
+<iframe id="love-iframe-899" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
 <script>
-const iframe_174 = document.getElementById('love-iframe-174');
-iframe_174.addEventListener('load', function() {
-iframe_174.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
+const iframe_899 = document.getElementById('love-iframe-899');
+iframe_899.addEventListener('load', function() {
+iframe_899.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
 -- This variable is not declared inside a code block
 -- Because of that, it's accessible in all of main.lua
 local one = 1
@@ -260,11 +259,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, 370, 10, width, height)
 end
 </code></pre>
-<iframe id="love-iframe-812" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-357" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_812 = document.getElementById('love-iframe-812');
-iframe_812.addEventListener('load', function() {
-iframe_812.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_357 = document.getElementById('love-iframe-357');
+iframe_357.addEventListener('load', function() {
+iframe_357.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local width, height
 function love.load()
  width = 100

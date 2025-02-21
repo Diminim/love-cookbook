@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LÖVE cookbook | Tables</title>
+    <title>LÖVE cookbook | Tables and For-loops</title>
 
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
@@ -36,8 +36,7 @@
             </li><li><a href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
             </li><li><a href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
             </li><li><a href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/tables/">Tables</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/for-loops/">For-loops</a>
+            </li><li><a href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
             </li><span class="group-header">LÖVE</span><li><a href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
             </li><li><a href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
             </li><li><a href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
@@ -65,10 +64,10 @@
         
 <section class="guide-content">
   <header class="guide-header">
-    <h1 class="guide-title">Tables</h1>
+    <h1 class="guide-title">Tables and For-loops</h1>
   </header>
 
-  <p>Tables are a type of value in which you can store multiple values. We create a table by using curly braces.</p>
+  <p><strong>Tables</strong> are a type of value in which you can store multiple values. We create a table by using curly braces.</p>
 <pre><code class="language-lua">local fruits = {}
 </code></pre>
 <p>Now that we have a table, we can fill it with values. There are multiple ways to do this. We can put in the values as we create the table.</p>
@@ -99,7 +98,7 @@ print(fruits[3]) -- Output: &quot;tomato&quot;
 </code></pre>
 <p>But this is very inefficient. Imagine if we had a hundred items. Luckily, there is a better way.</p>
 <h2>For-loops</h2>
-<p>A for-loop is a type of statement that allows you to repeat certain code a number of times.</p>
+<p>A <strong>for-loop</strong> is a type of statement that allows you to repeat certain code a number of times.</p>
 <pre><code class="language-lua">for i = 1, 10 do
     print(&quot;Hello!&quot;) -- Output: Hello! (x10)
 end
@@ -135,6 +134,51 @@ end
 
 print(i) -- Output: nil
 </code></pre>
+<h3>While-loops</h3>
+<p>Besides the for-loops there is also a <strong>while-loop</strong>. It's like an if-statement and for-loop combined.</p>
+<pre><code class="language-lua">local a = 0
+
+while a &lt; 5 do
+    a = a + 1
+    print(a) -- Output: 1, 2, 3, 4, 5
+end
+</code></pre>
+<p>The loop repeats as long as the condition is true.</p>
+<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>Be careful! If the condition never becomes false, the while-loop will repeat indefintely, causing LÖVE to hang.</p>
+</div>
+<p>It is possible to exit a loop early by using a <code>break</code>. It's somewhat similar to how you exit a function with <code>return</code>.</p>
+<pre><code class="language-lua">local a = 0
+
+while true do
+    a = a + 1
+    print(a) -- Output: 1, 2, 3, 4, 5
+
+    if a &gt; 5 then
+        break
+    end
+end
+
+print(&quot;Escaped the infinite loop!&quot;)
+</code></pre>
+<p>A for-loop is useful when you know how many steps to take. A while-loop is useful when you know the end condition. For example, what if we want to calculate the power-of-2-sequence up to a million? We don't know how many steps it will take, but we do know when we want to end it.</p>
+<pre><code class="language-lua">local a = 1
+
+while a &lt; 1000000 do
+    a = a * 2
+    print(a) -- Output: 2, 4, 8, 16, 32, .... 524288, 1048576
+end
+</code></pre>
+<p>There is one more type of loop. A <strong>repeat-until loop</strong>.</p>
+<pre><code class="language-lua">
+local x = 0
+
+repeat
+    x = x + 1
+until x &gt; 5
+</code></pre>
+<p>It's similar to a while loop, except it always executes what's inside the loop at least once.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Even if we won't use these alternative loops as much, it's good to know of their existence.</p>
+</div>
 <h2>Looping through tables</h2>
 <p>Now that we understand for-loops, we can use them to loop through our table.</p>
 <pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
@@ -154,7 +198,7 @@ for i = 1, #fruits do
 end
 </code></pre>
 <h2>Editing tables</h2>
-<p>We have already learned that we can use <code>table.insert(table, value)</code> to insert value into our table. Similarly, we can use <code>table.remove(table, index)</code> to remove a value.</p>
+<p>We have already learned that we can use <code>table.insert(table, value)</code> to insert a value into our table. Similarly, we can use <code>table.remove(table, index)</code> to remove a value.</p>
 <pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
 
 table.remove(fruits, 2) -- This removes &quot;pear&quot;
@@ -163,7 +207,7 @@ for i = 1, #fruits do
     print(fruits[i]) -- Output: apple, tomato
 end
 </code></pre>
-<p>We can edit a value, by accessing refering to that values index.</p>
+<p>We can edit a value, by referring to that value's index.</p>
 <pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
 
 -- Change the value on the second index to &quot;banana&quot;.
@@ -173,7 +217,7 @@ for i = 1, #fruits do
     print(fruits[i]) -- Output: apple, banana, tomato
 end
 </code></pre>
-<p>This is also yet another way to add a value to your table.</p>
+<p>This is also yet another way to add a value to our table.</p>
 <pre><code class="language-lua">local fruits = { &quot;apple&quot;, &quot;pear&quot;, &quot;tomato&quot; }
 
 -- Change the value on the fourth index to &quot;banana&quot;.
@@ -215,38 +259,148 @@ end
 <pre><code class="language-lua">for index, value of ipairs(fruits) do
 </code></pre>
 </div>
+<h2>Objects</h2>
+<p>Tables can be used as a list, where we use numbers as indexes, but we can also use strings as indexes.</p>
+<pre><code class="language-lua">local rectangle = {}
+rectangle[&quot;width&quot;] = 50
+</code></pre>
+<p>When using a string as the index, we call that a <ins>property</ins>. This property has <code>&quot;width&quot;</code> as its <ins>key</ins>, and <code>50</code> as its <ins>value</ins>.</p>
+<p>A table with properties is also called an <strong>Object</strong>.</p>
+<p>A shorter way to assign a property is to use a dot.</p>
+<pre><code class="language-lua">local rectangle = {}
+
+rectangle.width = 50
+print(rectangle.width) -- 50
+
+-- We can still access it with the string.
+print(rectangle[&quot;width&quot;]) -- 50
+</code></pre>
+<p>We can also add properties when creating the table.</p>
+<pre><code class="language-lua">local rectangle = {
+    x = 10,
+    y = 20,
+    width = 50,
+    height = 120
+}
+</code></pre>
 <h2>Usage</h2>
 <p>By using tables, we can store multiple items in a single variable. If we have multiple enemies in our game, we won't need to make a separate variable for each of them. We can store these enemies inside our table (and remove them when defeated).</p>
-<p>In the demo below we add a string &quot;hello&quot; to our table each time we press space (make sure you click on it first). We use the variable <code>i</code> to position all the strings. For example, the fourth &quot;hello&quot; will be drawn on position <code>50 * 4</code>.</p>
-<pre><code class="language-lua">local hellos = {}
+<p>In the demo below, we combine all the fundamentals we learned. We create a moving rectangle each time we press the left or right arrow key (make sure you click on it first). Based on the arrow key, it moves either left or right.</p>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Don't be discouraged if you have trouble understanding the code below. Learning individual concepts is one thing, but learning how to use them combined is a challenge on its own. Reread the chapters, experiment with the demos, try to make things yourself, and dare to take the next step even if you feel like you're not ready. Because that's how you learn.</p>
+</div>
+<pre><code class="language-lua">-- We declare the local variable rectangles, and assign a table as its value.
+local rectangeList = {}
 
-function love.keypressed(key)
-    if key == &quot;space&quot; then
-        table.insert(hellos, &quot;hello&quot;)
+-- We create the function createRectangle.
+local function createRectangle(direction)
+
+    -- We create a new local variable named rectangle.
+    -- It won't be available outside of this function.
+    local rectangle = {
+        -- We make it an object, and give it these properties.
+        x = 375,
+        y = 20,
+        width = 50,
+        height = 120,
+        -- This will be either &quot;left&quot; or &quot;right&quot;,
+        -- based on what is passed as argument.
+        direction = direction
+    }
+
+    -- We return the rectangle
+    return rectangle
+end
+
+function love.update()
+    -- We loop through the list of rectangles
+    for i, rectangle in ipairs(rectangeList) do
+        -- Move the rectangle to the left or right based on its direction.
+        if rectangle.direction == &quot;left&quot; then
+            rectangle.x = rectangle.x - 1
+        elseif rectangle.direction == &quot;right&quot; then
+            rectangle.x = rectangle.x + 1
+        end
     end
 end
 
 function love.draw()
-    for i, v in ipairs(hellos) do
-        love.graphics.print(v .. i, 50 * i, 40)
+    -- We loop through the list of rectangles
+    for i, rectangle in ipairs(rectangeList) do
+        -- Draw the rectangle using its properties.
+        love.graphics.rectangle(&quot;fill&quot;, rectangle.x, rectangle.y,
+            rectangle.width, rectangle.height)
     end
+end
+
+function love.keypressed(key)
+    -- If the key pressed is not &quot;left&quot; and is not &quot;right&quot;...
+    if key ~= &quot;left&quot; and key ~= &quot;right&quot; then
+        -- Go out of this function.
+        return
+    end
+
+    -- We are still here, so the key is either &quot;left&quot; or &quot;right&quot;.
+    -- Because of the 'return', we don't need to use an 'else'.
+
+    -- Call createRectangle, and pass the key as argument.
+    -- We add its returned value to the list of rectangles.
+    table.insert(rectangeList, createRectangle(key))
 end
 </code></pre>
-<iframe id="love-iframe-429" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
+<iframe id="love-iframe-871" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_429 = document.getElementById('love-iframe-429');
-iframe_429.addEventListener('load', function() {
-iframe_429.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
-local hellos = {}
-function love.keypressed(key)
- if key == "space" then
- table.insert(hellos, "hello")
+const iframe_871 = document.getElementById('love-iframe-871');
+iframe_871.addEventListener('load', function() {
+iframe_871.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+-- We declare the local variable rectangles, and assign a table as its value.
+local rectangeList = {}
+-- We create the function createRectangle.
+local function createRectangle(direction)
+ -- We create a new local variable named rectangle.
+ -- It won't be available outside of this function.
+ local rectangle = {
+ -- We make it an object, and give it these properties.
+ x = 375,
+ y = 20,
+ width = 50,
+ height = 120,
+ -- This will be either "left" or "right",
+ -- based on what is passed as argument.
+ direction = direction
+ }
+ -- We return the rectangle
+ return rectangle
+end
+function love.update()
+ -- We loop through the list of rectangles
+ for i, rectangle in ipairs(rectangeList) do
+ -- Move the rectangle to the left or right based on its direction.
+ if rectangle.direction == "left" then
+ rectangle.x = rectangle.x - 1
+ elseif rectangle.direction == "right" then
+ rectangle.x = rectangle.x + 1
+ end
  end
 end
 function love.draw()
- for i, v in ipairs(hellos) do
- love.graphics.print(v .. i, 50 * i, 40)
+ -- We loop through the list of rectangles
+ for i, rectangle in ipairs(rectangeList) do
+ -- Draw the rectangle using its properties.
+ love.graphics.rectangle("fill", rectangle.x, rectangle.y,
+ rectangle.width, rectangle.height)
  end
+end
+function love.keypressed(key)
+ -- If the key pressed is not "left" and is not "right"...
+ if key ~= "left" and key ~= "right" then
+ -- Go out of this function.
+ return
+ end
+ -- We are still here, so the key is either "left" or "right".
+ -- Because of the 'return', we don't need to use an 'else'.
+ -- Call createRectangle, and pass the key as argument.
+ -- We add its returned value to the list of rectangles.
+ table.insert(rectangeList, createRectangle(key))
 end
 `}, '*');
 });
@@ -256,7 +410,7 @@ end
 
 <footer class="guide-footer">
   <p>
-    Created on: <em>Wed Feb 19 2025</em>
+    Created on: <em>Thu Feb 20 2025</em>
   </p>
 
   <p>By: 
