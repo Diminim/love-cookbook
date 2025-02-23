@@ -17,57 +17,65 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div class="navbar">
-      <h1>LÖVE Cookbook</h1>
+    <div class="sidebar">
+      <header>
+        <img src="/love-cookbook/assets/logo.png" width="440" height="332">
+        
+        <h1>LÖVE cookbook</h1>
+      </header>
+
+      <nav>
+        <ul><li class="group-header"><ul><li><a class="" href="/love-cookbook/guides/getting-started/">Getting started</a>
+                  </li></ul>
+            </li><li class="group-header">Installation<ul><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">NeoVim</a>
+                  </li></ul>
+            </li><li class="group-header">Fundamentals<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
+                  </li></ul>
+            </li><li class="group-header">LÖVE<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
+                  </li></ul>
+            </li><li class="group-header">Basics<ul><li><a class="" href="/love-cookbook/guides/basic/aabb/">AABB</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/tiles/">Tiles</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/animation/">Animation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/canvases/">Canvases</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
+                  </li></ul>
+            </li><li class="group-header">Intermediate<ul><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/metatables/">Metatables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
+                  </li></ul>
+            </li><li class="group-header">Advanced<ul><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
+                  </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
+                  </li></ul>
+            </li></ul>
+      </nav>
     </div>
 
-    <div class="container">
-      <section class="guide-toc">
-        <ul>
-            <li>
-                <a href="/love-cookbook/">Introduction</a>
-            </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
-            </li><span class="group-header">Installation</span><li><a href="/love-cookbook/guides/installation/love/">LÖVE</a>
-            </li><li><a href="/love-cookbook/guides/installation/vscode/">VSCode</a>
-            </li><li><a href="/love-cookbook/guides/installation/neovim/">NeoVim</a>
-            </li><span class="group-header">Fundamentals</span><li><a href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
-            </li><span class="group-header">LÖVE</span><li><a href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
-            </li><li><a href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
-            </li><li><a href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
-            </li><li><a href="/love-cookbook/guides/love/input/">Input</a>
-            </li><li><a href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
-            </li><li><a href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
-            </li><li><a href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
-            </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/aabb/">AABB</a>
-            </li><li><a href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
-            </li><li><a href="/love-cookbook/guides/basic/tiles/">Tiles</a>
-            </li><li><a href="/love-cookbook/guides/basic/animation/">Animation</a>
-            </li><li><a href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
-            </li><li><a href="/love-cookbook/guides/basic/canvases/">Canvases</a>
-            </li><li><a href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
-            </li><span class="group-header">Intermediate</span><li><a href="/love-cookbook/guides/intermediate/oop/">OOP</a>
-            </li><li><a href="/love-cookbook/guides/intermediate/metatables/">Metatables</a>
-            </li><li><a href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
-            </li><li><a href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
-            </li><li><a href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
-            </li><span class="group-header">Advanced</span><li><a href="/love-cookbook/guides/advanced/physics/">Physics</a>
-            </li><li><a href="/love-cookbook/guides/advanced/threads/">Threads</a>
-            </li></ul>
-      </section>
+    <main>
       <article class="guide">
         
-<section class="guide-content">
-  <header class="guide-header">
-    <h1 class="guide-title">Variables</h1>
-  </header>
+<h1>Variables</h1>
 
-  <p><strong>Variables</strong> are words that contain a value, like a number for example.</p>
+<p><strong>Variables</strong> are words that contain a value, like a number for example.</p>
 <p>We can make a variable like so:</p>
 <pre><code class="language-lua">a = 10
 </code></pre>
@@ -214,11 +222,11 @@ function love.draw()
     love.graphics.print(two, 10, 50)
 end
 </code></pre>
-<iframe id="love-iframe-899" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
+<iframe id="love-iframe-149" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
 <script>
-const iframe_899 = document.getElementById('love-iframe-899');
-iframe_899.addEventListener('load', function() {
-iframe_899.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
+const iframe_149 = document.getElementById('love-iframe-149');
+iframe_149.addEventListener('load', function() {
+iframe_149.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
 -- This variable is not declared inside a code block
 -- Because of that, it's accessible in all of main.lua
 local one = 1
@@ -259,11 +267,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, 370, 10, width, height)
 end
 </code></pre>
-<iframe id="love-iframe-357" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-19" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_357 = document.getElementById('love-iframe-357');
-iframe_357.addEventListener('load', function() {
-iframe_357.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_19 = document.getElementById('love-iframe-19');
+iframe_19.addEventListener('load', function() {
+iframe_19.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local width, height
 function love.load()
  width = 100
@@ -279,20 +287,17 @@ end
 });
 </script>
 
-</section>
 
 <footer class="guide-footer">
-  <p>
-    Created on: <em>Wed Feb 19 2025</em>
-  </p>
+  <p></p>
 
   <p>By: 
   
-    <em>Sheepolution</em>
-  
+      <em>Sheepolution</em>
+    
   </p>
 </footer>
       </article>
-    </div>
+    </main>
   </body>
 </html>

@@ -17,57 +17,65 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div class="navbar">
-      <h1>LÖVE Cookbook</h1>
+    <div class="sidebar">
+      <header>
+        <img src="/love-cookbook/assets/logo.png" width="440" height="332">
+        
+        <h1>LÖVE cookbook</h1>
+      </header>
+
+      <nav>
+        <ul><li class="group-header"><ul><li><a class="" href="/love-cookbook/guides/getting-started/">Getting started</a>
+                  </li></ul>
+            </li><li class="group-header">Installation<ul><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">NeoVim</a>
+                  </li></ul>
+            </li><li class="group-header">Fundamentals<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
+                  </li></ul>
+            </li><li class="group-header">LÖVE<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
+                  </li></ul>
+            </li><li class="group-header">Basics<ul><li><a class="" href="/love-cookbook/guides/basic/aabb/">AABB</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/tiles/">Tiles</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/animation/">Animation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/canvases/">Canvases</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
+                  </li></ul>
+            </li><li class="group-header">Intermediate<ul><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/metatables/">Metatables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
+                  </li></ul>
+            </li><li class="group-header">Advanced<ul><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
+                  </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
+                  </li></ul>
+            </li></ul>
+      </nav>
     </div>
 
-    <div class="container">
-      <section class="guide-toc">
-        <ul>
-            <li>
-                <a href="/love-cookbook/">Introduction</a>
-            </li><li><a href="/love-cookbook/guides/getting-started/">Getting started</a>
-            </li><span class="group-header">Installation</span><li><a href="/love-cookbook/guides/installation/love/">LÖVE</a>
-            </li><li><a href="/love-cookbook/guides/installation/vscode/">VSCode</a>
-            </li><li><a href="/love-cookbook/guides/installation/neovim/">NeoVim</a>
-            </li><span class="group-header">Fundamentals</span><li><a href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-            </li><li><a href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
-            </li><span class="group-header">LÖVE</span><li><a href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
-            </li><li><a href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
-            </li><li><a href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
-            </li><li><a href="/love-cookbook/guides/love/input/">Input</a>
-            </li><li><a href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
-            </li><li><a href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
-            </li><li><a href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
-            </li><span class="group-header">Basics</span><li><a href="/love-cookbook/guides/basic/aabb/">AABB</a>
-            </li><li><a href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
-            </li><li><a href="/love-cookbook/guides/basic/tiles/">Tiles</a>
-            </li><li><a href="/love-cookbook/guides/basic/animation/">Animation</a>
-            </li><li><a href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
-            </li><li><a href="/love-cookbook/guides/basic/canvases/">Canvases</a>
-            </li><li><a href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
-            </li><span class="group-header">Intermediate</span><li><a href="/love-cookbook/guides/intermediate/oop/">OOP</a>
-            </li><li><a href="/love-cookbook/guides/intermediate/metatables/">Metatables</a>
-            </li><li><a href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
-            </li><li><a href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
-            </li><li><a href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
-            </li><span class="group-header">Advanced</span><li><a href="/love-cookbook/guides/advanced/physics/">Physics</a>
-            </li><li><a href="/love-cookbook/guides/advanced/threads/">Threads</a>
-            </li></ul>
-      </section>
+    <main>
       <article class="guide">
         
-<section class="guide-content">
-  <header class="guide-header">
-    <h1 class="guide-title">If-statements</h1>
-  </header>
+<h1>If-statements</h1>
 
-  <p>With <strong>if-statements</strong> we can control whether certain code should be executed or not.</p>
+<p>With <strong>if-statements</strong> we can control whether certain code should be executed or not.</p>
 <pre><code class="language-lua">if true then
     print(&quot;Hello world&quot;) -- Will get printed
 end
@@ -244,11 +252,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, x, 50, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-821" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-112" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_821 = document.getElementById('love-iframe-821');
-iframe_821.addEventListener('load', function() {
-iframe_821.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_112 = document.getElementById('love-iframe-112');
+iframe_112.addEventListener('load', function() {
+iframe_112.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local frame = 0
 local x = 0
 function love.update()
@@ -282,11 +290,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, x, 50, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-555" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-729" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_555 = document.getElementById('love-iframe-555');
-iframe_555.addEventListener('load', function() {
-iframe_555.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_729 = document.getElementById('love-iframe-729');
+iframe_729.addEventListener('load', function() {
+iframe_729.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local x = 0
 function love.update()
  if love.keyboard.isDown("right") then
@@ -304,20 +312,17 @@ end
 <div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>These demos are simplified. Check out the chapter on deltatime for proper movement.</p>
 </div>
 
-</section>
 
 <footer class="guide-footer">
-  <p>
-    Created on: <em>Thu Feb 20 2025</em>
-  </p>
+  <p></p>
 
   <p>By: 
   
-    <em>Sheepolution</em>
-  
+      <em>Sheepolution</em>
+    
   </p>
 </footer>
       </article>
-    </div>
+    </main>
   </body>
 </html>
