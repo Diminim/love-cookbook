@@ -6,13 +6,12 @@
 
     <title>LÖVE cookbook | Drawing an image</title>
 
+    <script src="/love-cookbook/assets/js/line-highlights.js"></script>
+
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -86,30 +85,30 @@
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>It is not mandatory to put your images in a folder. You can place your files wherever you like, as long as they are somewhere in your project folder.</p>
 </div>
 <p>To draw the image, we first need to load it. We do this with <a href="https://love2d.org/wiki/love.graphics.newImage" target="_blank"><code>love.graphics.newImage(image)</code></a>.</p>
-<pre><code class="language-lua">local image
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> image
 
-function love.load()
-    image = love.graphics.newImage(&quot;assets/whale.png&quot;)
-end
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    image <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newImage</span><span class="token punctuation">(</span><span class="token string">"assets/whale.png"</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 </code></pre>
 <p>The variable <code>image</code> is now our <a href="https://love2d.org/wiki/Image" target="_blank"><code>Image</code></a> object.</p>
 <p>We can draw the image with <a href="https://love2d.org/wiki/love.graphics.draw" target="_blank"><code>love.graphics.draw(image, x, y)</code></a>.</p>
-<pre><code class="language-lua">local image
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> image
 
-function love.load()
-    image = love.graphics.newImage(&quot;assets/whale.png&quot;)
-end
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    image <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newImage</span><span class="token punctuation">(</span><span class="token string">"assets/whale.png"</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
-function love.draw()
-    -- Draw the image on position 100, 100
-    love.graphics.draw(image, 100, 100)
-end
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Draw the image on position 100, 100</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 </code></pre>
-<iframe id="love-iframe-958" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-646" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_958 = document.getElementById('love-iframe-958');
-iframe_958.addEventListener('load', function() {
-iframe_958.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_646 = document.getElementById('love-iframe-646');
+iframe_646.addEventListener('load', function() {
+iframe_646.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
  image = love.graphics.newImage("assets/whale.png")
@@ -124,11 +123,11 @@ end
 <p>Whale done! ;)</p>
 <h2 id="bonus-challenge" tabindex="-1">Bonus challenge <a class="anchor" href="#bonus-challenge">#</a></h2>
 <p>Make the whale move back and forth!</p>
-<iframe id="love-iframe-21" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-589" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_21 = document.getElementById('love-iframe-21');
-iframe_21.addEventListener('load', function() {
-iframe_21.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_589 = document.getElementById('love-iframe-589');
+iframe_589.addEventListener('load', function() {
+iframe_589.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()

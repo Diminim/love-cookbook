@@ -6,13 +6,12 @@
 
     <title>LÖVE cookbook | Getting started</title>
 
+    <script src="/love-cookbook/assets/js/line-highlights.js"></script>
+
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -95,17 +94,17 @@
 <p>The source can be found on <a href="https://github.com/love2d/love">GitHub</a>.</p>
 <h2 id="a-little-example" tabindex="-1">A little example <a class="anchor" href="#a-little-example">#</a></h2>
 <p>In this example we will see how to draw text to the screen!</p>
-<pre><code class="language-lua">-- in main.lua
-function love.draw()
-    love.graphics.print(&quot;Hello, World!&quot;, 400, 300)
-end
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- in main.lua</span>
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Hello, World!"</span><span class="token punctuation">,</span> <span class="token number">400</span><span class="token punctuation">,</span> <span class="token number">300</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 </code></pre>
 <p>This will show this:</p>
-<iframe id="love-iframe-992" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
+<iframe id="love-iframe-651" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
 <script>
-const iframe_992 = document.getElementById('love-iframe-992');
-iframe_992.addEventListener('load', function() {
-iframe_992.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
+const iframe_651 = document.getElementById('love-iframe-651');
+iframe_651.addEventListener('load', function() {
+iframe_651.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
 function love.draw()
  love.graphics.print("Hello, World!", 300, 225)
 end

@@ -6,13 +6,12 @@
 
     <title>LÖVE cookbook | Functions</title>
 
+    <script src="/love-cookbook/assets/js/line-highlights.js"></script>
+
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -82,35 +81,35 @@
 
 <p>With <strong>functions</strong> you can store a piece of code to be executed at different times, and multiple times.</p>
 <p>There are two ways to create a function:</p>
-<pre><code class="language-lua">-- A function is a type of value, like a number and a string.
-local hello = function ()
-    print(&quot;Hello world!&quot;)
-end
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- A function is a type of value, like a number and a string.</span>
+<span class="token keyword">local</span> hello <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Hello world!"</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
--- This is the common way!
-local function hello()
-    print(&quot;Hello world!&quot;)
-end
+<span class="token comment">-- This is the common way!</span>
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Hello world!"</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 </code></pre>
 <p>We have now created a function that, when executed, will print <code>Hello world!</code>. We can execute our function like so:</p>
-<pre><code class="language-lua">local function hello()
-    print(&quot;Hello world!&quot;)
-end
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Hello world!"</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
-hello() -- Output: Hello world!
+<span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">-- Output: Hello world!</span>
 </code></pre>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Executing a function is called a <strong>function call</strong>. So in the example above we <ins>call</ins> the function <code>hello</code>.</p>
 </div>
 <h2 id="parameters" tabindex="-1">Parameters <a class="anchor" href="#parameters">#</a></h2>
 <p>Parameters are special kind of variables that functions can have. In the example below, the function has the parameter <code>animal</code>. What we put inbetween the parantheses when we call the function decides the value of the parameter for that function call.</p>
-<pre><code class="language-lua">local function favorite(animal)
-    print(&quot;My favorite animal is the &quot; .. animal .. &quot;.&quot;)
-end
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">favorite</span><span class="token punctuation">(</span>animal<span class="token punctuation">)</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"My favorite animal is the "</span> <span class="token operator">..</span> animal <span class="token operator">..</span> <span class="token string">"."</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
-favorite(&quot;whale&quot;) -- Output: My favorite animal is the whale.
-favorite(&quot;bear&quot;) -- Output: My favorite animal is the bear.
-favorite(&quot;tiger&quot;) -- Output: My favorite animal is the tiger.
-print(animal) -- Output: nil
+<span class="token function">favorite</span><span class="token punctuation">(</span><span class="token string">"whale"</span><span class="token punctuation">)</span> <span class="token comment">-- Output: My favorite animal is the whale.</span>
+<span class="token function">favorite</span><span class="token punctuation">(</span><span class="token string">"bear"</span><span class="token punctuation">)</span> <span class="token comment">-- Output: My favorite animal is the bear.</span>
+<span class="token function">favorite</span><span class="token punctuation">(</span><span class="token string">"tiger"</span><span class="token punctuation">)</span> <span class="token comment">-- Output: My favorite animal is the tiger.</span>
+<span class="token function">print</span><span class="token punctuation">(</span>animal<span class="token punctuation">)</span> <span class="token comment">-- Output: nil</span>
 </code></pre>
 <p>At the end we print <code>animal</code>, and it outputs <code>nil</code>. This is because parameters are automatically <ins>local variables</ins>. They are only available inside that function.</p>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>The value we put inbetween the parantheses is called the <strong>argument</strong>.</p>
@@ -119,53 +118,53 @@ print(animal) -- Output: nil
 </div>
 <h2 id="return" tabindex="-1">Return <a class="anchor" href="#return">#</a></h2>
 <p>Functions can <strong>return</strong> a value. This means that, upon calling the function, it will give us a value back.</p>
-<pre><code class="language-lua">-- We can create multiple parameters by separating them with a comma.
-local function give_me_five()
-    return 5
-end
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- We can create multiple parameters by separating them with a comma.</span>
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">give_me_five</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">5</span>
+<span class="token keyword">end</span>
 
-local five = give_me_five()
-print(five) -- Output: 5
+<span class="token keyword">local</span> five <span class="token operator">=</span> <span class="token function">give_me_five</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>five<span class="token punctuation">)</span> <span class="token comment">-- Output: 5</span>
 </code></pre>
 <p>When a function reaches the <code>return</code> keyword, it is the end of that function call, and <code>end</code> should follow. Trying to place code after the <code>return</code> will cause an error.</p>
-<pre><code class="language-lua">local function sum(a, b)
-    return a + b
-    print(a, b) -- Error!
-end
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">sum</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b
+    <span class="token function">print</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token comment">-- Error!</span>
+<span class="token keyword">end</span>
 
-sum(10, 20)
+<span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
 </code></pre>
 <p>A function can have multiple parameters, arguments, and return values, by separating them with a comma.</p>
-<pre><code class="language-lua">local function arithmetics(a, b)
-    -- 'a' becomes the value of 'a' multiplied by 2.
-    a = a * 2
-    -- 'b' becomes the value of 'b'  divided by 2.
-    b = b / 2
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">arithmetics</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token comment">-- 'a' becomes the value of 'a' multiplied by 2.</span>
+    a <span class="token operator">=</span> a <span class="token operator">*</span> <span class="token number">2</span>
+    <span class="token comment">-- 'b' becomes the value of 'b'  divided by 2.</span>
+    b <span class="token operator">=</span> b <span class="token operator">/</span> <span class="token number">2</span>
 
-    return a, b
-end
+    <span class="token keyword">return</span> a<span class="token punctuation">,</span> b
+<span class="token keyword">end</span>
 
-print(arithmetics(5, 40)) -- Ouput: 10, 20
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">arithmetics</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- Ouput: 10, 20</span>
 </code></pre>
 <h2 id="usage" tabindex="-1">Usage <a class="anchor" href="#usage">#</a></h2>
 <p>Functions allow us to execute the same code in different places, without having to copy that code. Instead we can call the function. If we ever want to change how the code works, we only need to change the function.</p>
 <p>In the example below we draw multiple rectangles. If we ever want to change the shape of all the rectangles, we only need to change the function.</p>
-<pre><code class="language-lua">local function draw_rectangle(x)
-    love.graphics.rectangle(&quot;fill&quot;, x, 10, 100, 75)
-end
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">draw_rectangle</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
-function love.draw()
-    draw_rectangle(10)
-    draw_rectangle(130)
-    draw_rectangle(250)
-    draw_rectangle(370)
-end
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">draw_rectangle</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+    <span class="token function">draw_rectangle</span><span class="token punctuation">(</span><span class="token number">130</span><span class="token punctuation">)</span>
+    <span class="token function">draw_rectangle</span><span class="token punctuation">(</span><span class="token number">250</span><span class="token punctuation">)</span>
+    <span class="token function">draw_rectangle</span><span class="token punctuation">(</span><span class="token number">370</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 </code></pre>
-<iframe id="love-iframe-339" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-179" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_339 = document.getElementById('love-iframe-339');
-iframe_339.addEventListener('load', function() {
-iframe_339.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_179 = document.getElementById('love-iframe-179');
+iframe_179.addEventListener('load', function() {
+iframe_179.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local function draw_rectangle(x)
  love.graphics.rectangle("fill", x, 10, 100, 75)
 end
@@ -180,17 +179,17 @@ end
 </script>
 <h2 id="challenge" tabindex="-1">Challenge <a class="anchor" href="#challenge">#</a></h2>
 <p>Can you figure out what the code below will output?</p>
-<pre><code class="language-lua">local function sum(a, b)
-    return a + b
-end
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">sum</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b
+<span class="token keyword">end</span>
 
-local function subtract(a, b)
-    return a - b
-end
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">subtract</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> a <span class="token operator">-</span> b
+<span class="token keyword">end</span>
 
--- The returned values of 'sum' are passed as arguments for 'subtract'.
-local result = subtract(sum(6, 4), sum(1, 2))
-print(result)
+<span class="token comment">-- The returned values of 'sum' are passed as arguments for 'subtract'.</span>
+<span class="token keyword">local</span> result <span class="token operator">=</span> <span class="token function">subtract</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
 </code></pre>
 
 
