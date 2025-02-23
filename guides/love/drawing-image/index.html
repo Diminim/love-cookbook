@@ -105,11 +105,11 @@ function love.draw()
     love.graphics.draw(image, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-68" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-958" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_68 = document.getElementById('love-iframe-68');
-iframe_68.addEventListener('load', function() {
-iframe_68.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_958 = document.getElementById('love-iframe-958');
+iframe_958.addEventListener('load', function() {
+iframe_958.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
  image = love.graphics.newImage("assets/whale.png")
@@ -122,13 +122,13 @@ end
 });
 </script>
 <p>Whale done! ;)</p>
-<h2>Bonus challenge</h2>
+<h2 id="bonus-challenge" tabindex="-1">Bonus challenge <a class="anchor" href="#bonus-challenge">#</a></h2>
 <p>Make the whale move back and forth!</p>
-<iframe id="love-iframe-541" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe id="love-iframe-21" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_541 = document.getElementById('love-iframe-541');
-iframe_541.addEventListener('load', function() {
-iframe_541.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_21 = document.getElementById('love-iframe-21');
+iframe_21.addEventListener('load', function() {
+iframe_21.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()

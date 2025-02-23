@@ -129,17 +129,43 @@ article {
 
 article h1 {
   font-size: 64px;
-  color: var(--color-text);
-  font-family: "Nunito", serif;
   border-bottom: solid 1px var(--color-text);
   margin: 0px;
 }
 
 article h2 {
   font-size: 32px;
+}
+
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
   color: var(--color-text);
   font-family: "Nunito", serif;
   margin: 0px;
+}
+
+article h1 a,
+article h2 a,
+article h3 a,
+article h4 a,
+article h5 a,
+article h6 a {
+  visibility: hidden;
+}
+
+article h1:hover a,
+article h2:hover a,
+article h3:hover a,
+article h4:hover a,
+article h5:hover a,
+article h6:hover a {
+  color: var(--color-text);
+  text-decoration: none;
+  visibility: visible;
 }
 
 .logo-hover-img {

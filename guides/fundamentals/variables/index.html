@@ -116,7 +116,7 @@ c = a + b
 a, b = 0, 0
 print(c) -- Output: 16
 </code></pre>
-<h2>Strings</h2>
+<h2 id="strings" tabindex="-1">Strings <a class="anchor" href="#strings">#</a></h2>
 <p>Besides numbers, we can also store text. In programming, text is called a <strong>string</strong> because it's a <em>string of characters</em>.</p>
 <pre><code class="language-lua">animal = &quot;whale&quot;
 color = &quot;blue&quot;
@@ -132,7 +132,7 @@ color = &quot;blue&quot;
 print(&quot;The &quot; .. animal .. &quot; is &quot; .. color .. &quot;.&quot;)
 -- Output: The whale is blue.
 </code></pre>
-<h2>nil</h2>
+<h2 id="nil" tabindex="-1">nil <a class="anchor" href="#nil">#</a></h2>
 <p>When a variable has no value, we say it is <code>nil</code>. We can also assign <code>nil</code> to a variable to remove its value.</p>
 <pre><code class="language-lua">print(test) -- Output: nil
 
@@ -142,7 +142,7 @@ print(test) -- Output: 10
 test = nil -- We assign nil to remove the value.
 print(test) -- Output: nil
 </code></pre>
-<h2>Naming variables</h2>
+<h2 id="naming-variables" tabindex="-1">Naming variables <a class="anchor" href="#naming-variables">#</a></h2>
 <p>The word in which you store a value can be almost anything.</p>
 <pre><code class="language-lua">whale = 3
 cOoKbOoK = 1040
@@ -186,7 +186,7 @@ a = 5
 print(a) -- Error!
 </code></pre>
 </div>
-<h2>Local variables</h2>
+<h2 id="local-variables" tabindex="-1">Local variables <a class="anchor" href="#local-variables">#</a></h2>
 <p>By default, all variables are <strong>global</strong>. This means that they can be used everywhere in your project. That sounds like a good thing, but it can get messy when you have a big project with many variables.</p>
 <p>Because of that, we often use <strong>local</strong> variables. We can create a local variable by putting the keyword <code>local</code> in front.</p>
 <pre><code class="language-lua">local a = 0
@@ -227,11 +227,11 @@ function love.draw()
     love.graphics.print(two, 10, 50)
 end
 </code></pre>
-<iframe id="love-iframe-590" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
+<iframe id="love-iframe-429" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
 <script>
-const iframe_590 = document.getElementById('love-iframe-590');
-iframe_590.addEventListener('load', function() {
-iframe_590.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
+const iframe_429 = document.getElementById('love-iframe-429');
+iframe_429.addEventListener('load', function() {
+iframe_429.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
 -- This variable is not declared inside a code block
 -- Because of that, it's accessible in all of main.lua
 local one = 1
@@ -255,7 +255,7 @@ end
 });
 </script>
 <p>Because it is good practice, we will use local variables throughout this codebook.</p>
-<h2>Usage</h2>
+<h2 id="usage" tabindex="-1">Usage <a class="anchor" href="#usage">#</a></h2>
 <p>By using variables we can keep track of a value. For example, your ammo can be a variable, and when you shoot we subtract from that value to keep track of how many bullets you have left.</p>
 <p>Another great thing about variables is that when we use one in multiple places, we only need to change one value for it to be applied those place. In the code below we can change the <code>width</code> and <code>height</code> variables to change the width and height of all rectangles.</p>
 <pre><code class="language-lua">local width, height
@@ -272,11 +272,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, 370, 10, width, height)
 end
 </code></pre>
-<iframe id="love-iframe-202" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-461" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_202 = document.getElementById('love-iframe-202');
-iframe_202.addEventListener('load', function() {
-iframe_202.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_461 = document.getElementById('love-iframe-461');
+iframe_461.addEventListener('load', function() {
+iframe_461.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local width, height
 function love.load()
  width = 100

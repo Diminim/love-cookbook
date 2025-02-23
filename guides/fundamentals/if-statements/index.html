@@ -113,7 +113,7 @@ else
     print(&quot;Nothing...&quot;) -- Not printed
 end
 </code></pre>
-<h2>Expressions</h2>
+<h2 id="expressions" tabindex="-1">Expressions <a class="anchor" href="#expressions">#</a></h2>
 <p>We can also assign a boolean by using an <strong>expression</strong>.</p>
 <pre><code class="language-lua">local a = 5 &gt; 9
 </code></pre>
@@ -180,7 +180,7 @@ end
 </code></pre>
 <p>Though not incorrect, it is redundant. We don't need to compare <code>a</code> with the value <code>true</code>, because <code>a</code> by itself is already <code>true</code> or <code>false</code>. It would be the same as doing <code>true == true</code>.</p>
 </div>
-<h2>and &amp; or</h2>
+<h2 id="and-%26-or" tabindex="-1">and &amp; or <a class="anchor" href="#and-%26-or">#</a></h2>
 <p>With the keyword <code>and</code> we can combine expressions to check if they are all true.</p>
 <pre><code class="language-lua">if 5 &lt; 9 and 7 &gt; 3 then
     print(&quot;Both expressions are true&quot;) -- Printed!
@@ -208,7 +208,7 @@ if b = 8 &lt; 4 and (7 == 3 or 2 &lt; 6) then
     print(&quot;Not printed...&quot;)
 end
 </code></pre>
-<h2>Truthy and falsy</h2>
+<h2 id="truthy-and-falsy" tabindex="-1">Truthy and falsy <a class="anchor" href="#truthy-and-falsy">#</a></h2>
 <p>So far we have talked about booleans, and <code>true</code> or <code>false</code>, but if-statements can accept other values as well. We call these values <strong>truthy</strong>.</p>
 <pre><code class="language-lua">if 15 then
     print(&quot;Fifteen!&quot;)
@@ -237,7 +237,7 @@ else
     print(&quot;hello() is falsy!&quot;) -- Printed!
 end
 </code></pre>
-<h2>Usage</h2>
+<h2 id="usage" tabindex="-1">Usage <a class="anchor" href="#usage">#</a></h2>
 <p>By using if-statements, we can prevent code from being executed. For example, if you have an <code>ammo</code> variable, we can use the expression <code>ammo &gt; 0</code> to check whether the player still has bullets left.</p>
 <pre><code class="language-lua">if ammo &gt; 0 then
     shoot()
@@ -257,11 +257,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, x, 50, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-149" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-822" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_149 = document.getElementById('love-iframe-149');
-iframe_149.addEventListener('load', function() {
-iframe_149.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_822 = document.getElementById('love-iframe-822');
+iframe_822.addEventListener('load', function() {
+iframe_822.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local frame = 0
 local x = 0
 function love.update()
@@ -295,11 +295,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, x, 50, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-856" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-166" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_856 = document.getElementById('love-iframe-856');
-iframe_856.addEventListener('load', function() {
-iframe_856.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_166 = document.getElementById('love-iframe-166');
+iframe_166.addEventListener('load', function() {
+iframe_166.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local x = 0
 function love.update()
  if love.keyboard.isDown("right") then
