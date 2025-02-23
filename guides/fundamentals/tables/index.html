@@ -23,9 +23,14 @@
   <body>
     <div class="sidebar">
       <header>
-        <img src="/love-cookbook/assets/logo.png" width="440" height="332">
-        
-        <h1>LÖVE cookbook</h1>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
       </header>
 
       <nav>
@@ -355,11 +360,11 @@ function love.keypressed(key)
     table.insert(rectangeList, createRectangle(key))
 end
 </code></pre>
-<iframe id="love-iframe-308" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-615" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_308 = document.getElementById('love-iframe-308');
-iframe_308.addEventListener('load', function() {
-iframe_308.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_615 = document.getElementById('love-iframe-615');
+iframe_615.addEventListener('load', function() {
+iframe_615.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 -- We declare the local variable rectangles, and assign a table as its value.
 local rectangeList = {}
 -- We create the function createRectangle.

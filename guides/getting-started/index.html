@@ -23,9 +23,14 @@
   <body>
     <div class="sidebar">
       <header>
-        <img src="/love-cookbook/assets/logo.png" width="440" height="332">
-        
-        <h1>LÖVE cookbook</h1>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
       </header>
 
       <nav>
@@ -96,11 +101,11 @@ function love.draw()
 end
 </code></pre>
 <p>This will show this:</p>
-<iframe id="love-iframe-261" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
+<iframe id="love-iframe-133" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
 <script>
-const iframe_261 = document.getElementById('love-iframe-261');
-iframe_261.addEventListener('load', function() {
-iframe_261.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
+const iframe_133 = document.getElementById('love-iframe-133');
+iframe_133.addEventListener('load', function() {
+iframe_133.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
 function love.draw()
  love.graphics.print("Hello, World!", 300, 225)
 end

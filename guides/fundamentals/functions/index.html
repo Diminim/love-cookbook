@@ -23,9 +23,14 @@
   <body>
     <div class="sidebar">
       <header>
-        <img src="/love-cookbook/assets/logo.png" width="440" height="332">
-        
-        <h1>LÖVE cookbook</h1>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
       </header>
 
       <nav>
@@ -156,11 +161,11 @@ function love.draw()
     draw_rectangle(370)
 end
 </code></pre>
-<iframe id="love-iframe-674" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-276" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_674 = document.getElementById('love-iframe-674');
-iframe_674.addEventListener('load', function() {
-iframe_674.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_276 = document.getElementById('love-iframe-276');
+iframe_276.addEventListener('load', function() {
+iframe_276.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local function draw_rectangle(x)
  love.graphics.rectangle("fill", x, 10, 100, 75)
 end

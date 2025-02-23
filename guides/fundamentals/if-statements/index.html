@@ -23,9 +23,14 @@
   <body>
     <div class="sidebar">
       <header>
-        <img src="/love-cookbook/assets/logo.png" width="440" height="332">
-        
-        <h1>LÖVE cookbook</h1>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
       </header>
 
       <nav>
@@ -252,11 +257,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, x, 50, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-112" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-149" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_112 = document.getElementById('love-iframe-112');
-iframe_112.addEventListener('load', function() {
-iframe_112.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_149 = document.getElementById('love-iframe-149');
+iframe_149.addEventListener('load', function() {
+iframe_149.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local frame = 0
 local x = 0
 function love.update()
@@ -290,11 +295,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, x, 50, 100, 100)
 end
 </code></pre>
-<iframe id="love-iframe-729" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-856" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_729 = document.getElementById('love-iframe-729');
-iframe_729.addEventListener('load', function() {
-iframe_729.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_856 = document.getElementById('love-iframe-856');
+iframe_856.addEventListener('load', function() {
+iframe_856.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local x = 0
 function love.update()
  if love.keyboard.isDown("right") then

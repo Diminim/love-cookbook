@@ -23,9 +23,14 @@
   <body>
     <div class="sidebar">
       <header>
-        <img src="/love-cookbook/assets/logo.png" width="440" height="332">
-        
-        <h1>LÖVE cookbook</h1>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
       </header>
 
       <nav>
@@ -222,11 +227,11 @@ function love.draw()
     love.graphics.print(two, 10, 50)
 end
 </code></pre>
-<iframe id="love-iframe-149" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
+<iframe id="love-iframe-590" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
 <script>
-const iframe_149 = document.getElementById('love-iframe-149');
-iframe_149.addEventListener('load', function() {
-iframe_149.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
+const iframe_590 = document.getElementById('love-iframe-590');
+iframe_590.addEventListener('load', function() {
+iframe_590.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
 -- This variable is not declared inside a code block
 -- Because of that, it's accessible in all of main.lua
 local one = 1
@@ -267,11 +272,11 @@ function love.draw()
     love.graphics.rectangle(&quot;fill&quot;, 370, 10, width, height)
 end
 </code></pre>
-<iframe id="love-iframe-19" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-202" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_19 = document.getElementById('love-iframe-19');
-iframe_19.addEventListener('load', function() {
-iframe_19.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_202 = document.getElementById('love-iframe-202');
+iframe_202.addEventListener('load', function() {
+iframe_202.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local width, height
 function love.load()
  width = 100

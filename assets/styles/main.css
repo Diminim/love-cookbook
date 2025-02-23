@@ -63,6 +63,10 @@ header img {
   margin-right: 20%;
 }
 
+header a {
+  text-decoration: none;
+}
+
 header h1 {
   text-align: center;
   margin: 0px;
@@ -138,3 +142,14 @@ article h2 {
   margin: 0px;
 }
 
+.logo-hover-img {
+  display: none;
+}
+
+.logo:hover .logo-unhover-img {
+  display: none;
+}
+
+.logo:hover .logo-hover-img {
+  display: inline-block;
+}
