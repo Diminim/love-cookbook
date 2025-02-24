@@ -79,7 +79,125 @@
         
 <h1>Reading errors</h1>
 
-<p>Not yet written: contribute to this page on <a href="https://github.com/Diminim/love-cookbook">GitHub</a>.</p>
+<p>Running into errors in your code is an inevitable part of the process and it's important to understand how to read them effectively.</p>
+<h2 id="example" tabindex="-1">Example <a class="anchor" href="#example">#</a></h2>
+<p>Let's do something silly to generate an error on purpose:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">*</span> <span class="token string">"test"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Running the above code will present you with a nice error message that looks like this:</p>
+<p><img src="/love-cookbook/assets/img/reading-errors/error.png" alt=""></p>
+<h2 id="error-message-breakdown" tabindex="-1">Error message breakdown <a class="anchor" href="#error-message-breakdown">#</a></h2>
+<p>Let's quickly break down what this means before your eyes glaze over and you close the window without reading it - a common beginner pitfall.</p>
+<p>The most important part is at the very beginning of the second line. <code>main.lua:2</code> means that the error was thrown in the file <code>main.lua</code> on line 2. This is always a good place to start and will usually be where you will have to correct your code in order to resolve the issue. The rest of the line is telling us what the error actually was.</p>
+<ul>
+<li><code>main.lua</code> - the file</li>
+<li><code>:2</code> - line 2</li>
+<li><code>attempt to perform arithmetic on a string value</code> - the error message</li>
+</ul>
+<p>In this case we know the issue is that we're attempting to multiply the number 100 by a string (&quot;test&quot;) on line 2 which makes absolutely no sense and LÖVE is right to complain.</p>
+<h2 id="less-obvious-errors" tabindex="-1">Less obvious errors <a class="anchor" href="#less-obvious-errors">#</a></h2>
+<p>This code will throw a different kind of error:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> image <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newImage</span><span class="token punctuation">(</span><span class="token string">"assets/whale.png"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>picture<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p><img src="/love-cookbook/assets/img/reading-errors/error_drawable_expected.png" alt=""></p>
+<p>Here the error is on line 4. Bad argument #1 to 'draw' is referring to the first argument (<code>picture</code>) in the <a href="https://love2d.org/wiki/love.graphics.draw" target="_blank"><code>love.graphics.draw</code></a> call. LÖVE is saying it was expecting a <a href="https://love2d.org/wiki/Drawable" target="_blank"><code>Drawable</code></a> as the first argument but we gave it <code>nil</code> (or nothing). Of course in this case we did give it <em>something</em> so why are we getting this error?</p>
+<p>A close look at the <code>picture</code> variable we're passing through makes it clear that we didn't actually define it anywhere. Instead we meant to pass the <code>image</code> variable!</p>
+<pre><code class="language-lua"><span data-attrs="4"></span><span class="token keyword">local</span> image <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newImage</span><span class="token punctuation">(</span><span class="token string">"assets/whale.png"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Changing that line to instead pass through <code>image</code> and rerunning the code shows us a lovely picture of a whale instead of an error.</p>
+<iframe id="love-iframe-721" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<script>
+const iframe_721 = document.getElementById('love-iframe-721');
+iframe_721.addEventListener('load', function() {
+iframe_721.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+local image = love.graphics.newImage("assets/whale.png")
+function love.draw()
+ love.graphics.draw(image, 100, 100)
+end
+`}, '*');
+});
+</script>
+<p>Hopefully you can see how even in a much bigger file or project you can quickly track down the source of an error and solve it.</p>
+<h2 id="traceback" tabindex="-1">Traceback <a class="anchor" href="#traceback">#</a></h2>
+<p>What if the line the error message points you to isn't helpful? In the code below we're intentionally throwing an error on line 5 with an <code>assert</code> if a passed parameter is nil and that's indeed the line our error message is pointing to.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> image <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newImage</span><span class="token punctuation">(</span><span class="token string">"assets/whale.png"</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> whales <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">make_whale</span><span class="token punctuation">(</span>sprite<span class="token punctuation">)</span>
+    <span class="token function">assert</span><span class="token punctuation">(</span>sprite<span class="token punctuation">,</span> <span class="token string">"no sprite provided!"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+        x <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">getWidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">96</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        y <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">getHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">96</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        sprite <span class="token operator">=</span> sprite
+    <span class="token punctuation">}</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>whales<span class="token punctuation">,</span> <span class="token function">make_whale</span><span class="token punctuation">(</span>image<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>whales<span class="token punctuation">,</span> <span class="token function">make_whale</span><span class="token punctuation">(</span>image<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>whales<span class="token punctuation">,</span> <span class="token function">make_whale</span><span class="token punctuation">(</span>image<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>whales<span class="token punctuation">,</span> <span class="token function">make_whale</span><span class="token punctuation">(</span>imaeg<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>whales<span class="token punctuation">,</span> <span class="token function">make_whale</span><span class="token punctuation">(</span>image<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> _<span class="token punctuation">,</span> v <span class="token keyword">in</span> <span class="token function">ipairs</span><span class="token punctuation">(</span>whales<span class="token punctuation">)</span> <span class="token keyword">do</span>
+        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>sprite<span class="token punctuation">,</span> v<span class="token punctuation">.</span>x<span class="token punctuation">,</span> v<span class="token punctuation">.</span>y<span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p><img src="/love-cookbook/assets/img/reading-errors/error_traceback.png" alt=""></p>
+<p>But line 5 is our <code>assert</code>, it's not the direct cause of the bug and we're calling <code>make_whale</code> in many places. So how do we fix this and how do we know which <code>make_whale</code> call was the problematic one?</p>
+<p>Well - below the error message there's a handy thing called a Traceback. This tells us what our program was doing just before it crashed! Starting from the bottom up this tells us the path of execution.</p>
+<p>Starting from the top we can work our way back:</p>
+<ul>
+<li><code>[love &quot;callbacks.lua&quot;]:245: in function 'handler'</code> - this isn't very helpful and we can ignore it</li>
+<li><code>[C]: in function 'assert'</code> - this is our assert: the line that threw the error</li>
+<li><code>main.lua:5: in function 'make_whale'</code> - this is where we called <code>assert</code></li>
+<li><code>main.lua:18: in function 'load'</code> - aha!</li>
+</ul>
+<p>Our <code>make_whale</code> function was called from line 18 in main.lua's load function and that call was the one that directly led to the error being thrown. Looking back at our code we can see that line 18 looks a little different from the others with a typo: <code>make_whale(imaeg)</code> should be <code>make_whale(image)</code>!</p>
+<iframe id="love-iframe-809" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<script>
+const iframe_809 = document.getElementById('love-iframe-809');
+iframe_809.addEventListener('load', function() {
+iframe_809.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+local image = love.graphics.newImage("assets/whale.png")
+local whales = {}
+local function make_whale(sprite)
+ assert(sprite, "no sprite provided!")
+ return {
+ x = love.math.random(0, love.graphics.getWidth() - 96),
+ y = love.math.random(0, love.graphics.getHeight() - 96),
+ sprite = sprite
+ }
+end
+function love.load()
+ table.insert(whales, make_whale(image))
+ table.insert(whales, make_whale(image))
+ table.insert(whales, make_whale(image))
+ table.insert(whales, make_whale(image))
+ table.insert(whales, make_whale(image))
+end
+function love.draw()
+ for _, v in ipairs(whales) do
+ love.graphics.draw(v.sprite, v.x, v.y)
+ end
+end
+`}, '*');
+});
+</script>
 
 
 <footer class="guide-footer">
@@ -87,6 +205,8 @@
 
   <p>By: 
   
+      <em>josh</em>
+    
   </p>
 </footer>
       </article>
