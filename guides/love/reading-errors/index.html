@@ -7,6 +7,7 @@
     <title>LÖVE cookbook | Reading errors</title>
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
+    <script src="/love-cookbook/assets/js/hover_preview.js"></script>
 
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
@@ -115,11 +116,11 @@
 <span class="token keyword">end</span>
 </code></pre>
 <p>Changing that line to instead pass through <code>image</code> and rerunning the code shows us a lovely picture of a whale instead of an error.</p>
-<iframe id="love-iframe-721" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<iframe id="love-iframe-78" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
 <script>
-const iframe_721 = document.getElementById('love-iframe-721');
-iframe_721.addEventListener('load', function() {
-iframe_721.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+const iframe_78 = document.getElementById('love-iframe-78');
+iframe_78.addEventListener('load', function() {
+iframe_78.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
 local image = love.graphics.newImage("assets/whale.png")
 function love.draw()
  love.graphics.draw(image, 100, 100)
@@ -168,11 +169,11 @@ end
 <li><code>main.lua:18: in function 'load'</code> - aha!</li>
 </ul>
 <p>Our <code>make_whale</code> function was called from line 18 in main.lua's load function and that call was the one that directly led to the error being thrown. Looking back at our code we can see that line 18 looks a little different from the others with a typo: <code>make_whale(imaeg)</code> should be <code>make_whale(image)</code>!</p>
-<iframe id="love-iframe-809" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<iframe id="love-iframe-550" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
 <script>
-const iframe_809 = document.getElementById('love-iframe-809');
-iframe_809.addEventListener('load', function() {
-iframe_809.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+const iframe_550 = document.getElementById('love-iframe-550');
+iframe_550.addEventListener('load', function() {
+iframe_550.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
 local image = love.graphics.newImage("assets/whale.png")
 local whales = {}
 local function make_whale(sprite)

@@ -185,3 +185,19 @@ article h6:hover a {
 .logo:hover .logo-hover-img {
   display: inline-block;
 }
+
+.hover-preview {
+  font-family: "Inter", serif;
+  color: black;
+  position: absolute;
+  max-width: 500px;
+  max-height: 500px;
+  overflow: hidden;
+  background: var(--color-background-panel);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 1000;
+  display: none;
+}

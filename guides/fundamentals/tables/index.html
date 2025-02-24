@@ -7,6 +7,7 @@
     <title>LÖVE cookbook | Tables and For-loops</title>
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
+    <script src="/love-cookbook/assets/js/hover_preview.js"></script>
 
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
@@ -272,6 +273,7 @@ fruits<span class="token punctuation">[</span><span class="token number">10</spa
 </code></pre>
 </div>
 <h2 id="objects" tabindex="-1">Objects <a class="anchor" href="#objects">#</a></h2>
+<p><span data-abstract="Objects are tables that use keys rather than indexes. We call these the object's properties."></span></p>
 <p>Tables can be used as a list, where we use numbers as indexes, but we can also use strings as indexes.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> rectangle <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 rectangle<span class="token punctuation">[</span><span class="token string">"width"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">50</span>
@@ -359,11 +361,11 @@ rectangle<span class="token punctuation">.</span>width <span class="token operat
     table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>rectangeList<span class="token punctuation">,</span> <span class="token function">createRectangle</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe id="love-iframe-422" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-271" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_422 = document.getElementById('love-iframe-422');
-iframe_422.addEventListener('load', function() {
-iframe_422.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_271 = document.getElementById('love-iframe-271');
+iframe_271.addEventListener('load', function() {
+iframe_271.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 -- We declare the local variable rectangles, and assign a table as its value.
 local rectangeList = {}
 -- We create the function createRectangle.
