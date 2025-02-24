@@ -14,10 +14,14 @@
 }
 
 .markdown-alert {
-    padding: 0.5rem 1rem;
-    margin-bottom: 16px;
-    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    border-radius: .25rem;
     border-left: .25em solid #888;
+    padding: 1rem;
+
+    color: inherit;
 }
 
 .markdown-alert>:first-child {
