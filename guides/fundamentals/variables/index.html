@@ -40,14 +40,21 @@
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Fundamentals<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
                   </li><li><a class="active" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
                   </li></ul>
-            </li><li class="group-header">LÖVE<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
+            </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
+                  </li></ul>
+            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
@@ -64,7 +71,6 @@
                   </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
                   </li></ul>
             </li><li class="group-header">Intermediate<ul><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
-                  </li><li><a class="" href="/love-cookbook/guides/intermediate/metatables/">Metatables</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
@@ -109,9 +115,11 @@ b <span class="token operator">=</span> <span class="token number">4</span>
 <span class="token function">print</span><span class="token punctuation">(</span>a <span class="token operator">-</span> b<span class="token punctuation">)</span> <span class="token comment">-- Output: 8</span>
 <span class="token function">print</span><span class="token punctuation">(</span>a <span class="token operator">*</span> b<span class="token punctuation">)</span> <span class="token comment">-- Output: 48</span>
 <span class="token function">print</span><span class="token punctuation">(</span>a <span class="token operator">/</span> b<span class="token punctuation">)</span> <span class="token comment">-- Output: 3</span>
+<span class="token function">print</span><span class="token punctuation">(</span>a <span class="token operator">^</span> b<span class="token punctuation">)</span> <span class="token comment">-- Output: 20736</span>
+<span class="token comment">-- ^ is for exponentiation (12 * 12 * 12 * 12)</span>
 </code></pre>
 <p>When we use a variable, there is no reference to the variable itself, only its value. In this code we change the values of <code>a</code> and <code>b</code>, but that does not affect the value of <code>c</code>. The value of <code>c</code> becomes <code>16</code>, and not <code>a + b</code>.</p>
-<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- Tip: This way you can declare multiple variables on a single line.</span>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- Tip: This way we can declare multiple variables on a single line.</span>
 a<span class="token punctuation">,</span> b <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">4</span>
 c <span class="token operator">=</span> a <span class="token operator">+</span> b
 a<span class="token punctuation">,</span> b <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span>
@@ -188,73 +196,20 @@ a <span class="token operator">=</span> <span class="token number">5</span>
 </code></pre>
 </div>
 <h2 id="local-variables" tabindex="-1">Local variables <a class="anchor" href="#local-variables">#</a></h2>
+<p><span data-abstract="Local variables are variables that are only available within the scope they are created."></span></p>
 <p>By default, all variables are <strong>global</strong>. This means that they can be used everywhere in your project. That sounds like a good thing, but it can get messy when you have a big project with many variables.</p>
 <p>Because of that, we often use <strong>local</strong> variables. We can create a local variable by putting the keyword <code>local</code> in front.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> a <span class="token operator">=</span> <span class="token number">0</span>
 <span class="token comment">-- We can reassign a value to our local variable, and it will remain local.</span>
 a <span class="token operator">=</span> <span class="token number">10</span>
 
-<span class="token comment">-- You can declare a local variable without assigning it a value right away.</span>
+<span class="token comment">-- We can declare a local variable without assigning it a value right away.</span>
 <span class="token keyword">local</span> b
 b <span class="token operator">=</span> <span class="token number">20</span>
 </code></pre>
 <p>Local variables are only accessible where they are declared. We call this its <em>scope</em>. In a later chapter you will learn more about scope, but in simple terms it means the <em>code block</em> it is in, or otherwise the file.</p>
 <div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Every time you see and <code>end</code>, then that is the end of a <em>code block</em>.</p>
 </div>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Scope can be complicated as a beginner. Don't worry if you have trouble understanding it. In a later chapter we will talk about scope in more detail.</p>
-</div>
-<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- This variable is not declared inside a code block</span>
-<span class="token comment">-- Because of that, it's accessible in all of main.lua</span>
-<span class="token keyword">local</span> one <span class="token operator">=</span> <span class="token number">1</span>
-
-<span class="token comment">-- A function is an example of a code block.</span>
-<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token comment">-- The variable 'two' is only accessible in this code block.</span>
-    <span class="token keyword">local</span> two <span class="token operator">=</span> <span class="token number">2</span>
-    <span class="token function">print</span><span class="token punctuation">(</span>one<span class="token punctuation">,</span> two<span class="token punctuation">)</span> <span class="token comment">-- Output: 1, 2</span>
-<span class="token keyword">end</span> <span class="token comment">-- 'end' closes the code block.</span>
-
-<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token comment">-- We are inside a different code block.</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>one<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
-
-    <span class="token comment">-- This would give an error, because 'two' holds no value.</span>
-    <span class="token comment">-- love.graphics.print(two, 10, 30) -- Error!</span>
-
-    <span class="token comment">-- Careful! This is now declared as a global variable!</span>
-    <span class="token comment">-- Because the original declaration was inside a different code block.</span>
-    two <span class="token operator">=</span> <span class="token number">20</span>
-
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>two<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>
-<span class="token keyword">end</span>
-</code></pre>
-<iframe id="love-iframe-498" src="/love-cookbook/assets/love/love-js" width="800" height="100"></iframe>
-<script>
-const iframe_498 = document.getElementById('love-iframe-498');
-iframe_498.addEventListener('load', function() {
-iframe_498.contentWindow.postMessage({lua: `love.window.setMode(800, 100) 
--- This variable is not declared inside a code block
--- Because of that, it's accessible in all of main.lua
-local one = 1
--- A function is an example of a code block.
-function love.load()
- -- The variable 'two' is only accessible in this code block.
- local two = 2
- print(one, two) -- Output: 1, 2
-end -- 'end' closes the code block.
-function love.draw()
- -- We are inside a different code block.
- love.graphics.print(one, 10, 10)
- -- This would give an error, because 'two' holds no value.
- -- love.graphics.print(two, 10, 30) -- Error!
- -- Careful! This is now declared as a global variable!
- -- Because the original declaration was inside a different code block.
- two = 20
- love.graphics.print(two, 10, 50)
-end
-`}, '*');
-});
-</script>
 <p>Because it is good practice, we will use local variables throughout this codebook.</p>
 <h2 id="usage" tabindex="-1">Usage <a class="anchor" href="#usage">#</a></h2>
 <p>By using variables we can keep track of a value. For example, your ammo can be a variable, and when you shoot we subtract from that value to keep track of how many bullets you have left.</p>
@@ -273,11 +228,11 @@ end
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">370</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> width<span class="token punctuation">,</span> height<span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe id="love-iframe-628" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-834" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_628 = document.getElementById('love-iframe-628');
-iframe_628.addEventListener('load', function() {
-iframe_628.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_834 = document.getElementById('love-iframe-834');
+iframe_834.addEventListener('load', function() {
+iframe_834.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local width, height
 function love.load()
  width = 100

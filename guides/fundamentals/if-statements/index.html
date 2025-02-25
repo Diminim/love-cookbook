@@ -40,14 +40,21 @@
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Fundamentals<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
                   </li><li><a class="active" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
                   </li></ul>
-            </li><li class="group-header">LÖVE<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
+            </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
+                  </li></ul>
+            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
@@ -64,7 +71,6 @@
                   </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
                   </li></ul>
             </li><li class="group-header">Intermediate<ul><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
-                  </li><li><a class="" href="/love-cookbook/guides/intermediate/metatables/">Metatables</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
@@ -81,6 +87,7 @@
         
 <h1>If-statements</h1>
 
+<p><span data-abstract="if-statements are great!"></span></p>
 <p>With <strong>if-statements</strong> we can control whether certain code should be executed or not.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">if</span> <span class="token keyword">true</span> <span class="token keyword">then</span>
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Hello world"</span><span class="token punctuation">)</span> <span class="token comment">-- Will get printed</span>
@@ -125,7 +132,7 @@
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"5 is higher than 9"</span><span class="token punctuation">)</span> <span class="token comment">-- Not printed</span>
 <span class="token keyword">end</span>
 </code></pre>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>The if-statement is a <strong>statement</strong>.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>An if-statement is what we call a <strong>control structure</strong>.</p>
 <p><code>5 &gt; 9</code> is an <strong>expression</strong>.</p>
 <p><code>a</code> is used as the <strong>condition</strong> for the if-statement.</p>
 </div>
@@ -145,7 +152,7 @@ a <span class="token operator">==</span> <span class="token number">10</span> <s
 <span class="token function">print</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token comment">-- false, 4 is not lower than 4.</span>
 
 <span class="token function">print</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">>=</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token comment">-- true, 4 is equal to or higher than 4.</span>
-<span class="token function">print</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">&lt;=</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token comment">-- true, 4 is equal to or higher than 4.</span>
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">&lt;=</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token comment">-- true, 4 is equal to or lower than 4.</span>
 </code></pre>
 <p>And finally, we have <code>~=</code> to check if two values are NOT equal to each other.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token function">print</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">==</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token comment">-- true, 4 is equal to four.</span>
@@ -182,6 +189,7 @@ a <span class="token operator">==</span> <span class="token number">10</span> <s
 <p>Though not incorrect, it is redundant. We don't need to compare <code>a</code> with the value <code>true</code>, because <code>a</code> by itself is already <code>true</code> or <code>false</code>. It would be the same as doing <code>true == true</code>.</p>
 </div>
 <h2 id="and-%26-or" tabindex="-1">and &amp; or <a class="anchor" href="#and-%26-or">#</a></h2>
+<p><span data-abstract="With the keyword `and` we can combine expressions to check if they are all true. With the keyword `or` we can combine expressions to check if any of them are true."></span></p>
 <p>With the keyword <code>and</code> we can combine expressions to check if they are all true.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">if</span> <span class="token number">5</span> <span class="token operator">&lt;</span> <span class="token number">9</span> <span class="token keyword">and</span> <span class="token number">7</span> <span class="token operator">></span> <span class="token number">3</span> <span class="token keyword">then</span>
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Both expressions are true"</span><span class="token punctuation">)</span> <span class="token comment">-- Printed!</span>
@@ -191,7 +199,7 @@ a <span class="token operator">==</span> <span class="token number">10</span> <s
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"All these expressions are true"</span><span class="token punctuation">)</span> <span class="token comment">-- Not printed</span>
 <span class="token keyword">end</span>
 </code></pre>
-<p>With the keyword <code>or</code> we can combine expression to check if any of them are true.</p>
+<p>With the keyword <code>or</code> we can combine expressions to check if any of them are true.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">if</span> <span class="token number">1</span> <span class="token operator">></span> <span class="token number">8</span> <span class="token keyword">or</span> <span class="token number">7</span> <span class="token operator">></span> <span class="token number">3</span> <span class="token keyword">then</span>
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Any of these two expressions is true"</span><span class="token punctuation">)</span> <span class="token comment">-- Printed!</span>
 <span class="token keyword">end</span>
@@ -210,6 +218,7 @@ a <span class="token operator">==</span> <span class="token number">10</span> <s
 <span class="token keyword">end</span>
 </code></pre>
 <h2 id="truthy-and-falsy" tabindex="-1">Truthy and falsy <a class="anchor" href="#truthy-and-falsy">#</a></h2>
+<p><span data-abstract="Truthy and falsy refer to state of values when used as a condition. The values `false` and `nil` are falsy. All other values are truthy."></span></p>
 <p>So far we have talked about booleans, and <code>true</code> or <code>false</code>, but if-statements can accept other values as well. We call these values <strong>truthy</strong>.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">if</span> <span class="token number">15</span> <span class="token keyword">then</span>
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Fifteen!"</span><span class="token punctuation">)</span>
@@ -238,6 +247,25 @@ a <span class="token operator">==</span> <span class="token number">10</span> <s
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"hello() is falsy!"</span><span class="token punctuation">)</span> <span class="token comment">-- Printed!</span>
 <span class="token keyword">end</span>
 </code></pre>
+<h2 id="nested-statements" tabindex="-1">Nested statements <a class="anchor" href="#nested-statements">#</a></h2>
+<p><span data-abstract="A nested statement is when you put a statement (like an if-statement or a for-loop) inside another statement"></span></p>
+<p>We can put an if-statement inside another if-statement. We call these <strong>nested statements</strong>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> number <span class="token operator">=</span> <span class="token number">80</span>
+
+<span class="token keyword">if</span> number <span class="token operator">></span> <span class="token number">50</span> <span class="token keyword">then</span>
+    <span class="token keyword">if</span> number <span class="token operator">></span> <span class="token number">75</span> <span class="token keyword">then</span>
+        <span class="token keyword">if</span> number <span class="token operator">></span> <span class="token number">100</span> <span class="token keyword">then</span>
+            <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Higher than 100!"</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span>
+            <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Lower than 100"</span><span class="token punctuation">)</span> <span class="token comment">-- Printed!</span>
+        <span class="token keyword">end</span>
+    <span class="token keyword">else</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Lower than 75"</span><span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">else</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Lower than 50"</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
 <h2 id="usage" tabindex="-1">Usage <a class="anchor" href="#usage">#</a></h2>
 <p>By using if-statements, we can prevent code from being executed. For example, if you have an <code>ammo</code> variable, we can use the expression <code>ammo &gt; 0</code> to check whether the player still has bullets left.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">if</span> ammo <span class="token operator">></span> <span class="token number">0</span> <span class="token keyword">then</span>
@@ -258,11 +286,11 @@ a <span class="token operator">==</span> <span class="token number">10</span> <s
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe id="love-iframe-131" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-940" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_131 = document.getElementById('love-iframe-131');
-iframe_131.addEventListener('load', function() {
-iframe_131.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_940 = document.getElementById('love-iframe-940');
+iframe_940.addEventListener('load', function() {
+iframe_940.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local frame = 0
 local x = 0
 function love.update()
@@ -296,11 +324,11 @@ end
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe id="love-iframe-714" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-175" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_714 = document.getElementById('love-iframe-714');
-iframe_714.addEventListener('load', function() {
-iframe_714.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_175 = document.getElementById('love-iframe-175');
+iframe_175.addEventListener('load', function() {
+iframe_175.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local x = 0
 function love.update()
  if love.keyboard.isDown("right") then

@@ -40,14 +40,21 @@
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Fundamentals<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
                   </li><li><a class="active" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
                   </li></ul>
-            </li><li class="group-header">LÖVE<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
+            </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
+                  </li></ul>
+            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
@@ -64,7 +71,6 @@
                   </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
                   </li></ul>
             </li><li class="group-header">Intermediate<ul><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
-                  </li><li><a class="" href="/love-cookbook/guides/intermediate/metatables/">Metatables</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
@@ -81,7 +87,7 @@
         
 <h1>Functions</h1>
 
-<p>With <strong>functions</strong> you can store a piece of code to be executed at different times, and multiple times.</p>
+<p>With <strong>functions</strong> we can store a piece of code to be executed at different times, and multiple times.</p>
 <p>There are two ways to create a function:</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- A function is a type of value, like a number and a string.</span>
 <span class="token keyword">local</span> hello <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -119,6 +125,7 @@
 <p>So in the example above we <ins>pass</ins> the <ins>argument</ins> <code>&quot;whale&quot;</code>, <code>&quot;bear&quot;</code>, and <code>&quot;tiger&quot;</code>.</p>
 </div>
 <h2 id="return" tabindex="-1">Return <a class="anchor" href="#return">#</a></h2>
+<p><span data-abstract="A return-statement ends the execution of a function, and allows you to return a value for the function-call."></span></p>
 <p>Functions can <strong>return</strong> a value. This means that, upon calling the function, it will give us a value back.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- We can create multiple parameters by separating them with a comma.</span>
 <span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">give_me_five</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -148,6 +155,36 @@
 
 <span class="token function">print</span><span class="token punctuation">(</span><span class="token function">arithmetics</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- Ouput: 10, 20</span>
 </code></pre>
+<h2 id="callbacks" tabindex="-1">Callbacks <a class="anchor" href="#callbacks">#</a></h2>
+<p>As we stated earlier, when we execute a function, we call that a <ins>function call</ins>. It's as if we're <em>calling</em> someone to help us with something.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">my_math_teacher</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> a <span class="token operator">-</span> b
+<span class="token keyword">end</span>
+
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">my_math_teacher</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<p>Here we call our math teacher to ask him what 10 minus 4 is. I don't think we're gonna get good grades.</p>
+<p>In fact, our math teacher isn't gonna be so helpful this time. He wants us to do the math ourselves. When we call him, we need to provide a function. Using a function like this is called a <strong>callback</strong>. It's as if we provide a phone number for him to <ins>call back</ins>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">my_math_teacher</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+    <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">addition</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>a <span class="token operator">+</span> b<span class="token punctuation">)</span> <span class="token comment">-- Output: 10</span>
+<span class="token keyword">end</span>
+
+<span class="token function">my_math_teacher</span><span class="token punctuation">(</span>addition<span class="token punctuation">)</span>
+
+<span class="token comment">-- We don't necessarily need to assign it in a variable first.</span>
+<span class="token comment">-- We call this an anonymous function.</span>
+<span class="token function">my_math_teacher</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>a <span class="token operator">-</span> b<span class="token punctuation">)</span> <span class="token comment">-- Output: 6</span>
+<span class="token keyword">end</span><span class="token punctuation">)</span>
+</code></pre>
+<p>We call the function <code>my_math_teacher</code>, and pass a function (a <ins>callback</ins>) for the parameter <code>f</code>. Our teacher then calls this function, and passes two numbers. Our function <code>addition</code> prints the summed up numbers.</p>
+<p>In the second call we pass a function as we create it. We don't assign it in a variable first. We call this an <strong>anonymous function</strong>.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p><code>love.load</code>, <code>love.update</code> and <code>love.draw</code> are also callbacks. We provide LÖVE with a function to call upon these events happening.</p>
+</div>
 <h2 id="usage" tabindex="-1">Usage <a class="anchor" href="#usage">#</a></h2>
 <p>Functions allow us to execute the same code in different places, without having to copy that code. Instead we can call the function. If we ever want to change how the code works, we only need to change the function.</p>
 <p>In the example below we draw multiple rectangles. If we ever want to change the shape of all the rectangles, we only need to change the function.</p>
@@ -162,11 +199,11 @@
     <span class="token function">draw_rectangle</span><span class="token punctuation">(</span><span class="token number">370</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe id="love-iframe-398" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe id="love-iframe-899" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_398 = document.getElementById('love-iframe-398');
-iframe_398.addEventListener('load', function() {
-iframe_398.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_899 = document.getElementById('love-iframe-899');
+iframe_899.addEventListener('load', function() {
+iframe_899.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local function draw_rectangle(x)
  love.graphics.rectangle("fill", x, 10, 100, 75)
 end

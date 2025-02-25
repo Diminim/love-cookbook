@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LÖVE cookbook | Drawing a rectangle</title>
+    <title>LÖVE cookbook | Scope</title>
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
@@ -48,13 +48,13 @@
                   </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
                   </li></ul>
             </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
-                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
-            </li><li class="group-header">LÖVE Basics<ul><li><a class="active" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
+            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
@@ -85,9 +85,45 @@
     <main>
       <article class="guide">
         
-<h1>Drawing a rectangle</h1>
+<h1>Scope</h1>
 
-<p>Not yet written: contribute to this page on <a href="https://github.com/Diminim/love-cookbook">GitHub</a>.</p>
+<p>We have been using <a href="../../fundamentals/variables#local-variables" data-preview="../../fundamentals/variables#local-variables">local variables</a>, and explained that they are only available within their <strong>scope</strong>. Let's expand on what that exactly means.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> one <span class="token operator">=</span> <span class="token number">1</span>
+
+<span class="token keyword">if</span> <span class="token keyword">true</span> <span class="token keyword">then</span> <span class="token comment">-- Code block starts</span>
+    <span class="token keyword">local</span> two <span class="token operator">=</span> <span class="token number">2</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>one<span class="token punctuation">,</span> two<span class="token punctuation">)</span> <span class="token comment">-- Output: 1, 2</span>
+<span class="token keyword">end</span> <span class="token comment">-- Code block ends</span>
+
+<span class="token function">print</span><span class="token punctuation">(</span>one<span class="token punctuation">,</span> two<span class="token punctuation">)</span> <span class="token comment">-- 1, nil</span>
+</code></pre>
+<p>The local variable <code>one</code> is created outside of a codeblock, and therefore available in the entire file. The local variable <code>two</code> is created in an if-statement. In this if-statement, we can access both <code>one</code> and <code>two</code>. After the if-statement ends, <code>two</code> no longer exists. By <ins>indenting</ins> our code, we automatically visualize the scope of local variables.</p>
+<p>As shown in the example below, you can create a local variable with <ins>the same name</ins> in a deeper scope level, without affecting the variable in the level above.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- main.lua</span>
+a <span class="token operator">=</span> <span class="token number">10</span> <span class="token comment">-- A global variable</span>
+require <span class="token string">"example"</span>
+<span class="token function">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">-- Output: 10</span>
+<span class="token comment">-- The global variable is unaffected by the local variable</span>
+</code></pre>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- example.lua</span>
+<span class="token function">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">-- Output: 10</span>
+<span class="token keyword">local</span> a <span class="token operator">=</span> <span class="token number">20</span> <span class="token comment">-- A local variable</span>
+
+<span class="token keyword">function</span> <span class="token function">my_function</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">-- A parameter</span>
+    <span class="token keyword">if</span> <span class="token keyword">true</span> <span class="token keyword">then</span>
+        <span class="token keyword">local</span> a <span class="token operator">=</span> <span class="token number">40</span> <span class="token comment">-- Another local variable</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">-- Output: 40</span>
+    <span class="token keyword">end</span>
+
+    <span class="token function">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">-- Output: 30</span>
+    <span class="token comment">-- The parameter is unaffected by the local variable</span>
+<span class="token keyword">end</span>
+
+<span class="token function">some_function</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span>
+
+<span class="token function">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">-- Output: 20</span>
+<span class="token comment">-- The local variable is unaffected by the parameter</span>
+</code></pre>
 
 
 <footer class="guide-footer">
@@ -95,6 +131,8 @@
 
   <p>By: 
   
+      <em>Sheepolution</em>
+    
   </p>
 </footer>
       </article>

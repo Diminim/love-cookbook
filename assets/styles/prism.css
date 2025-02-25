@@ -147,7 +147,7 @@ pre:has(code[class*=language-]) {
 
 .highlight-lines {
     position: absolute;
-    top: 12px;
+    top: 20px;
     left: 0;
     width: 100%;
     height: 100%;
@@ -160,5 +160,5 @@ pre:has(code[class*=language-]) {
 }
 
 .highlight-line.active {
-    background: rgb(255, 253, 249);
+    background: rgb(255, 239, 167);
 }
