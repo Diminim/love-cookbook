@@ -54,8 +54,8 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
-            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
-                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
@@ -199,11 +199,11 @@
     <span class="token function">draw_rectangle</span><span class="token punctuation">(</span><span class="token number">370</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe id="love-iframe-899" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-729" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_899 = document.getElementById('love-iframe-899');
-iframe_899.addEventListener('load', function() {
-iframe_899.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_729 = document.getElementById('love-iframe-729');
+iframe_729.addEventListener('load', function() {
+iframe_729.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local function draw_rectangle(x)
  love.graphics.rectangle("fill", x, 10, 100, 75)
 end

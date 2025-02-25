@@ -54,8 +54,8 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
-            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
-                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
@@ -108,11 +108,11 @@
 <span class="token keyword">end</span>
 </code></pre>
 <p>This will show this:</p>
-<iframe id="love-iframe-470" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
+<iframe class="love-embed" id="love-iframe-842" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
 <script>
-const iframe_470 = document.getElementById('love-iframe-470');
-iframe_470.addEventListener('load', function() {
-iframe_470.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
+const iframe_842 = document.getElementById('love-iframe-842');
+iframe_842.addEventListener('load', function() {
+iframe_842.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
 function love.draw()
  love.graphics.print("Hello, World!", 300, 225)
 end

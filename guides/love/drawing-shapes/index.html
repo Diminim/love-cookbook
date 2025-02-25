@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LÖVE cookbook | Drawing shapes</title>
+
+    <script src="/love-cookbook/assets/js/codeblock.js"></script>
+    <script src="/love-cookbook/assets/js/hover_preview.js"></script>
+
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="sidebar">
+      <header>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
+      </header>
+
+      <nav>
+        <ul><li class="group-header"><ul><li><a class="" href="/love-cookbook/guides/getting-started/">Getting started</a>
+                  </li></ul>
+            </li><li class="group-header">Installation<ul><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
+                  </li></ul>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
+                  </li></ul>
+            </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
+                  </li></ul>
+            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
+                  </li></ul>
+            </li><li class="group-header">Basics<ul><li><a class="" href="/love-cookbook/guides/basic/aabb/">AABB</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/tiles/">Tiles</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/animation/">Animation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/canvases/">Canvases</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
+                  </li></ul>
+            </li><li class="group-header">Intermediate<ul><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
+                  </li></ul>
+            </li><li class="group-header">Advanced<ul><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
+                  </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
+                  </li></ul>
+            </li></ul>
+      </nav>
+    </div>
+
+    <main>
+      <article class="guide">
+        
+<h1>Drawing shapes</h1>
+
+<p>LÖVE comes equipped with a variety of shape drawing functions and in this tutorial we're going to go through them.</p>
+<h2 id="rectangles" tabindex="-1">Rectangles <a class="anchor" href="#rectangles">#</a></h2>
+<p>Drawing rectangles is straightforward: we provide the x and y position of the top-left corner and a width and height. We also instruct whether we want the rectangle to be filled or just an outline.</p>
+<p>This is the simplest rectangle we can draw with the <a href="https://love2d.org/wiki/love.graphics.rectangle" target="_blank"><code>love.graphics.rectangle</code></a> function:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Breaking down the parameters we have:</p>
+<ul>
+<li>DrawMode - &quot;line&quot; or &quot;fill&quot;; self-explanatory.</li>
+<li>x - the x position of the top-left corner of the rectangle.</li>
+<li>y - the y position of the top-left corner of the rectangle.</li>
+<li>width - the width in pixels.</li>
+<li>height - the height in pixels.</li>
+</ul>
+<p>This leaves us with a rectangle of 100x50 pixels starting at 50,50:</p>
+<iframe class="love-embed" id="love-iframe-357" src="/love-cookbook/assets/love/love-js" width="200" height="200"></iframe>
+<script>
+const iframe_357 = document.getElementById('love-iframe-357');
+iframe_357.addEventListener('load', function() {
+iframe_357.contentWindow.postMessage({lua: `love.window.setMode(200, 200) 
+function love.draw()
+ love.graphics.rectangle("fill", 50, 50, 100, 50)
+end
+`}, '*');
+});
+</script>
+<p>Let's draw some more rectangles: some filled and some with just outlines:</p>
+<pre><code class="language-lua"><span data-attrs="3,6,9,12"></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">125</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">300</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">325</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-370" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_370 = document.getElementById('love-iframe-370');
+iframe_370.addEventListener('load', function() {
+iframe_370.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+function love.draw()
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.rectangle("line", 100, 60, 100, 50)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.rectangle("line", 125, 75, 100, 50, 16, 8)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.rectangle("fill", 300, 60, 100, 50)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.rectangle("fill", 325, 75, 100, 50, 16, 8)
+end
+`}, '*');
+});
+</script>
+<p>Did you notice the 2 rounded rectangles? That's because there are actually extra optional parameters that you can provide <a href="https://love2d.org/wiki/love.graphics.rectangle" target="_blank"><code>love.graphics.rectangle</code></a> to change corner radii!</p>
+<ul>
+<li>rx - the x radius of the rounded corner</li>
+<li>ry - the y radius of the rounded corner</li>
+</ul>
+<p>Here we provided 16 for the x and 8 for the y so the corners are skewed horizontally.</p>
+<h2 id="circles" tabindex="-1">Circles <a class="anchor" href="#circles">#</a></h2>
+<p>Drawing circles is even easier - we use <a href="https://love2d.org/wiki/love.graphics.circle" target="_blank"><code>love.graphics.circle</code></a> in a very similar way to <code>love.graphics.rectangle</code>:</p>
+<pre><code class="language-lua"><span data-attrs="3,6,9,12"></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">125</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">300</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">325</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Very similar to rectangle:</p>
+<ul>
+<li>DrawMode - &quot;line&quot; or &quot;fill&quot;; self-explanatory</li>
+<li>x - the x position of the <em>center</em> of the circle.</li>
+<li>y - the y position of the <em>center</em> of the circle.</li>
+<li>radius - the radius in pixels.</li>
+</ul>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Notice that unlike rectangles we provide the <strong>center</strong> position here!</p>
+</div>
+<iframe class="love-embed" id="love-iframe-199" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_199 = document.getElementById('love-iframe-199');
+iframe_199.addEventListener('load', function() {
+iframe_199.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+function love.draw()
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.circle("line", 100, 60, 32)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.circle("line", 125, 75, 32)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.circle("fill", 300, 60, 32)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.circle("fill", 325, 75, 32)
+end
+`}, '*');
+});
+</script>
+<h2 id="lines" tabindex="-1">Lines <a class="anchor" href="#lines">#</a></h2>
+<p>As you might expect lines are drawn with <a href="https://love2d.org/wiki/love.graphics.line" target="_blank"><code>love.graphics.line</code></a>:</p>
+<p>It takes a set of 4 parameters:</p>
+<ul>
+<li>x</li>
+<li>y</li>
+<li>x2</li>
+<li>y2</li>
+</ul>
+<p>and draws a line from x,y -&gt; x2,y2. Unlike the other functions we've covered so far, however, you can continue to provide further sets of 2 to make a continuous line drawing from point to point (see the highlighted lines below):</p>
+<pre><code class="language-lua"><span data-attrs="7-11"></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">line</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">line</span><span class="token punctuation">(</span>
+        <span class="token number">125</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span>
+        <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span>
+        <span class="token number">300</span><span class="token punctuation">,</span> <span class="token number">150</span><span class="token punctuation">,</span>
+        <span class="token number">350</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span>
+        <span class="token number">125</span><span class="token punctuation">,</span> <span class="token number">75</span> <span class="token comment">-- back to the start!</span>
+    <span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-809" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_809 = document.getElementById('love-iframe-809');
+iframe_809.addEventListener('load', function() {
+iframe_809.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+function love.draw()
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.line(50, 50, 100, 100)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.line(
+ 125, 75,
+ 200, 20,
+ 300, 150,
+ 350, 100,
+ 125, 75
+ )
+end
+`}, '*');
+});
+</script>
+<h2 id="points" tabindex="-1">Points <a class="anchor" href="#points">#</a></h2>
+<p>Singular points are drawn with <a href="https://love2d.org/wiki/love.graphics.points" target="_blank"><code>love.graphics.points</code></a> and has essentially the same parameters as <code>love.graphics.line</code>:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setPointSize</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">points</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setPointSize</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">points</span><span class="token punctuation">(</span>
+        <span class="token number">125</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span>
+        <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span>
+        <span class="token number">300</span><span class="token punctuation">,</span> <span class="token number">150</span><span class="token punctuation">,</span>
+        <span class="token number">350</span><span class="token punctuation">,</span> <span class="token number">100</span>
+    <span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>The default point size of 1 pixel makes it a little tricky to spot so for the second example (highlighted above) we use <a href="https://love2d.org/wiki/love.graphics.setPointSize" target="_blank"><code>love.graphics.setPointSize</code></a> to make them a bit bigger.</p>
+</div>
+<iframe class="love-embed" id="love-iframe-831" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_831 = document.getElementById('love-iframe-831');
+iframe_831.addEventListener('load', function() {
+iframe_831.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+function love.draw()
+ love.graphics.setPointSize(1)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.points(50, 50, 100, 100)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.setPointSize(3)
+ love.graphics.points(
+ 125, 75,
+ 200, 20,
+ 300, 150,
+ 350, 100
+ )
+end
+`}, '*');
+});
+</script>
+<h2 id="polygons" tabindex="-1">Polygons <a class="anchor" href="#polygons">#</a></h2>
+<p>Like with points and lines we provide a set of positions for the polygon to draw with but we have a <code>Draw Mode</code> parameter to pass first (like with <a href="#rectangles">rectangles</a> and <a href="#circles">circles</a>).</p>
+<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>The polygon <em>must</em> be convex and non-self-intersecting when in fill mode!</p>
+</div>
+<p>We draw polygons with <a href="https://love2d.org/wiki/love.graphics.polygon" target="_blank"><code>love.graphics.polygon</code></a>:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">polygon</span><span class="token punctuation">(</span>
+        <span class="token string">"line"</span><span class="token punctuation">,</span>
+        <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span>
+        <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">150</span><span class="token punctuation">,</span>
+        <span class="token number">150</span><span class="token punctuation">,</span> <span class="token number">150</span>
+    <span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">polygon</span><span class="token punctuation">(</span>
+        <span class="token string">"fill"</span><span class="token punctuation">,</span>
+        <span class="token number">250</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span>
+        <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">150</span><span class="token punctuation">,</span>
+        <span class="token number">300</span><span class="token punctuation">,</span> <span class="token number">150</span>
+    <span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-751" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_751 = document.getElementById('love-iframe-751');
+iframe_751.addEventListener('load', function() {
+iframe_751.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+function love.draw()
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.polygon(
+ "line",
+ 100, 50,
+ 50, 150,
+ 150, 150
+ )
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.polygon(
+ "fill",
+ 250, 50,
+ 200, 150,
+ 300, 150
+ )
+end
+`}, '*');
+});
+</script>
+<h2 id="ellipse" tabindex="-1">Ellipse <a class="anchor" href="#ellipse">#</a></h2>
+<p>Ellipses are like circles but with 2 radius parameters. One for the horizontal radius and one for the vertical:</p>
+<ul>
+<li>DrawMode - &quot;line&quot; or &quot;fill&quot;; self-explanatory</li>
+<li>x - the x position of the <em>center</em> of the circle.</li>
+<li>y - the y position of the <em>center</em> of the circle.</li>
+<li>x radius - the x radius in pixels.</li>
+<li>y radius - the y radius in pixels.</li>
+</ul>
+<pre><code class="language-lua"><span data-attrs="3,6,9,12"></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">ellipse</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">ellipse</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">ellipse</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">300</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">ellipse</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">325</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Notice that like circles we provide the <strong>center</strong> position here!</p>
+</div>
+<iframe class="love-embed" id="love-iframe-55" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_55 = document.getElementById('love-iframe-55');
+iframe_55.addEventListener('load', function() {
+iframe_55.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+function love.draw()
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.ellipse("line", 100, 100, 32, 16)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.ellipse("line", 100, 100, 16, 32)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.ellipse("fill", 300, 100, 64, 8)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.ellipse("fill", 300, 100, 8, 8)
+end
+`}, '*');
+});
+</script>
+<h2 id="arcs" tabindex="-1">Arcs <a class="anchor" href="#arcs">#</a></h2>
+<p>We can draw arcs with <a href="https://love2d.org/wiki/love.graphics.arc" target="_blank"><code>love.graphics.arc</code></a>. There are variants of this function, one specifying the <a href="https://love2d.org/wiki/ArcType" target="_blank"><code>ArcType</code></a> and one without (defaulting to <code>pie</code>).</p>
+<ul>
+<li>DrawMode - &quot;line&quot; or &quot;fill&quot;</li>
+<li>ArcType - &quot;pie&quot;, &quot;open&quot; or &quot;closed&quot; - this one is optional! If skipped then <code>pie</code> will be used.</li>
+<li>x - x position of the <em>center</em> of the arc.</li>
+<li>y - y position of the <em>center</em> of the arc.</li>
+<li>radius - radius of the arc in pixels.</li>
+<li>angle1 - this is the angle to start the arc from in radians.</li>
+<li>angle2 - this is where the angle ends in radians.</li>
+</ul>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Note that the angles are in <strong>radians</strong>: not degrees!</p>
+<p>You can convert between the 2 with the standard Lua functions <code>math.deg</code> and <code>math.rad</code>.</p>
+</div>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">arc</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> math<span class="token punctuation">.</span>pi <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">,</span> math<span class="token punctuation">.</span>pi<span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">arc</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">125</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> love<span class="token punctuation">.</span>timer<span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> math<span class="token punctuation">.</span>pi <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">arc</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">300</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> math<span class="token punctuation">.</span>pi<span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">arc</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">325</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> love<span class="token punctuation">.</span>timer<span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> math<span class="token punctuation">.</span>pi <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">arc</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token string">"open"</span><span class="token punctuation">,</span> <span class="token number">500</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> math<span class="token punctuation">.</span>pi <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">,</span> math<span class="token punctuation">.</span>pi<span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">arc</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token string">"closed"</span><span class="token punctuation">,</span> <span class="token number">700</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> math<span class="token punctuation">.</span>pi <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">,</span> math<span class="token punctuation">.</span>pi<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-295" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_295 = document.getElementById('love-iframe-295');
+iframe_295.addEventListener('load', function() {
+iframe_295.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+function love.draw()
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.print("pie", 100, 20)
+ love.graphics.arc("line", 100, 60, 32, math.pi / 4, math.pi)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.arc("line", 125, 75, 32, 0, love.timer.getTime() % math.pi * 2)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.arc("fill", 300, 60, 32, 0, math.pi)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.arc("fill", 325, 75, 32, 0, love.timer.getTime() % math.pi * 2)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.print("open", 500, 20)
+ love.graphics.arc("line", "open", 500, 60, 32, math.pi / 4, math.pi)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.print("closed", 700, 20)
+ love.graphics.arc("line", "closed", 700, 60, 32, math.pi / 4, math.pi)
+end
+`}, '*');
+});
+</script>
+<h2 id="bonus" tabindex="-1">Bonus <a class="anchor" href="#bonus">#</a></h2>
+<h3 id="line-styles" tabindex="-1">Line styles <a class="anchor" href="#line-styles">#</a></h3>
+<p>For shapes in line mode we have control over how thick those lines are rendered using the function <a href="https://love2d.org/wiki/love.graphics.setLineWidth" target="_blank"><code>love.graphics.setLineWidth</code></a>:</p>
+<pre><code class="language-lua"><span data-attrs="4"></span><span class="token keyword">local</span> line_width <span class="token operator">=</span> <span class="token number">4</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setLineWidth</span><span class="token punctuation">(</span>line_width<span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">line</span><span class="token punctuation">(</span><span class="token number">232</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">232</span><span class="token punctuation">,</span> <span class="token number">264</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">100</span> <span class="token operator">-</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">polygon</span><span class="token punctuation">(</span>
+        <span class="token string">"line"</span><span class="token punctuation">,</span>
+        <span class="token number">166</span> <span class="token operator">-</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span>
+        <span class="token number">166</span> <span class="token operator">+</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span>
+        <span class="token number">166</span><span class="token punctuation">,</span> <span class="token number">264</span>
+    <span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.98</span><span class="token punctuation">,</span> <span class="token number">0.73</span><span class="token punctuation">,</span> <span class="token number">0.67</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">arc</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">300</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> math<span class="token punctuation">.</span>pi <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">ellipse</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">350</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">48</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">keypressed</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> key <span class="token operator">==</span> <span class="token string">"up"</span> <span class="token keyword">then</span>
+        line_width <span class="token operator">=</span> line_width <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token keyword">elseif</span> key <span class="token operator">==</span> <span class="token string">"down"</span> <span class="token keyword">then</span>
+        line_width <span class="token operator">=</span> line_width <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">end</span>
+
+    line_width <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> line_width<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Try pressing the <code>up</code> and <code>down</code> keys to change the line width!</p>
+</div>
+<iframe class="love-embed" id="love-iframe-116" src="/love-cookbook/assets/love/love-js" width="450" height="300"></iframe>
+<script>
+const iframe_116 = document.getElementById('love-iframe-116');
+iframe_116.addEventListener('load', function() {
+iframe_116.contentWindow.postMessage({lua: `love.window.setMode(450, 300) 
+local line_width = 4
+function love.draw()
+ love.graphics.setLineWidth(line_width)
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.circle("line", 100, 100, 32)
+ love.graphics.line(232, 200, 232, 264)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.rectangle("line", 200, 100 - 32, 64, 64)
+ love.graphics.polygon(
+ "line",
+ 166 - 32, 200,
+ 166 + 32, 200,
+ 166, 264
+ )
+ love.graphics.setColor(0.98, 0.73, 0.67)
+ love.graphics.arc("line", 300, 200, 32, 0, math.pi / 2)
+ love.graphics.ellipse("line", 350, 100, 48, 16)
+end
+function love.keypressed(key)
+ if key == "up" then
+ line_width = line_width + 1
+ elseif key == "down" then
+ line_width = line_width - 1
+ end
+ line_width = math.max(1, line_width)
+end
+`}, '*');
+});
+</script>
+<h3 id="flower" tabindex="-1">Flower <a class="anchor" href="#flower">#</a></h3>
+<p>Just for fun let's combine a lot of these to make a simple scene:</p>
+<pre><code class="language-lua"><span data-attrs="9-16,28-32,49,53,60,64"></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">draw_leaf</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> rotation<span class="token punctuation">)</span>
+    <span class="token keyword">local</span> leaf_height <span class="token operator">=</span> <span class="token number">50</span>
+    <span class="token keyword">local</span> leaf_half_width <span class="token operator">=</span> <span class="token number">5</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">translate</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rotate</span><span class="token punctuation">(</span>rotation<span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">polygon</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span>
+        <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token operator">-</span>leaf_half_width<span class="token punctuation">,</span> leaf_height <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">,</span>
+        <span class="token operator">-</span>leaf_half_width<span class="token punctuation">,</span> leaf_height <span class="token operator">/</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span>
+        <span class="token number">0</span><span class="token punctuation">,</span> leaf_height<span class="token punctuation">,</span>
+        leaf_half_width<span class="token punctuation">,</span> leaf_height <span class="token operator">/</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span>
+        leaf_half_width<span class="token punctuation">,</span> leaf_height <span class="token operator">/</span> <span class="token number">3</span>
+    <span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Set the origin to be 100,100</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">translate</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+
+    <span class="token comment">-- Draw a green stem</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setLineWidth</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">line</span><span class="token punctuation">(</span>
+        <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span>
+        <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span>
+        <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">200</span>
+    <span class="token punctuation">)</span>
+
+    <span class="token keyword">local</span> t <span class="token operator">=</span> love<span class="token punctuation">.</span>timer<span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">draw_leaf</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">75</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>math<span class="token punctuation">.</span>pi <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span> math<span class="token punctuation">.</span><span class="token function">sin</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">8</span><span class="token punctuation">)</span>
+    <span class="token function">draw_leaf</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> math<span class="token punctuation">.</span>pi <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span> math<span class="token punctuation">.</span><span class="token function">cos</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">8</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setLineWidth</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">local</span> petal_count <span class="token operator">=</span> <span class="token number">7</span>
+    <span class="token keyword">for</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> petal_count <span class="token keyword">do</span>
+        <span class="token comment">-- Rotate around the center by an amount depending on which petal we're drawing</span>
+        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rotate</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> math<span class="token punctuation">.</span>pi <span class="token operator">/</span> petal_count<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> t<span class="token punctuation">)</span>
+        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">translate</span><span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+
+        <span class="token comment">-- Draw a filled ellipse for the petal</span>
+        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.93</span><span class="token punctuation">,</span> <span class="token number">0.52</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">ellipse</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>
+
+        <span class="token comment">-- Draw an outline of the petal</span>
+        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.16</span><span class="token punctuation">,</span> <span class="token number">0.15</span><span class="token punctuation">,</span> <span class="token number">0.19</span><span class="token punctuation">)</span>
+        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">ellipse</span><span class="token punctuation">(</span><span class="token string">"line"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>
+
+        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+
+    <span class="token comment">-- The center of the flower (called a pistil!)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.16</span><span class="token punctuation">,</span> <span class="token number">0.15</span><span class="token punctuation">,</span> <span class="token number">0.19</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>
+
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.29</span><span class="token punctuation">,</span> <span class="token number">0.56</span><span class="token punctuation">,</span> <span class="token number">0.58</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setPointSize</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">points</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Don't worry if a lot of this is unfamilar!</p>
+<p>Some of the concepts like the transformation stack (<code>love.graphics.push/pop/translate/scale</code>) will be covered in later chapters.</p>
+</div>
+<iframe class="love-embed" id="love-iframe-845" src="/love-cookbook/assets/love/love-js" width="200" height="350"></iframe>
+<script>
+const iframe_845 = document.getElementById('love-iframe-845');
+iframe_845.addEventListener('load', function() {
+iframe_845.contentWindow.postMessage({lua: `love.window.setMode(200, 350) 
+local function draw_leaf(x, y, rotation)
+ local leaf_height = 50
+ local leaf_half_width = 5
+ love.graphics.push()
+ love.graphics.translate(x, y)
+ love.graphics.rotate(rotation)
+ love.graphics.polygon("fill",
+ 0, 0,
+ -leaf_half_width, leaf_height / 3,
+ -leaf_half_width, leaf_height / 3 * 2,
+ 0, leaf_height,
+ leaf_half_width, leaf_height / 3 * 2,
+ leaf_half_width, leaf_height / 3
+ )
+ love.graphics.pop()
+end
+function love.draw()
+ -- Set the origin to be 100,100
+ love.graphics.translate(100, 100)
+ -- Draw a green stem
+ love.graphics.setLineWidth(4)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.line(
+ 0, 16,
+ 0, 100,
+ 5, 200
+ )
+ local t = love.timer.getTime()
+ draw_leaf(0, 75, (math.pi / 3) + math.sin(t) / 8)
+ draw_leaf(0, 100, (5 * math.pi / 3) + math.cos(t) / 8)
+ love.graphics.setLineWidth(2)
+ local petal_count = 7
+ for i = 1, petal_count do
+ -- Rotate around the center by an amount depending on which petal we're drawing
+ love.graphics.push()
+ love.graphics.rotate((2 * math.pi / petal_count) * (i - 1) + t)
+ love.graphics.translate(40, 0)
+ -- Draw a filled ellipse for the petal
+ love.graphics.setColor(0.93, 0.52, 0.58)
+ love.graphics.ellipse("fill", 0, 0, 32, 16)
+ -- Draw an outline of the petal
+ love.graphics.setColor(0.16, 0.15, 0.19)
+ love.graphics.ellipse("line", 0, 0, 32, 16)
+ love.graphics.pop()
+ end
+ -- The center of the flower (called a pistil!)
+ love.graphics.setColor(0.16, 0.15, 0.19)
+ love.graphics.circle("fill", 0, 0, 16)
+ love.graphics.setColor(0.29, 0.56, 0.58)
+ love.graphics.setPointSize(8)
+ love.graphics.points(0, 0)
+end
+`}, '*');
+});
+</script>
+<p>Pretty!</p>
+
+
+<footer class="guide-footer">
+  <p></p>
+
+  <p>By: 
+  
+      <em>josh</em>
+    
+  </p>
+</footer>
+      </article>
+    </main>
+  </body>
+</html>

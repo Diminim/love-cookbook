@@ -225,3 +225,9 @@ code:not(.language-lua), .code-block {
   z-index: 1000;
   display: none;
 }
+
+.love-embed {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

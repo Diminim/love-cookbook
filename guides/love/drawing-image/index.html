@@ -54,8 +54,8 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
-            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-a-rectangle/">Drawing a rectangle</a>
-                  </li><li><a class="active" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+            </li><li class="group-header">LÖVE Basics<ul><li><a class="active" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
@@ -112,11 +112,11 @@
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe id="love-iframe-767" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe class="love-embed" id="love-iframe-920" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_767 = document.getElementById('love-iframe-767');
-iframe_767.addEventListener('load', function() {
-iframe_767.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_920 = document.getElementById('love-iframe-920');
+iframe_920.addEventListener('load', function() {
+iframe_920.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
  image = love.graphics.newImage("assets/whale.png")
@@ -131,11 +131,11 @@ end
 <p>Whale done! ;)</p>
 <h2 id="bonus-challenge" tabindex="-1">Bonus challenge <a class="anchor" href="#bonus-challenge">#</a></h2>
 <p>Make the whale move back and forth!</p>
-<iframe id="love-iframe-854" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe class="love-embed" id="love-iframe-556" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_854 = document.getElementById('love-iframe-854');
-iframe_854.addEventListener('load', function() {
-iframe_854.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_556 = document.getElementById('love-iframe-556');
+iframe_556.addEventListener('load', function() {
+iframe_556.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()
