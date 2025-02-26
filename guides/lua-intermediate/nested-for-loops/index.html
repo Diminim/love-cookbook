@@ -40,17 +40,19 @@
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
             </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
                   </li><li><a class="active" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
@@ -87,7 +89,7 @@
         
 <h1>Nested for-loops</h1>
 
-<p>You have already learned that you can <a href="../../fundamentals/if-statements#nested-statements" data-preview="../../fundamentals/if-statements#nested-statements">nest statements</a>. So of course, we can also nest for-loops.</p>
+<p>You have already learned that you can <a href="../../lua-basics/if-statements#nested-statements" data-preview="../../lua-basics/if-statements#nested-statements">nest statements</a>. So of course, we can also nest for-loops.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">for</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span> <span class="token keyword">do</span>
     <span class="token keyword">for</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span> <span class="token keyword">do</span>
         <span class="token function">print</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span>
@@ -134,7 +136,7 @@
 <span class="token keyword">end</span>
 <span class="token comment">-- Output: 1, 1</span>
 </code></pre>
-<p>Or we could put the for-loop inside a function, and use a <a href="../../fundamentals/functions#return" data-preview="../../fundamentals/functions#return">return-statement</a>.</p>
+<p>Or we could put the for-loop inside a function, and use a <a href="../../lua-basics/functions#return" data-preview="../../lua-basics/functions#return">return-statement</a>.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">counting</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token keyword">for</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span> <span class="token keyword">do</span>
         <span class="token keyword">for</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span> <span class="token keyword">do</span>
@@ -162,7 +164,7 @@
 <span class="token keyword">end</span>
 </code></pre>
 <p>We create a <strong>label</strong> named <code>retry</code>, which we can do by surrounding a word with double colons. In the <code>else</code>, after changed the value of <code>a</code>, we tell Lua to go to that label. After doing so, it tries the if-statement again. This time the condition is <code>true</code>.</p>
-<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>Be careful! Similar to <a href="../../fundamentals/tables#while-loops" data-preview="../../fundamentals/tables#while-loops">while-loops</a>, it is possible to create an infinite loop, which will cause LÖVE to hang.</p>
+<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>Be careful! Similar to <a href="../../lua-basics/tables#while-loops" data-preview="../../lua-basics/tables#while-loops">while-loops</a>, it is possible to create an infinite loop, which will cause LÖVE to hang.</p>
 </div>
 <p>We can use a <ins>goto</ins> statement to jump out of a nested for-loop.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">for</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span> <span class="token keyword">do</span>

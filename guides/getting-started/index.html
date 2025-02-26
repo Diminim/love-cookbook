@@ -40,17 +40,19 @@
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
             </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
@@ -108,11 +110,11 @@
 <span class="token keyword">end</span>
 </code></pre>
 <p>This will show this:</p>
-<iframe class="love-embed" id="love-iframe-842" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
+<iframe class="love-embed" id="love-iframe-678" src="/love-cookbook/assets/love/love-js" width="600" height="450"></iframe>
 <script>
-const iframe_842 = document.getElementById('love-iframe-842');
-iframe_842.addEventListener('load', function() {
-iframe_842.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
+const iframe_678 = document.getElementById('love-iframe-678');
+iframe_678.addEventListener('load', function() {
+iframe_678.contentWindow.postMessage({lua: `love.window.setMode(600, 450) 
 function love.draw()
  love.graphics.print("Hello, World!", 300, 225)
 end

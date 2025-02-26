@@ -40,17 +40,19 @@
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
-                  </li><li><a class="active" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
             </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
@@ -151,6 +153,16 @@ test <span class="token operator">=</span> <span class="token number">10</span>
 test <span class="token operator">=</span> <span class="token keyword">nil</span> <span class="token comment">-- We assign nil to remove the value.</span>
 <span class="token function">print</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span> <span class="token comment">-- Output: nil</span>
 </code></pre>
+<h2 id="types" tabindex="-1">Types <a class="anchor" href="#types">#</a></h2>
+<p>We have shown that variables can be a number, or a string, or no value at all. We call this the variable's <strong>type</strong>.</p>
+<p>You can get the type of a variable by using <code>type</code>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> a <span class="token operator">=</span> <span class="token number">10</span>
+<span class="token keyword">local</span> animal <span class="token operator">=</span> <span class="token string">"whale"</span>
+
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">type</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- Output: number</span>
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">type</span><span class="token punctuation">(</span>animal<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- Output: string</span>
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">type</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- Output: nil</span>
+</code></pre>
 <h2 id="naming-variables" tabindex="-1">Naming variables <a class="anchor" href="#naming-variables">#</a></h2>
 <p>The word in which you store a value can be almost anything.</p>
 <pre><code class="language-lua"><span data-attrs=""></span>whale <span class="token operator">=</span> <span class="token number">3</span>
@@ -210,7 +222,7 @@ b <span class="token operator">=</span> <span class="token number">20</span>
 <p>Local variables are only accessible where they are declared. We call this its <em>scope</em>. In a later chapter you will learn more about scope, but in simple terms it means the <em>code block</em> it is in, or otherwise the file.</p>
 <div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Every time you see and <code>end</code>, then that is the end of a <em>code block</em>.</p>
 </div>
-<p>Because it is good practice, we will use local variables throughout this codebook.</p>
+<p>Because it is good practice, we will use local variables throughout this cookbook.</p>
 <h2 id="usage" tabindex="-1">Usage <a class="anchor" href="#usage">#</a></h2>
 <p>By using variables we can keep track of a value. For example, your ammo can be a variable, and when you shoot we subtract from that value to keep track of how many bullets you have left.</p>
 <p>Another great thing about variables is that when we use one in multiple places, we only need to change one value for it to be applied those place. In the code below we can change the <code>width</code> and <code>height</code> variables to change the width and height of all rectangles.</p>
@@ -228,11 +240,11 @@ b <span class="token operator">=</span> <span class="token number">20</span>
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> <span class="token number">370</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> width<span class="token punctuation">,</span> height<span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-588" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-93" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_588 = document.getElementById('love-iframe-588');
-iframe_588.addEventListener('load', function() {
-iframe_588.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_93 = document.getElementById('love-iframe-93');
+iframe_93.addEventListener('load', function() {
+iframe_93.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local width, height
 function love.load()
  width = 100

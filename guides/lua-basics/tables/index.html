@@ -40,17 +40,19 @@
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-                  </li><li><a class="active" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
             </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
@@ -243,6 +245,21 @@ table<span class="token punctuation">.</span><span class="token function">insert
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">for</span> index<span class="token punctuation">,</span> value of <span class="token function">ipairs</span><span class="token punctuation">(</span>fruits<span class="token punctuation">)</span> <span class="token keyword">do</span>
 </code></pre>
 </div>
+<h2 id="unpack" tabindex="-1">unpack <a class="anchor" href="#unpack">#</a></h2>
+<p>With the function <code>unpack</code> we can &quot;unpack&quot; a table.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> fruits <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token string">"apple"</span><span class="token punctuation">,</span> <span class="token string">"pear"</span><span class="token punctuation">,</span> <span class="token string">"tomato"</span> <span class="token punctuation">}</span>
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">unpack</span><span class="token punctuation">(</span>fruits<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- Output: apple, pear, tomato</span>
+</code></pre>
+<p>We can use it to clone a table for example.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> fruits <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token string">"apple"</span><span class="token punctuation">,</span> <span class="token string">"pear"</span><span class="token punctuation">,</span> <span class="token string">"tomato"</span> <span class="token punctuation">}</span>
+<span class="token keyword">local</span> fruits_clone <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token function">unpack</span><span class="token punctuation">(</span>fruits<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+<span class="token function">print</span><span class="token punctuation">(</span>fruits_clone<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">-- Output: pear</span>
+</code></pre>
+<p>Or to assign the contents of the table to individual variables.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> fruits <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token string">"apple"</span><span class="token punctuation">,</span> <span class="token string">"pear"</span><span class="token punctuation">,</span> <span class="token string">"tomato"</span> <span class="token punctuation">}</span>
+<span class="token keyword">local</span> fruit1<span class="token punctuation">,</span> fruit2<span class="token punctuation">,</span> fruit3 <span class="token operator">=</span> <span class="token function">unpack</span><span class="token punctuation">(</span>fruits<span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>fruit2<span class="token punctuation">)</span> <span class="token comment">-- Output: pear</span>
+</code></pre>
 <h2 id="editing-tables" tabindex="-1">Editing tables <a class="anchor" href="#editing-tables">#</a></h2>
 <p>We have already learned that we can use <code>table.insert(table, value)</code> to insert a value into our table. Similarly, we can use <code>table.remove(table, index)</code> to remove a value.</p>
 <pre><code class="language-lua"><span data-attrs="3"></span><span class="token keyword">local</span> fruits <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token string">"apple"</span><span class="token punctuation">,</span> <span class="token string">"pear"</span><span class="token punctuation">,</span> <span class="token string">"tomato"</span> <span class="token punctuation">}</span>

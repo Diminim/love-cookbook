@@ -40,17 +40,19 @@
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
             </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="active" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
@@ -147,7 +149,7 @@ my_table<span class="token punctuation">[</span><span class="token number">1</sp
 </code></pre>
 <p>As you can see, our numbers are being doubled. But something weird is going on there at the end. We assign the number <code>3</code>, and it stays <code>3</code>. This is because <code>__newindex</code> only works for <ins>new</ins> indexes. Because <code>my_table[1]</code> already had a value, it doesn't trigger the event anymore.</p>
 <h2 id="index" tabindex="-1">index <a class="anchor" href="#index">#</a></h2>
-<p>The event <code>index</code> will trigger when trying to acces a property that the table doesn't have. With this, we can create special properties would normally take a function. Well, do they do take a function, but we don't need to call that function ourselves. We only need to access the non-existing property.</p>
+<p>The event <code>index</code> will trigger when trying to acces a property that the table doesn't have. With this, we can create special properties that would normally require us to use a function. Well, we do use a function, but we don't need to call that function ourselves. We only need to access the non-existing property.</p>
 <p>In the example below we have a triangle. We set the length of <code>a</code> and <code>b</code>, and let the metamethod calculate the length of <code>c</code>.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> my_triangle <span class="token operator">=</span> <span class="token punctuation">{</span>
     a <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span>
@@ -175,8 +177,27 @@ my_triangle<span class="token punctuation">.</span>a <span class="token operator
 my_triangle<span class="token punctuation">.</span>b <span class="token operator">=</span> <span class="token number">20</span>
 <span class="token function">print</span><span class="token punctuation">(</span>my_triangle<span class="token punctuation">.</span>c<span class="token punctuation">)</span> <span class="token comment">-- Output: 22.36</span>
 </code></pre>
-<p>Upon trying to access <code>c</code>, the metamethod return us a number calculated with the <a href="https://en.wikipedia.org/wiki/Pythagorean_theorem">Pythagorean theorem</a>. By changing <code>a</code> and <code>b</code>, we automatically change the value of <code>c</code>.</p>
+<p>Upon trying to access <code>c</code>, the metamethod returns us a number calculated with the <a href="https://en.wikipedia.org/wiki/Pythagorean_theorem">Pythagorean theorem</a>. By changing <code>a</code> and <code>b</code>, we automatically change the value of <code>c</code>.</p>
 <p>In the metamethod, we use <code>rawget(t, key)</code>. Similar to <code>rawset</code>, it is to get a value without triggering the event. In this case we wouldn't need it, since <code>my_triangle</code> definitely has the properties <code>a</code> and <code>b</code>, but it's always good to be safe.</p>
+<h2 id="strict-mode" tabindex="-1">Strict mode <a class="anchor" href="#strict-mode">#</a></h2>
+<p>In <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">JavaScript</a> we can enable <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">strict mode</a>. This prevents the creation of global variables, among other things.</p>
+<p>Using the power of metatables, we can create our own strict mode. We do this by setting a metatable to <a href="../scope#_g" data-preview="../scope#_g"><code>_G</code></a>, where the metamethods for <code>newindex</code> and <code>index</code> throw an error.</p>
+<pre><code class="language-lua"><span data-attrs=""></span>animal <span class="token operator">=</span> <span class="token string">"whale"</span>
+
+<span class="token function">setmetatable</span><span class="token punctuation">(</span>_G<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  __newindex <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+      <span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Cannot set undefined variable: "</span> <span class="token operator">..</span> k<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+  <span class="token keyword">end</span><span class="token punctuation">,</span>
+  __index <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> k<span class="token punctuation">)</span>
+    <span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Cannot get undefined variable: "</span> <span class="token operator">..</span> k<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+  <span class="token keyword">end</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token function">print</span><span class="token punctuation">(</span>animal<span class="token punctuation">)</span> <span class="token comment">-- Output: whale</span>
+<span class="token function">print</span><span class="token punctuation">(</span>onimal<span class="token punctuation">)</span> <span class="token comment">-- Error: Cannot get undefined variable: onimal</span>
+fruit <span class="token operator">=</span> <span class="token string">"apple"</span> <span class="token comment">-- Error: Cannot set undefined variable: fruit</span>
+</code></pre>
+<p>As you can see, this also helps us with finding mistyped variable names.</p>
 
 
 <footer class="guide-footer">

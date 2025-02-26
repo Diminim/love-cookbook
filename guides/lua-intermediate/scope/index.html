@@ -40,17 +40,19 @@
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/fundamentals/lua/">Lua</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/variables/">Variables</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/functions/">Functions</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/tables/">Tables and For-loops</a>
-                  </li><li><a class="" href="/love-cookbook/guides/fundamentals/recap/">Recap</a>
+            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
             </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
                   </li><li><a class="active" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
@@ -87,7 +89,7 @@
         
 <h1>Scope</h1>
 
-<p>We have been using <a href="../../fundamentals/variables#local-variables" data-preview="../../fundamentals/variables#local-variables">local variables</a>, and explained that they are only available within their <strong>scope</strong>. Let's expand on what that exactly means.</p>
+<p>We have been using <a href="../../lua-basics/variables#local-variables" data-preview="../../lua-basics/variables#local-variables">local variables</a>, and explained that they are only available within their <strong>scope</strong>. Let's expand on what that exactly means.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> one <span class="token operator">=</span> <span class="token number">1</span>
 
 <span class="token keyword">if</span> <span class="token keyword">true</span> <span class="token keyword">then</span> <span class="token comment">-- Code block starts</span>
@@ -124,6 +126,26 @@ require <span class="token string">"example"</span>
 <span class="token function">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">-- Output: 20</span>
 <span class="token comment">-- The local variable is unaffected by the parameter</span>
 </code></pre>
+<h2 id="_g" tabindex="-1">_G <a class="anchor" href="#_g">#</a></h2>
+<p>All global variables are actually part of the table <code>_G</code>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span>animal <span class="token operator">=</span> <span class="token string">"whale"</span>
+<span class="token function">print</span><span class="token punctuation">(</span>_G<span class="token punctuation">.</span>animal<span class="token punctuation">)</span> <span class="token comment">-- Output: whale</span>
+
+_G<span class="token punctuation">.</span>fruit <span class="token operator">=</span> <span class="token string">"apple"</span>
+<span class="token function">print</span><span class="token punctuation">(</span>fruit<span class="token punctuation">)</span> <span class="token comment">-- Output: apple</span>
+</code></pre>
+<p>This means that we can use <code>_G</code> to check out all the global variables.</p>
+<pre><code class="language-lua"><span data-attrs=""></span>animal <span class="token operator">=</span> <span class="token string">"whale"</span>
+fruit <span class="token operator">=</span> <span class="token string">"apple"</span>
+
+<span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> <span class="token function">pairs</span><span class="token punctuation">(</span>_G<span class="token punctuation">)</span> <span class="token keyword">do</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+<span class="token comment">-- Output:</span>
+<span class="token comment">-- animal, whale</span>
+<span class="token comment">-- fruit, apple</span>
+</code></pre>
+<p>In a <a href="../metatables#strict-mode" data-preview="../metatables#strict-mode">later chapter</a> we will learn how we can modify <code>_G</code> to prevent the creation of global variables.</p>
 
 
 <footer class="guide-footer">
