@@ -1,13 +1,15 @@
 .inter {
-    font-family: "Inter", serif;
-    font-optical-sizing: auto;
-    font-weight: 500; /* from 100 to 900 */
-    font-style: normal;
-  }
-  
-  .fira-code {
-    font-family: "Fira Code", serif;
-    font-optical-sizing: auto;
-    font-weight: 500; /* from 300 to 700 */
-    font-style: normal;
-  }
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  /* from 100 to 900 */
+  font-style: normal;
+}
+
+.fira-code {
+  font-family: "Fira Code", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  /* from 300 to 700 */
+  font-style: normal;
+}

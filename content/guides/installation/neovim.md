@@ -1,5 +1,5 @@
 ---
-title: "NeoVim"
+title: "Neovim"
 date: 2025-02-20
 authors: [Nykenik]
 ---

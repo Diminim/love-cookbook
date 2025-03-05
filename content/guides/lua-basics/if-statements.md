@@ -3,6 +3,7 @@ title: "If-statements"
 authors: [Sheepolution]
 date: 2025-02-20
 ---
+{% abstract "if-statements are great!" %}
 
 With **if-statements** we can control whether certain code should be executed or not.
 
@@ -69,7 +70,7 @@ end
 ```
 
 > [!NOTE]
-> The if-statement is a **statement**.
+> An if-statement is what we call a **control structure**.
 >
 > `5 > 9` is an **expression**.
 >
@@ -98,7 +99,7 @@ print(4 > 4) -- false, 4 is not higher than 4.
 print(4 < 4) -- false, 4 is not lower than 4.
 
 print(4 >= 4) -- true, 4 is equal to or higher than 4.
-print(4 <= 4) -- true, 4 is equal to or higher than 4.
+print(4 <= 4) -- true, 4 is equal to or lower than 4.
 ```
 
 And finally, we have `~=` to check if two values are NOT equal to each other.
@@ -148,6 +149,8 @@ end
 
 ## and & or
 
+{% abstract "With the keyword `and` we can combine expressions to check if they are all true. With the keyword `or` we can combine expressions to check if any of them are true." %}
+
 With the keyword `and` we can combine expressions to check if they are all true.
 
 ```lua
@@ -160,7 +163,7 @@ if 6 > 1 and 5 == 4 and 8 > 2 then
 end
 ```
 
-With the keyword `or` we can combine expression to check if any of them are true.
+With the keyword `or` we can combine expressions to check if any of them are true.
 
 ```lua
 if 1 > 8 or 7 > 3 then
@@ -185,6 +188,8 @@ end
 ```
 
 ## Truthy and falsy
+
+{% abstract "Truthy and falsy refer to state of values when used as a condition. The values `false` and `nil` are falsy. All other values are truthy." %}
 
 So far we have talked about booleans, and `true` or `false`, but if-statements can accept other values as well. We call these values **truthy**.
 
@@ -220,6 +225,30 @@ if hello() then -- The function call returns false.
     print("Not printed...")
 else
     print("hello() is falsy!") -- Printed!
+end
+```
+
+## Nested statements
+
+{% abstract "A nested statement is when you put a statement (like an if-statement or a for-loop) inside another statement" %}
+
+We can put an if-statement inside another if-statement. We call these **nested statements**.
+
+```lua
+local number = 80
+
+if number > 50 then
+    if number > 75 then
+        if number > 100 then
+            print("Higher than 100!")
+        else
+            print("Lower than 100") -- Printed!
+        end
+    else
+        print("Lower than 75")
+    end
+else
+    print("Lower than 50")
 end
 ```
 

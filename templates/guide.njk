@@ -2,22 +2,16 @@
 layout: base.njk
 ---
 
-<section class="guide-content">
-  <header class="guide-header">
-    <h1 class="guide-title">{{ title }}</h1>
-  </header>
+<h1>{{ title }}</h1>
 
-  {{ content | safe }}
-</section>
+{{ content | safe }}
 
 <footer class="guide-footer">
-  <p>
-    Created on: <em>{{ date.toDateString() }}</em>
-  </p>
+  <p></p>
 
   <p>By: 
   {% for author in authors %}
-    <em>{{ author }}</em>
-  {% endfor %}
+      <em>{{ author }}</em>
+    {% endfor %}
   </p>
 </footer>

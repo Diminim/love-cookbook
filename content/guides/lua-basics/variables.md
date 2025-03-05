@@ -49,12 +49,14 @@ print(a + b) -- Output: 16
 print(a - b) -- Output: 8
 print(a * b) -- Output: 48
 print(a / b) -- Output: 3
+print(a ^ b) -- Output: 20736
+-- ^ is for exponentiation (12 * 12 * 12 * 12)
 ```
 
 When we use a variable, there is no reference to the variable itself, only its value. In this code we change the values of `a` and `b`, but that does not affect the value of `c`. The value of `c` becomes `16`, and not `a + b`.
 
 ```lua
--- Tip: This way you can declare multiple variables on a single line.
+-- Tip: This way we can declare multiple variables on a single line.
 a, b = 12, 4
 c = a + b
 a, b = 0, 0
@@ -96,6 +98,21 @@ print(test) -- Output: 10
 
 test = nil -- We assign nil to remove the value.
 print(test) -- Output: nil
+```
+
+## Types
+
+We have shown that variables can be a number, or a string, or no value at all. We call this the variable's **type**.
+
+You can get the type of a variable by using `type`.
+
+```lua
+local a = 10
+local animal = "whale"
+
+print(type(a)) -- Output: number
+print(type(animal)) -- Output: string
+print(type(test)) -- Output: nil
 ```
 
 ## Naming variables
@@ -152,6 +169,8 @@ wHaLe = 200
 
 ## Local variables
 
+{% abstract "Local variables are variables that are only available within the scope they are created." %}
+
 By default, all variables are **global**. This means that they can be used everywhere in your project. That sounds like a good thing, but it can get messy when you have a big project with many variables.
 
 Because of that, we often use **local** variables. We can create a local variable by putting the keyword `local` in front.
@@ -161,48 +180,17 @@ local a = 0
 -- We can reassign a value to our local variable, and it will remain local.
 a = 10
 
--- You can declare a local variable without assigning it a value right away.
+-- We can declare a local variable without assigning it a value right away.
 local b
 b = 20
 ```
-
 
 Local variables are only accessible where they are declared. We call this its *scope*. In a later chapter you will learn more about scope, but in simple terms it means the *code block* it is in, or otherwise the file.
 
 > [!TIP]
 > Every time you see and `end`, then that is the end of a *code block*.
 
-> [!NOTE]
-> Scope can be complicated as a beginner. Don't worry if you have trouble understanding it. In a later chapter we will talk about scope in more detail.
-
-{% love 800, 100, true %}
--- This variable is not declared inside a code block
--- Because of that, it's accessible in all of main.lua
-local one = 1
-
--- A function is an example of a code block.
-function love.load()
-    -- The variable 'two' is only accessible in this code block.
-    local two = 2
-    print(one, two) -- Output: 1, 2
-end -- 'end' closes the code block.
-
-function love.draw()
-    -- We are inside a different code block.
-    love.graphics.print(one, 10, 10)
-
-    -- This would give an error, because 'two' holds no value.
-    -- love.graphics.print(two, 10, 30) -- Error!
-
-    -- Careful! This is now declared as a global variable!
-    -- Because the original declaration was inside a different code block.
-    two = 20
-
-    love.graphics.print(two, 10, 50)
-end
-{% endlove %}
-
-Because it is good practice, we will use local variables throughout this codebook.
+Because it is good practice, we will use local variables throughout this cookbook.
 
 ## Usage
 

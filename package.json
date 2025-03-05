@@ -21,6 +21,8 @@
   "description": "",
   "dependencies": {
     "@11ty/eleventy": "^3.0.0",
-    "markdown-it-github-alerts": "^0.3.0"
+    "markdown-it-anchor": "^9.2.0",
+    "markdown-it-github-alerts": "^0.3.0",
+    "prismjs": "^1.29.0"
   }
 }

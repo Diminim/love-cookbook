@@ -10,25 +10,38 @@
         "guide_urls": [
             "/guides/installation/love/",
             "/guides/installation/vscode/",
-			"/guides/installation/neovim/"
+            "/guides/installation/neovim/"
         ]
     },
     {
-        "name": "Fundamentals",
+        "name": "Lua Basics",
         "guide_urls": [
-            "/guides/fundamentals/lua/",
-            "/guides/fundamentals/variables/",
-            "/guides/fundamentals/functions/",
-            "/guides/fundamentals/if-statements/",
-            "/guides/fundamentals/tables/",
-            "/guides/fundamentals/for-loops/"
+            "/guides/lua-basics/lua/",
+            "/guides/lua-basics/variables/",
+            "/guides/lua-basics/functions/",
+            "/guides/lua-basics/if-statements/",
+            "/guides/lua-basics/tables/",
+            "/guides/lua-basics/recap/"
         ]
     },
     {
-        "name": "LÖVE",
+        "name": "Lua Intermediate",
         "guide_urls": [
-            "/guides/love/drawing-a-rectangle/",
+            "/guides/lua-intermediate/require/",
+            "/guides/lua-intermediate/scope/",
+            "/guides/lua-intermediate/modulo/",
+            "/guides/lua-intermediate/nested-for-loops/",
+            "/guides/lua-intermediate/standard-library/",
+            "/guides/lua-intermediate/string-patterns/",
+            "/guides/lua-intermediate/ternary-operators/",
+            "/guides/lua-intermediate/metatables/"
+        ]
+    },
+    {
+        "name": "LÖVE Basics",
+        "guide_urls": [
             "/guides/love/drawing-image/",
+            "/guides/love/drawing-shapes/",
             "/guides/love/playing-sound/",
             "/guides/love/input/",
             "/guides/love/filesystem/",
@@ -52,7 +65,6 @@
         "name": "Intermediate",
         "guide_urls": [
             "/guides/intermediate/oop/",
-            "/guides/intermediate/metatables/",
             "/guides/intermediate/collision-resolving/",
             "/guides/intermediate/stencil-states/",
             "/guides/intermediate/coroutines/",

@@ -4,7 +4,7 @@ authors: [Sheepolution]
 date: 2025-02-19
 ---
 
-With **functions** you can store a piece of code to be executed at different times, and multiple times.
+With **functions** we can store a piece of code to be executed at different times, and multiple times.
 
 There are two ways to create a function:
 
@@ -59,6 +59,8 @@ At the end we print `animal`, and it outputs `nil`. This is because parameters a
 
 ## Return
 
+{% abstract "A return-statement ends the execution of a function, and allows you to return a value for the function-call." %}
+
 Functions can **return** a value. This means that, upon calling the function, it will give us a value back.
 
 ```lua
@@ -82,7 +84,7 @@ end
 sum(10, 20)
 ```
 
-A function can have multiple parameters, arguments, and return values, by separating them with a comma.
+A function can have multiple parameters, arguments, and return-values, by separating them with a comma.
 
 ```lua
 local function arithmetics(a, b)
@@ -97,11 +99,54 @@ end
 print(arithmetics(5, 40)) -- Ouput: 10, 20
 ```
 
+## Callbacks
+
+{% abstract "A callback is a function that is passed to another function. The latter function will, at some point, call the callback, often while passing useful information." %}
+
+As we stated earlier, when we execute a function, we call that a <ins>function call</ins>. It's as if we're *calling* someone to help us with something.
+
+```lua
+local function my_math_teacher(a, b)
+    return a - b
+end
+
+print(my_math_teacher(10, 4))
+```
+
+Here we call our math teacher to ask him what 10 minus 4 is. I don't think we're gonna get good grades.
+
+In fact, our math teacher isn't gonna be so helpful this time. He wants us to do the math ourselves. When we call him, we need to provide a function. Using a function like this is called a **callback**. It's as if we provide a phone number for him to <ins>call back</ins>.
+
+```lua
+local function my_math_teacher(f)
+    f(8, 2)
+end
+
+local function addition (a, b)
+    print(a + b) -- Output: 10
+end
+
+my_math_teacher(addition)
+
+-- We don't necessarily need to assign it in a variable first.
+-- We call this an anonymous function.
+my_math_teacher(function (a, b)
+    print(a - b) -- Output: 6
+end)
+```
+
+We call the function `my_math_teacher`, and pass a function (a <ins>callback</ins>) for the parameter `f`. Our teacher then calls this function, and passes two numbers. Our function `addition` prints the summed up numbers.
+
+In the second call we pass a function as we create it. We don't assign it in a variable first. We call this an **anonymous function**.
+
+> [!NOTE]
+> `love.load`, `love.update` and `love.draw` are also callbacks. We provide LÖVE with a function to call upon these events happening.
+
 ## Usage
 
 Functions allow us to execute the same code in different places, without having to copy that code. Instead we can call the function. If we ever want to change how the code works, we only need to change the function.
 
-In the example below we draw multiple rectangles. If we ever want to change the shape of the rectangle, we only need to change the function.
+In the example below we draw multiple rectangles. If we ever want to change the shape of all the rectangles, we only need to change the function.
 
 {% love 800, 200, true %}
 local function draw_rectangle(x)

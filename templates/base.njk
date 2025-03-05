@@ -6,46 +6,62 @@
 
     <title>LÖVE cookbook | {{ title }}</title>
 
+    <script src="/assets/js/codeblock.js"></script>
+    <script src="/assets/js/hover_preview.js"></script>
+
     <link rel="stylesheet" href="/assets/styles/fonts.css">
     <link rel="stylesheet" href="/assets/styles/main.css">
     <link rel="stylesheet" href="/assets/styles/prism.css">
     <link rel="stylesheet" href="/assets/styles/markdown.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div class="navbar">
-      <h1>LÖVE Cookbook</h1>
+    <div class="sidebar">
+      <header>
+        <a href="/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/assets/logo.png" />
+                <img class="logo-hover-img" src="/assets/logo_hover.png" />
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
+      </header>
+
+      <nav>
+        <ul>
+          {%- for group in guide_groups -%}
+            <li class="group-header">
+              {%- if group.name -%}
+                {{ group.name }}
+              {%- endif -%}
+
+              <ul>
+                {%- for guide_url in group.guide_urls -%}
+                  <li>
+                    {%- set guide_template = collections.guide | filterByUrl(guide_url) | first -%}
+                    <a 
+                      class="{%- if page.url == guide_url -%}active{%- endif -%}"
+                      href="{{ guide_template.url }}"
+                    >{{ guide_template.data.title }}</a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
     </div>
 
-    <div class="container">
-      <section class="guide-toc">
-        <ul>
-            <li>
-                <a href="/">Introduction</a>
-            </li>
-
-            {%- for group in guide_groups -%}
-            {%- if group.name -%}
-            <span class="group-header">{{ group.name }}</span>
-            {%- endif -%}
-            {%- for guide_url in group.guide_urls -%}
-            <li>
-                {%- set guide_template = collections.guide | filterByUrl(guide_url) | first -%}
-                <a href="{{ guide_template.url }}">{{ guide_template.data.title }}</a>
-            </li>
-            {%- endfor -%}
-            {%- endfor -%}
-        </ul>
-      </section>
+    <main>
       <article class="guide">
         {{ content | safe }}
       </article>
-    </div>
+    </main>
   </body>
 </html>

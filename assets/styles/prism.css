@@ -4,7 +4,6 @@ code[class*=language-],
 pre[class*=language-] {
     color: #000;
     background: 0 0;
-    text-shadow: 0 1px #fff;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size: 1em;
     text-align: left;
@@ -19,7 +18,9 @@ pre[class*=language-] {
     -webkit-hyphens: none;
     -moz-hyphens: none;
     -ms-hyphens: none;
-    hyphens: none
+    hyphens: none;
+    position: relative;
+    z-index: 2;
 }
 
 code[class*=language-] ::-moz-selection,
@@ -46,21 +47,26 @@ pre[class*=language-]::selection {
     }
 }
 
-pre[class*=language-] {
+pre:has(code[class*=language-]) {
     padding: 1em;
     margin: .5em 0;
-    overflow: auto
+    overflow: auto;
 }
 
 :not(pre)>code[class*=language-],
-pre[class*=language-] {
-    background: #f5f2f0
+pre:has(code[class*=language-]) {
+    background: #fff7ed;
+    border-radius: 8px;
 }
 
 :not(pre)>code[class*=language-] {
     padding: .1em;
     border-radius: .3em;
     white-space: normal
+}
+
+.line.highlight {
+    background: #dfdfff;
 }
 
 .token.cdata,
@@ -103,7 +109,6 @@ pre[class*=language-] {
 .token.operator,
 .token.url {
     color: #9a6e3a;
-    background: hsla(0, 0%, 100%, .5)
 }
 
 .token.atrule,
@@ -134,4 +139,26 @@ pre[class*=language-] {
 
 .token.entity {
     cursor: help
+}
+
+.code-block {
+    position: relative;
+}
+
+.highlight-lines {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.highlight-line {
+    display: relative;
+    width: 100%;
+    height: 1.5em;
+}
+
+.highlight-line.active {
+    background: rgb(255, 239, 167);
 }
