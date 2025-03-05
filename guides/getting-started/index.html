@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +23,7 @@
   </head>
   <body>
     <div class="sidebar">
+    
       <header>
         <a href="/love-cookbook/">
             <div class="logo">
@@ -33,21 +35,24 @@
         </a>
       </header>
 
-      <nav>
-        <ul><li class="group-header"><ul><li><a class="active" href="/love-cookbook/guides/getting-started/">Getting started</a>
+      <nav class="table-of-contents">
+        <ul class="chapters"><li class="group-header"><ul class="guides"><li><a class="active" href="/love-cookbook/guides/getting-started/">Getting started</a>
                   </li></ul>
-            </li><li class="group-header">Installation<ul><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
+
+            </li><li class="group-header">Installation<ul class="guides"><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
                   </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
                   </li></ul>
-            </li><li class="group-header">Lua Basics<ul><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+
+            </li><li class="group-header">Lua Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
-            </li><li class="group-header">Lua Intermediate<ul><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
+
+            </li><li class="group-header">Lua Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
@@ -56,7 +61,8 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
                   </li></ul>
-            </li><li class="group-header">LÖVE Basics<ul><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+
+            </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/playing-sound/">Playing sound</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
@@ -64,7 +70,8 @@
                   </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
                   </li></ul>
-            </li><li class="group-header">Basics<ul><li><a class="" href="/love-cookbook/guides/basic/aabb/">AABB</a>
+
+            </li><li class="group-header">Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/basic/aabb/">AABB</a>
                   </li><li><a class="" href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
                   </li><li><a class="" href="/love-cookbook/guides/basic/tiles/">Tiles</a>
                   </li><li><a class="" href="/love-cookbook/guides/basic/animation/">Animation</a>
@@ -72,24 +79,28 @@
                   </li><li><a class="" href="/love-cookbook/guides/basic/canvases/">Canvases</a>
                   </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
                   </li></ul>
-            </li><li class="group-header">Intermediate<ul><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+
+            </li><li class="group-header">Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/shaders/">Shaders</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/compute-shaders/">Compute Shaders</a>
                   </li></ul>
-            </li><li class="group-header">Advanced<ul><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
+
+            </li><li class="group-header">Advanced<ul class="guides"><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
                   </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
                   </li></ul>
+
             </li></ul>
+
       </nav>
     </div>
 
     <main>
       <article class="guide">
         
-<h1>Getting started</h1>
+<h1 class="title">Getting started</h1>
 
 <p>Hi there! LÖVE is an <em>awesome</em> framework you can use to make 2D games in Lua. It's free, open-source, and works on Windows, macOS, Linux, Android and iOS.</p>
 <h2 id="community" tabindex="-1">Community <a class="anchor" href="#community">#</a></h2>
@@ -136,5 +147,6 @@ end
 </footer>
       </article>
     </main>
+    
   </body>
 </html>

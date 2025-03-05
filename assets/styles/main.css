@@ -34,13 +34,24 @@ body {
   min-height: calc(100vh - 64px);
   box-sizing: border-box;
   overflow: hidden;
-  overflow-x: scroll;
+  overflow-x: scroll; 
+  /* 
+  ^ this creates a scrollbar at the bottom even when content fits. 
+  in the future, horizontal scrolling should never be a thing 
+  */
   
   font-family: "Inter", serif;
   line-height: 1.6;
   color: black;
   background-color: var(--color-background);
 }
+
+main {
+  flex: 6;
+}
+
+
+/* ---- sidebar ---- */
 
 .sidebar {
   display: flex;
@@ -49,18 +60,18 @@ body {
   width: 15rem;
 }
 
-header img {
+.sidebar header img {
   width: 60%;
   height: auto;
   margin-left: 20%;
   margin-right: 20%;
 }
 
-header a {
+.sidebar header a {
   text-decoration: none;
 }
 
-header h1 {
+.sidebar header h1 {
   text-align: center;
   margin: 0;
   padding: 0;
@@ -69,30 +80,56 @@ header h1 {
   color: var(--color-primary);
 }
 
-nav {
+/* images occupy the same space */
+.logo {
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: 1;
+}
+.logo > .logo-hover-img,
+.logo > .logo-unhover-img {
+  grid-area: 1 / 1 / -1 / -1;
+}
+
+/* using display: hidden means the image has to be fetched when first hovered, causing a flicker. */
+.logo-hover-img {
+  opacity: 0;
+}
+.logo:hover .logo-unhover-img {
+  opacity: 0;
+}
+.logo:hover .logo-hover-img {
+  opacity: 1;
+}
+
+.table-of-contents {
   background-color: var(--color-background-panel);
   border-radius: .5rem;
   flex-grow: 1;
 }
 
-nav ul {
+.table-of-contents .chapters {
   list-style: none;
-  padding-left: 2rem;
+  padding-left: 1rem;
 }
-
-nav ul li {
+.table-of-contents .chapters > li {
   font-weight: 700;
   color: var(--color-text);
 }
 
-nav ul li a {
+.table-of-contents .guides {
+  list-style: none;
+  padding-left: 2rem;
+}
+
+.table-of-contents .guides > li a {
   font-weight: 500;
   text-decoration: none;
   color: var(--color-text);
   position: relative;
 }
 
-nav ul li a:before {
+.table-of-contents .guides > li a:before {
   content: '';
   display: inline-block;
   width: .25rem;
@@ -106,19 +143,19 @@ nav ul li a:before {
   border-radius: .1rem;
 }
 
-nav ul li a:hover:before {
+.table-of-contents .guides > li a:hover:before {
   opacity: 1;
 }
 
-nav ul li a.active:before {
+.table-of-contents .guides > li a.active:before {
   opacity: 1;
 }
 
-main {
-  flex: 6;
-}
 
-article {
+
+/* ---- guide ---- */
+
+.guide {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -127,37 +164,35 @@ article {
   color: var(--color-text-dark);
 }
 
-article p,
-article ul,
-article ol {
+.guide p,
+.guide ul,
+.guide ol {
   margin: 0;
 }
 
-article img {
+.guide img {
   border-radius: .5rem;
   border: var(--color-faded-1) .1rem solid;
 }
 
-article a {
+.guide a {
   color: var(--color-whale);
 }
 
-article h1 {
+.guide .title {
   font-size: 3rem;
   border-bottom: solid .1rem var(--color-text);
   margin: 0;
 }
 
-article h2 {
-  font-size: 2rem;
-}
+.guide h1 { font-size: 2.0rem; font-weight: bold; }
+.guide h2 { font-size: 1.8rem; font-weight: bold; }
+.guide h3 { font-size: 1.6rem; font-weight: bold; }
+.guide h4 { font-size: 1.4rem; }
+.guide h5 { font-size: 1.2rem; }
+.guide h6 { font-size: 1.0rem; }
 
-article h1,
-article h2,
-article h3,
-article h4,
-article h5,
-article h6 {
+.guide :is(h1, h2, h3, h4, h5, h6) {
   margin: 0;
   margin-top: 1rem;
   
@@ -165,31 +200,24 @@ article h6 {
   font-family: "Nunito", serif;
 }
 
-article :is(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
+/* combinatorial way to remove margins on subsequent headers */
+.guide :is(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
   margin-top: 0;
 }
 
-article h1 a,
-article h2 a,
-article h3 a,
-article h4 a,
-article h5 a,
-article h6 a {
-  visibility: hidden;
-}
-
-article h1:hover a,
-article h2:hover a,
-article h3:hover a,
-article h4:hover a,
-article h5:hover a,
-article h6:hover a {
+/* header link */
+.guide :is(h1, h2, h3, h4, h5, h6) a {
   color: var(--color-text);
   text-decoration: none;
-  visibility: visible;
+  opacity: 0;
+  transition: opacity .1s;
+}
+.guide :is(h1, h2, h3, h4, h5, h6):hover a {
+  opacity: .75;
 }
 
-code:not(.language-lua), .code-block {
+.guide code, 
+.guide .code-block {
   border: .1rem solid var(--color-faded-2);
   border-radius: .25rem;
   background-color: var(--color-vanilla);
@@ -198,16 +226,13 @@ code:not(.language-lua), .code-block {
   font-family: "Fira Code", serif;
 }
 
-.logo-hover-img {
-  display: none;
-}
+.guide .code-block code {
+  border: none;
+  border-radius: 0;
+  padding: 0;
 
-.logo:hover .logo-unhover-img {
-  display: none;
-}
-
-.logo:hover .logo-hover-img {
-  display: inline-block;
+  font-family: "Fira Code", serif;
+  background-color: transparent;
 }
 
 .hover-preview {
