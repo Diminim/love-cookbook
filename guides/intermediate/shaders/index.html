@@ -86,6 +86,10 @@
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
                   </li><li><a class="active" href="/love-cookbook/guides/intermediate/shaders/">Shaders</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/compute-shaders/">Compute Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/box-blur/">Box Blur</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/outlines/">Outlines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/palette/">Palette</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/pixelation/">Pixelation</a>
                   </li></ul>
 
             </li><li class="group-header">Advanced<ul class="guides"><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
@@ -153,15 +157,27 @@ Which leads to another limitation, recursive code is not allowed either, use a s
 <li><code>uint</code> <em>x</em>u ( 1u )</li>
 </ul>
 <p><a href="https://learnwebgl.brown37.net/12_shader_language/glsl_mathematical_operations.html">This</a> page explains operators.</p>
+<h2 id="object-management" tabindex="-1">Object Management <a class="anchor" href="#object-management">#</a></h2>
+<p>When providing shaders with objects, like <code>Textures</code> and <code>Buffers</code>
+we provide the reference to the data already stored in VRAM.</p>
+<p>Meaning if we for example, send a canvas to a shader and render to it with a <code>setCanvas</code> call, the memory in VRAM will have changed.
+So when using that canvas later, the contents will be different from when you sent the image, as it's just a reference.
+Sending images and buffers to the gpu is expensive (Using newTexture, newBuffer or similar), but sending the reference (Using shader:send) is not.</p>
 <h2 id="the-fragment-shader" tabindex="-1">The Fragment shader <a class="anchor" href="#the-fragment-shader">#</a></h2>
 <p>This shader is executed for every pixel the effect covers.
 Let's make a simple fragment shader from a string to show it's functionality.</p>
 <p>During this guide, we will be creating new shader files, usually with the <code>.fs</code>, <code>.vs</code> or <code>.glsl</code> extension.
 However, if needed, shaders can be created from a string (<code>love.graphics.newShader(yourCodeString)</code>) as well.</p>
-<hr>
+<p>We start by defining the output, <code>vec4</code>.<br>
+<code>vec4 color</code> is the color we provide with <code>love.graphics.setColor</code>.<br>
+<code>Image tex</code> is the texture of our draw call, like the image from <code>love.graphics.draw(image)</code>.<br>
+<code>vec2 texture_coords</code> are the uv-coordinates defined by the vertices of our mesh or automatically by LÖVE for images and similar [0-1].<br>
+<code>vec2 screen_coords</code> are the coordinates on screen, [0.5 to love_ScreenSize.xy-0.5].</p>
 <h3 id="simple-color" tabindex="-1">Simple color <a class="anchor" href="#simple-color">#</a></h3>
 <p><code>solidColor.fs</code></p>
-<pre><code class="language-glsl"><span data-attrs=""></span><span class="token keyword">vec4</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token keyword">vec4</span> color<span class="token punctuation">,</span> Image tex<span class="token punctuation">,</span> <span class="token keyword">vec2</span> texture_coords<span class="token punctuation">,</span> <span class="token keyword">vec2</span> screen_coords<span class="token punctuation">)</span>
+<pre><code class="language-glsl"><span data-attrs=""></span>
+<span class="token comment">// This is one of the "entry points" supported by LÖVE.</span>
+<span class="token keyword">vec4</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token keyword">vec4</span> color<span class="token punctuation">,</span> Image tex<span class="token punctuation">,</span> <span class="token keyword">vec2</span> texture_coords<span class="token punctuation">,</span> <span class="token keyword">vec2</span> screen_coords<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token comment">// Colors are returned as (Red, Green, Blue, Alpha)</span>
     <span class="token keyword">return</span> <span class="token keyword">vec4</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Color the square red</span>
@@ -239,80 +255,6 @@ vec4 effect(vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords)
 <span class="token keyword">end</span>
 </code></pre>
 <hr>
-<h3 id="box-blur" tabindex="-1">Box blur <a class="anchor" href="#box-blur">#</a></h3>
-<p>Let's step things up again by creating a multi pass shader and by moving it to another file.
-Start by creating a file called <code>boxBlur.fs</code> (fs = fragment shader)</p>
-<p>Blurring a picture works by sampling the values of all other nearby pixels within a certain radius and averaging those results.<br>
-However, because of how this effect scales, larger blur radiuses become really computationally expensive.<br>
-Due to the way this effect works, we can do it in two passes, one on the x-axis and one on the y-axis, effectively changing the amount of pixels to so sample per pixel from Count^2 to Count * 2</p>
-<p><code>boxBlur.fs</code>:</p>
-<pre><code class="language-glsl"><span data-attrs=""></span><span class="token keyword">uniform</span> <span class="token keyword">vec2</span> Offset<span class="token punctuation">;</span>
-<span class="token keyword">uniform</span> <span class="token keyword">int</span> SampleCount<span class="token punctuation">;</span>
-<span class="token keyword">uniform</span> Image SourceTexture<span class="token punctuation">;</span>
-
-<span class="token keyword">vec4</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token keyword">vec4</span> color<span class="token punctuation">,</span> Image tex<span class="token punctuation">,</span> <span class="token keyword">vec2</span> texture_coords<span class="token punctuation">,</span> <span class="token keyword">vec2</span> screen_coords<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token comment">// Keep a sum of all samples</span>
-    <span class="token keyword">vec3</span> sum <span class="token operator">=</span> <span class="token keyword">vec3</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// Type conversions are not done automatically in GLSL ES </span>
-    <span class="token comment">// Knowing when they happen can help understanding our code better and improve compatability</span>
-    <span class="token keyword">vec2</span> texel_size <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">/</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span>love_ScreenSize<span class="token punctuation">.</span>xy<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token keyword">sample</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token keyword">sample</span> <span class="token operator">&lt;</span> SampleCount<span class="token punctuation">;</span> <span class="token keyword">sample</span><span class="token operator">++</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        sum <span class="token operator">+=</span> <span class="token function">Texel</span><span class="token punctuation">(</span>SourceTexture<span class="token punctuation">,</span> texture_coords <span class="token operator">+</span> <span class="token punctuation">(</span>Offset <span class="token operator">*</span> <span class="token keyword">float</span><span class="token punctuation">(</span><span class="token keyword">sample</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">*</span> texel_size<span class="token punctuation">)</span><span class="token punctuation">.</span>rgb<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    sum <span class="token operator">/=</span> <span class="token keyword">float</span><span class="token punctuation">(</span>SampleCount<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token keyword">vec4</span><span class="token punctuation">(</span>sum<span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p><code>main.lua</code>:</p>
-<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> image <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newImage</span><span class="token punctuation">(</span><span class="token string">"YourImage.png"</span><span class="token punctuation">)</span>
-<span class="token keyword">local</span> shader <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newShader</span><span class="token punctuation">(</span><span class="token string">"boxBlur.fs"</span><span class="token punctuation">)</span>
-<span class="token keyword">local</span> mainCanvas <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newCanvas</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment">-- Since we are applying the shader twice, we need to store the image in between passes</span>
-<span class="token keyword">local</span> blurCanvas <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newCanvas</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment">-- Size of the entire box will be (n * 2 + 1) x (n * 2 + 1) (n to each side + center)</span>
-shader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"SampleCount"</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>
-
-
-<span class="token comment">-- Quick helper function to draw a 1x1 image full-screen</span>
-<span class="token comment">-- Which avoids having to create a mesh with uv's, since images have that by default</span>
-<span class="token keyword">local</span> img <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newImage</span><span class="token punctuation">(</span>love<span class="token punctuation">.</span>image<span class="token punctuation">.</span><span class="token function">newImageData</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">function</span> <span class="token function">drawFullscreen</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>img<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">getDimensions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">end</span>
-
-<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setCanvas</span><span class="token punctuation">(</span>mainCanvas<span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>image<span class="token punctuation">)</span>
-
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setCanvas</span><span class="token punctuation">(</span>blurCanvas<span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span>shader<span class="token punctuation">)</span>
-
-    <span class="token comment">-- Blur on the X-axis</span>
-    shader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Offset"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
-    shader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"SourceTexture"</span><span class="token punctuation">,</span> mainCanvas<span class="token punctuation">)</span>
-
-    <span class="token function">drawFullscreen</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setCanvas</span><span class="token punctuation">(</span>mainCanvas<span class="token punctuation">)</span>
-
-    <span class="token comment">-- Blur on the Y-axis</span>
-    shader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Offset"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
-    shader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"SourceTexture"</span><span class="token punctuation">,</span> blurCanvas<span class="token punctuation">)</span>
-    <span class="token function">drawFullscreen</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setCanvas</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>mainCanvas<span class="token punctuation">)</span>
-<span class="token keyword">end</span>
-</code></pre>
 <h2 id="vertex-shaders" tabindex="-1">Vertex shaders <a class="anchor" href="#vertex-shaders">#</a></h2>
 <p>Vertex shaders are small programs which calculate the final position of a vertex on screen.<br>
 The output of a vertex shader is in NDC-space (Normalised Device Coordinates),<br>
@@ -341,11 +283,11 @@ By default, these values are interpolated, meaning halfway between, for example,
 <span class="token keyword">end</span>
 
 </code></pre>
-<iframe class="love-embed" id="love-iframe-772" src="/love-cookbook/assets/love/love-js" width="200" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-873" src="/love-cookbook/assets/love/love-js" width="200" height="200"></iframe>
 <script>
-const iframe_772 = document.getElementById('love-iframe-772');
-iframe_772.addEventListener('load', function() {
-iframe_772.contentWindow.postMessage({lua: `love.window.setMode(200, 200) 
+const iframe_873 = document.getElementById('love-iframe-873');
+iframe_873.addEventListener('load', function() {
+iframe_873.contentWindow.postMessage({lua: `love.window.setMode(200, 200) 
 local PI13 = math.pi * 2 / 3
 local mesh = love.graphics.newMesh({
  { 100 + math.cos(PI13 * 2 + math.pi / 6) * 100, 120 + math.sin(PI13 * 2 + math.pi / 6) * 100, 0, 0, 1, 0, 0 },
@@ -382,317 +324,6 @@ This is because the z values of the pixels will lie outside of the [-1 to 1] ran
     gl_Position <span class="token operator">=</span> VarScreenPosition<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
-</code></pre>
-<h2 id="effects" tabindex="-1">Effects <a class="anchor" href="#effects">#</a></h2>
-<h3 id="nearest-color" tabindex="-1">Nearest color <a class="anchor" href="#nearest-color">#</a></h3>
-<p>To lock the colors we can have in our image, and still have artistic control over those colors, we're going to create an image with all possible colors our output can be, then use a fragment shader to select one which fits the best using a simple approximation.</p>
-<p><code>paletteShader.fs</code></p>
-<pre><code class="language-glsl"><span data-attrs=""></span><span class="token keyword">uniform</span> <span class="token keyword">sampler2D</span> Palette<span class="token punctuation">;</span>
-
-<span class="token keyword">vec4</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token keyword">vec4</span> color<span class="token punctuation">,</span> Image tex<span class="token punctuation">,</span> <span class="token keyword">vec2</span> texture_coords<span class="token punctuation">,</span> <span class="token keyword">vec2</span> screen_coords<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">ivec2</span> size <span class="token operator">=</span> <span class="token function">textureSize</span><span class="token punctuation">(</span>Palette<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// Store the color our image was originally going to be</span>
-    <span class="token keyword">vec4</span> defaultColor <span class="token operator">=</span> color <span class="token operator">*</span> <span class="token function">Texel</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> texture_coords<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// Store the "Distance" To the current closest color</span>
-    <span class="token keyword">vec4</span> closestColor <span class="token operator">=</span> <span class="token keyword">vec4</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// In LDR (Low Dynamic Range), the maximum distance is 1.0</span>
-    <span class="token keyword">float</span> closestDist <span class="token operator">=</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// Loop over all colors in the palette</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">.</span>x<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">vec4</span> paletteColor <span class="token operator">=</span> <span class="token function">texelFetch</span><span class="token punctuation">(</span>Palette<span class="token punctuation">,</span> <span class="token keyword">ivec2</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment">// FYI, this is a very simple color distance calculation</span>
-        <span class="token comment">// The visual difference between colors is not linear</span>
-        <span class="token comment">// and not all channels are equal</span>
-
-        <span class="token keyword">float</span> dist <span class="token operator">=</span> <span class="token function">distance</span><span class="token punctuation">(</span>paletteColor<span class="token punctuation">.</span>rgb<span class="token punctuation">,</span> defaultColor<span class="token punctuation">.</span>rgb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment">// If this color is closer than the previous closest, use it</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>dist <span class="token operator">&lt;</span> closestDist<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            closestDist <span class="token operator">=</span> dist<span class="token punctuation">;</span>
-            closestColor <span class="token operator">=</span> paletteColor<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment">// Then just return the color</span>
-    <span class="token keyword">return</span> closestColor<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p><code>main.lua</code></p>
-<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> shader <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newShader</span><span class="token punctuation">(</span><span class="token string">"paletteShader.fs"</span><span class="token punctuation">)</span>
-
-<span class="token comment">-- Calculate a palette with some colors</span>
-<span class="token keyword">local</span> channels <span class="token operator">=</span> <span class="token number">4</span>
-<span class="token keyword">local</span> paletteData <span class="token operator">=</span> love<span class="token punctuation">.</span>image<span class="token punctuation">.</span><span class="token function">newImageData</span><span class="token punctuation">(</span>channels <span class="token operator">*</span> channels <span class="token operator">*</span> channels<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-
-<span class="token keyword">for</span> red <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> channels <span class="token operator">-</span> <span class="token number">1</span> <span class="token keyword">do</span>
-    <span class="token keyword">for</span> green <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> channels <span class="token operator">-</span> <span class="token number">1</span> <span class="token keyword">do</span>
-        <span class="token keyword">for</span> blue <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> channels <span class="token operator">-</span> <span class="token number">1</span> <span class="token keyword">do</span>
-            <span class="token keyword">local</span> x <span class="token operator">=</span> red <span class="token operator">+</span> green <span class="token operator">*</span> channels <span class="token operator">+</span> blue <span class="token operator">*</span> channels <span class="token operator">*</span> channels
-            paletteData<span class="token punctuation">:</span><span class="token function">setPixel</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> red <span class="token operator">/</span> <span class="token punctuation">(</span>channels <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> green <span class="token operator">/</span> <span class="token punctuation">(</span>channels <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> blue <span class="token operator">/</span> <span class="token punctuation">(</span>channels <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-        <span class="token keyword">end</span>
-    <span class="token keyword">end</span>
-<span class="token keyword">end</span>
-
-<span class="token keyword">local</span> palette <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newImage</span><span class="token punctuation">(</span>paletteData<span class="token punctuation">)</span>
-shader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'Palette'</span><span class="token punctuation">,</span> palette<span class="token punctuation">)</span>
-<span class="token keyword">local</span> image <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newImage</span><span class="token punctuation">(</span><span class="token string">'YourImage.png'</span><span class="token punctuation">)</span>
-
-<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span>shader<span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">end</span>
-</code></pre>
-<h3 id="pixelation" tabindex="-1">Pixelation <a class="anchor" href="#pixelation">#</a></h3>
-<p>To achieve a pixelation effect, we basically want to increase the amount of pixels a pixel in our game covers,</p>
-<p>For this effect we'll run a shader to average the results of every 2x2 block, effectively halving the resolution of our game.<br>
-We can use a trick to improve the memory efficiency of our effect by storing the results of that average in a half resolution image, since all pixels in that 2x2 block will have the same average.<br>
-To increase the amount of pixelation our effect allows for we can keep downscaling like that until we achieve our desired resolution.</p>
-<p><code>pixelationShader.fs</code></p>
-<pre><code class="language-glsl"><span data-attrs=""></span><span class="token keyword">vec4</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token keyword">vec4</span> color<span class="token punctuation">,</span> Image tex<span class="token punctuation">,</span> <span class="token keyword">vec2</span> texture_coords<span class="token punctuation">,</span> <span class="token keyword">vec2</span> screen_coords<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// This shader will run on a half-resolution canvas</span>
-    <span class="token comment">// meaning the texture_coords are in the center of a 2x2 pixel block</span>
-    <span class="token comment">/*
-    |---|---|
-    | 0 | 1 |
-    |---X---|
-    | 2 | 3 |
-    |---|---|
-    */</span>
-
-    <span class="token keyword">ivec2</span> size <span class="token operator">=</span> <span class="token function">textureSize</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Full-resolution size</span>
-    <span class="token keyword">vec2</span> texelSize <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">/</span> size<span class="token punctuation">;</span> <span class="token comment">// Size of a texel</span>
-
-    <span class="token comment">// Size we're offset 0.5 texels in each direction</span>
-    <span class="token keyword">vec2</span> offset <span class="token operator">=</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token operator">*</span> texelSize<span class="token punctuation">;</span>
-
-    <span class="token comment">// Calculate the positions on the Full-resolution canvas</span>
-    <span class="token keyword">vec2</span> samplePosition0 <span class="token operator">=</span> texture_coords <span class="token operator">+</span> offset <span class="token operator">*</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">vec2</span> samplePosition1 <span class="token operator">=</span> texture_coords <span class="token operator">+</span> offset <span class="token operator">*</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">vec2</span> samplePosition2 <span class="token operator">=</span> texture_coords <span class="token operator">+</span> offset <span class="token operator">*</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1.0</span><span class="token punctuation">,</span>  <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">vec2</span> samplePosition3 <span class="token operator">=</span> texture_coords <span class="token operator">+</span> offset <span class="token operator">*</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span> <span class="token number">1.0</span><span class="token punctuation">,</span>  <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// Half-resolution size, converted to vec2, so we skip a few automatic conversions</span>
-    <span class="token keyword">vec2</span> outputSize <span class="token operator">=</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span>love_ScreenSize<span class="token punctuation">.</span>xy<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">vec4</span> average <span class="token operator">=</span> <span class="token keyword">vec4</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// The gpu has something called a FMAD instruction, which is a Fused Multiply-Add</span>
-    <span class="token comment">// Meaning we can multiply and add at the same time for no extra cost!</span>
-
-    average <span class="token operator">=</span> <span class="token number">0.25</span> <span class="token operator">*</span> <span class="token function">texelFetch</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> <span class="token keyword">ivec2</span><span class="token punctuation">(</span>samplePosition0 <span class="token operator">*</span> size<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> average<span class="token punctuation">;</span>
-    average <span class="token operator">=</span> <span class="token number">0.25</span> <span class="token operator">*</span> <span class="token function">texelFetch</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> <span class="token keyword">ivec2</span><span class="token punctuation">(</span>samplePosition1 <span class="token operator">*</span> size<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> average<span class="token punctuation">;</span>
-    average <span class="token operator">=</span> <span class="token number">0.25</span> <span class="token operator">*</span> <span class="token function">texelFetch</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> <span class="token keyword">ivec2</span><span class="token punctuation">(</span>samplePosition2 <span class="token operator">*</span> size<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> average<span class="token punctuation">;</span>
-    average <span class="token operator">=</span> <span class="token number">0.25</span> <span class="token operator">*</span> <span class="token function">texelFetch</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> <span class="token keyword">ivec2</span><span class="token punctuation">(</span>samplePosition3 <span class="token operator">*</span> size<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> average<span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> average<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p><code>main.lua</code></p>
-<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> pixelationShader <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newShader</span><span class="token punctuation">(</span><span class="token string">"pixelationShader.fs"</span><span class="token punctuation">)</span>
-
-<span class="token comment">-- pixelScale must be an integer and a power of two</span>
-<span class="token comment">-- pixelationCanvases can just be a table we define outside of our main loop</span>
-<span class="token comment">-- the function will use this table to store the half-resultion canvases, it's a parameter</span>
-<span class="token comment">-- because we need to release them when resizing "gameCanvas" or when changing the format</span>
-<span class="token keyword">function</span> <span class="token function">pixelate</span><span class="token punctuation">(</span>gameCanvas<span class="token punctuation">,</span> pixelScale<span class="token punctuation">,</span> pixelationCanvases<span class="token punctuation">)</span>
-    <span class="token comment">-- Will try to avoid doing anything if the scale is 1</span>
-    <span class="token comment">-- Because then previousCanvas will be `gameCanvas` and a canvas can't be drawn to itself.</span>
-    <span class="token keyword">if</span> pixelScale <span class="token operator">==</span> <span class="token number">1</span> <span class="token keyword">then</span>
-        <span class="token keyword">return</span>
-    <span class="token keyword">end</span>
-
-    <span class="token keyword">local</span> width<span class="token punctuation">,</span> height <span class="token operator">=</span> gameCanvas<span class="token punctuation">:</span><span class="token function">getDimensions</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-    <span class="token comment">-- Make sure we don't try to create a 0x0 canvas later</span>
-    <span class="token function">assert</span><span class="token punctuation">(</span>math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>width <span class="token operator">/</span> pixelScale<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"Pixel scale is too high for the canvas width"</span><span class="token punctuation">)</span>
-    <span class="token function">assert</span><span class="token punctuation">(</span>math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>height <span class="token operator">/</span> pixelScale<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"Pixel scale is too high for the canvas height"</span><span class="token punctuation">)</span>
-
-    <span class="token comment">-- Though this is probably not used, it's good to have it here</span>
-    <span class="token comment">-- So this code doesn't need to be edited if we change the format of our game canvas</span>
-    <span class="token keyword">local</span> format <span class="token operator">=</span> gameCanvas<span class="token punctuation">:</span><span class="token function">getFormat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">local</span> settings <span class="token operator">=</span> <span class="token punctuation">{</span> format <span class="token operator">=</span> format <span class="token punctuation">}</span>
-
-    <span class="token comment">-- Keep track of the full-size canvas relative to the one we're working on.</span>
-    <span class="token keyword">local</span> previousCanvas <span class="token operator">=</span> gameCanvas
-
-    <span class="token keyword">local</span> mode<span class="token punctuation">,</span> alphaMode <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">getBlendMode</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token comment">-- Disable any blending for the pixelation</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setBlendMode</span><span class="token punctuation">(</span><span class="token string">"none"</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span>pixelationShader<span class="token punctuation">)</span>
-
-    <span class="token keyword">local</span> scale <span class="token operator">=</span> <span class="token number">2</span>
-
-    <span class="token comment">-- Create a canvas for each power of two scale if they don't exist yet</span>
-    <span class="token comment">-- and draw the previous canvas to it.</span>
-    <span class="token keyword">while</span> scale <span class="token operator">&lt;=</span> pixelScale <span class="token keyword">do</span>
-        <span class="token keyword">if</span> <span class="token keyword">not</span> pixelationCanvases<span class="token punctuation">[</span>scale<span class="token punctuation">]</span> <span class="token keyword">then</span>
-            pixelationCanvases<span class="token punctuation">[</span>scale<span class="token punctuation">]</span> <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newCanvas</span><span class="token punctuation">(</span>width <span class="token operator">/</span> scale<span class="token punctuation">,</span> height <span class="token operator">/</span> scale<span class="token punctuation">,</span> settings<span class="token punctuation">)</span>
-            pixelationCanvases<span class="token punctuation">[</span>scale<span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token function">setFilter</span><span class="token punctuation">(</span><span class="token string">"nearest"</span><span class="token punctuation">,</span> <span class="token string">"nearest"</span><span class="token punctuation">)</span>
-        <span class="token keyword">end</span>
-
-        <span class="token keyword">local</span> canvas <span class="token operator">=</span> pixelationCanvases<span class="token punctuation">[</span>scale<span class="token punctuation">]</span>
-
-        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setCanvas</span><span class="token punctuation">(</span>canvas<span class="token punctuation">)</span>
-        love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>previousCanvas<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">)</span>
-
-        previousCanvas <span class="token operator">=</span> canvas
-
-        scale <span class="token operator">=</span> scale <span class="token operator">*</span> <span class="token number">2</span>
-    <span class="token keyword">end</span>
-
-    <span class="token comment">-- Draw the final canvas to the game canvas</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setCanvas</span><span class="token punctuation">(</span>gameCanvas<span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>previousCanvas<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> scale <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span> scale <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span>
-
-    <span class="token comment">-- Clean up</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setCanvas</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setBlendMode</span><span class="token punctuation">(</span>mode<span class="token punctuation">,</span> alphaMode<span class="token punctuation">)</span>
-<span class="token keyword">end</span>
-</code></pre>
-<h3 id="outlines" tabindex="-1">Outlines <a class="anchor" href="#outlines">#</a></h3>
-<p>There are almost an infinite amount of ways to create an outline shader but we'll cover two simple ones here.</p>
-<p>The first implementation requires that objects with an outline are drawn to a black canvas, which a shader then calculates the outlines for and overlays over the game.</p>
-<p><code>outlineShader.fs</code></p>
-<pre><code class="language-glsl"><span data-attrs=""></span><span class="token comment">// radius in pixels of the outline</span>
-<span class="token keyword">uniform</span> <span class="token keyword">float</span> radius<span class="token punctuation">;</span>
-<span class="token keyword">uniform</span> <span class="token keyword">vec4</span> OutlineColor<span class="token punctuation">;</span>
-
-<span class="token comment">// Increasing the bias will change how dark a pixel needs to be to be considered outside</span>
-<span class="token comment">// 0.0 is the darkest possible color, 1.0 is the lightest possible color</span>
-<span class="token keyword">const</span> <span class="token keyword">float</span> bias <span class="token operator">=</span> <span class="token number">0.01</span><span class="token punctuation">;</span>
-
-<span class="token keyword">bool</span> <span class="token function">outside</span><span class="token punctuation">(</span>Image tex<span class="token punctuation">,</span> <span class="token keyword">vec2</span> texture_coords<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">vec3</span> color <span class="token operator">=</span> <span class="token function">Texel</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> texture_coords<span class="token punctuation">)</span><span class="token punctuation">.</span>rgb<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> color<span class="token punctuation">.</span>r <span class="token operator">&lt;=</span> bias <span class="token operator">&amp;&amp;</span> color<span class="token punctuation">.</span>g <span class="token operator">&lt;=</span> bias <span class="token operator">&amp;&amp;</span> color<span class="token punctuation">.</span>b <span class="token operator">&lt;=</span> bias<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">vec4</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token keyword">vec4</span> color<span class="token punctuation">,</span> Image tex<span class="token punctuation">,</span> <span class="token keyword">vec2</span> texture_coords<span class="token punctuation">,</span> <span class="token keyword">vec2</span> screen_coords<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// Make sure we only color outside of the shape</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">outside</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> texture_coords<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> <span class="token keyword">vec4</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// Size of the outline in pixels</span>
-    <span class="token keyword">int</span> size <span class="token operator">=</span> <span class="token keyword">int</span><span class="token punctuation">(</span>radius<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">vec2</span> texelSize <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">/</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span>love_ScreenSize<span class="token punctuation">.</span>xy<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// Loop over all pixels within the radius of the outline</span>
-    <span class="token comment">// If any are inside the shape, color the pixel</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token operator">-</span>size<span class="token punctuation">;</span> x <span class="token operator">&lt;=</span> size<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> y <span class="token operator">=</span> <span class="token operator">-</span>size<span class="token punctuation">;</span> y <span class="token operator">&lt;=</span> size<span class="token punctuation">;</span> y<span class="token operator">++</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">*</span> x <span class="token operator">+</span> y <span class="token operator">*</span> y <span class="token operator">&lt;=</span> size <span class="token operator">*</span> size <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token punctuation">(</span>x <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> y <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token keyword">vec2</span> offset <span class="token operator">=</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span> <span class="token operator">*</span> texelSize<span class="token punctuation">;</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">outside</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> texture_coords <span class="token operator">+</span> offset<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                    <span class="token keyword">return</span> OutlineColor<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">return</span> <span class="token keyword">vec4</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p><code>main.lua</code></p>
-<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> outlineShader <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newShader</span><span class="token punctuation">(</span><span class="token string">"outlineShader.fs"</span><span class="token punctuation">)</span>
-
-<span class="token keyword">function</span> <span class="token function">outline</span><span class="token punctuation">(</span>gameCanvas<span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span>outlineShader<span class="token punctuation">)</span>
-    <span class="token keyword">local</span> mode<span class="token punctuation">,</span> alphaMode <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">getBlendMode</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setBlendMode</span><span class="token punctuation">(</span><span class="token string">"alpha"</span><span class="token punctuation">,</span> <span class="token string">"premultiplied"</span><span class="token punctuation">)</span>
-
-    <span class="token comment">-- Set the shader's uniform variables</span>
-    outlineShader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"radius"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-    outlineShader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"OutlineColor"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-    <span class="token comment">-- Draw the game canvas</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>gameCanvas<span class="token punctuation">)</span>
-
-    <span class="token comment">-- Clean up</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setBlendMode</span><span class="token punctuation">(</span>mode<span class="token punctuation">,</span> alphaMode<span class="token punctuation">)</span>
-<span class="token keyword">end</span>
-</code></pre>
-<p>The next method does not need a contrast between our image and pure black to work.
-This one works by calculating the average of the difference in color around the center pixel
-and applying the outline color if it crosses a certain threshold.</p>
-<p><code>outlineShader.fs</code></p>
-<pre><code class="language-glsl"><span data-attrs=""></span><span class="token comment">// radius in pixels of the outline</span>
-<span class="token keyword">uniform</span> <span class="token keyword">float</span> radius<span class="token punctuation">;</span>
-<span class="token keyword">uniform</span> <span class="token keyword">vec4</span> OutlineColor<span class="token punctuation">;</span>
-<span class="token keyword">uniform</span> <span class="token keyword">float</span> Threshold<span class="token punctuation">;</span>
-
-<span class="token keyword">float</span> <span class="token function">difference</span><span class="token punctuation">(</span>Image tex<span class="token punctuation">,</span> <span class="token keyword">vec2</span> texture_coords<span class="token punctuation">,</span> <span class="token keyword">vec4</span> color<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">vec3</span> sampleColor <span class="token operator">=</span> <span class="token function">Texel</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> texture_coords<span class="token punctuation">)</span><span class="token punctuation">.</span>rgb<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token function">distance</span><span class="token punctuation">(</span>sampleColor<span class="token punctuation">,</span> color<span class="token punctuation">.</span>rgb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">vec4</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token keyword">vec4</span> color<span class="token punctuation">,</span> Image tex<span class="token punctuation">,</span> <span class="token keyword">vec2</span> texture_coords<span class="token punctuation">,</span> <span class="token keyword">vec2</span> screen_coords<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// Size of the outline in pixels</span>
-    <span class="token keyword">int</span> size <span class="token operator">=</span> <span class="token keyword">int</span><span class="token punctuation">(</span>radius<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">vec2</span> texelSize <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">/</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span>love_ScreenSize<span class="token punctuation">.</span>xy<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">vec4</span> texColor <span class="token operator">=</span> <span class="token function">Texel</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> texture_coords<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">float</span> diffSum <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
-    <span class="token keyword">float</span> count <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// Loop over all pixels within the radius of the outline</span>
-    <span class="token comment">// If any are inside the shape, color the pixel</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token operator">-</span>size<span class="token punctuation">;</span> x <span class="token operator">&lt;=</span> size<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> y <span class="token operator">=</span> <span class="token operator">-</span>size<span class="token punctuation">;</span> y <span class="token operator">&lt;=</span> size<span class="token punctuation">;</span> y<span class="token operator">++</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">*</span> x <span class="token operator">+</span> y <span class="token operator">*</span> y <span class="token operator">&lt;=</span> size <span class="token operator">*</span> size <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token punctuation">(</span>x <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> y <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token keyword">vec2</span> offset <span class="token operator">=</span> <span class="token keyword">vec2</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span> <span class="token operator">*</span> texelSize<span class="token punctuation">;</span>
-
-                <span class="token keyword">float</span> diff <span class="token operator">=</span> <span class="token function">difference</span><span class="token punctuation">(</span>tex<span class="token punctuation">,</span> texture_coords <span class="token operator">+</span> offset<span class="token punctuation">,</span> texColor<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-                diffSum <span class="token operator">+=</span> diff<span class="token punctuation">;</span>
-                count<span class="token operator">++</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>diffSum <span class="token operator">/</span> count <span class="token operator">>=</span> Threshold<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> OutlineColor<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">return</span> <span class="token keyword">vec4</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> outlineShader <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newShader</span><span class="token punctuation">(</span><span class="token string">"outlineShader.fs"</span><span class="token punctuation">)</span>
-<span class="token keyword">local</span> outlineColor <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0.7</span> <span class="token punctuation">}</span>
-
-<span class="token keyword">function</span> <span class="token function">outline</span><span class="token punctuation">(</span>gameCanvas<span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span>outlineShader<span class="token punctuation">)</span>
-    <span class="token keyword">local</span> mode<span class="token punctuation">,</span> alphaMode <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">getBlendMode</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setBlendMode</span><span class="token punctuation">(</span><span class="token string">"alpha"</span><span class="token punctuation">,</span> <span class="token string">"alphamultiply"</span><span class="token punctuation">)</span>
-
-    <span class="token comment">-- Set the shader's uniform variables</span>
-    outlineShader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"radius"</span><span class="token punctuation">,</span> <span class="token number">2.5</span><span class="token punctuation">)</span>
-    outlineShader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"OutlineColor"</span><span class="token punctuation">,</span> outlineColor<span class="token punctuation">)</span>
-    outlineShader<span class="token punctuation">:</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Threshold"</span><span class="token punctuation">,</span> <span class="token number">0.35</span><span class="token punctuation">)</span>
-
-    <span class="token comment">-- Draw the game canvas</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>gameCanvas<span class="token punctuation">)</span>
-
-    <span class="token comment">-- Clean up</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setShader</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setBlendMode</span><span class="token punctuation">(</span>mode<span class="token punctuation">,</span> alphaMode<span class="token punctuation">)</span>
-<span class="token keyword">end</span>
 </code></pre>
 <h2 id="shader-optimisation" tabindex="-1">Shader optimisation <a class="anchor" href="#shader-optimisation">#</a></h2>
 <p>While shader optimisation is an incredibly advanced topic, these are still some useful tips to keep in mind while creating stunning effects!</p>

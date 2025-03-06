@@ -86,6 +86,10 @@
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/shaders/">Shaders</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/compute-shaders/">Compute Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/box-blur/">Box Blur</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/outlines/">Outlines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/palette/">Palette</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/pixelation/">Pixelation</a>
                   </li></ul>
 
             </li><li class="group-header">Advanced<ul class="guides"><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
@@ -127,11 +131,11 @@
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-236" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe class="love-embed" id="love-iframe-823" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_236 = document.getElementById('love-iframe-236');
-iframe_236.addEventListener('load', function() {
-iframe_236.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_823 = document.getElementById('love-iframe-823');
+iframe_823.addEventListener('load', function() {
+iframe_823.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
  image = love.graphics.newImage("assets/whale.png")
@@ -146,11 +150,11 @@ end
 <p>Whale done! ;)</p>
 <h2 id="bonus-challenge" tabindex="-1">Bonus challenge <a class="anchor" href="#bonus-challenge">#</a></h2>
 <p>Make the whale move back and forth!</p>
-<iframe class="love-embed" id="love-iframe-202" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe class="love-embed" id="love-iframe-410" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_202 = document.getElementById('love-iframe-202');
-iframe_202.addEventListener('load', function() {
-iframe_202.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_410 = document.getElementById('love-iframe-410');
+iframe_410.addEventListener('load', function() {
+iframe_410.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()
