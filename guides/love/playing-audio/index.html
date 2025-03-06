@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LÖVE cookbook | Playing Audio</title>
+
+    <script src="/love-cookbook/assets/js/codeblock.js"></script>
+    <script src="/love-cookbook/assets/js/hover_preview.js"></script>
+
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="sidebar">
+    
+      <header>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
+      </header>
+
+      <nav class="table-of-contents">
+        <ul class="chapters"><li class="group-header"><ul class="guides"><li><a class="" href="/love-cookbook/guides/getting-started/">Getting started</a>
+                  </li></ul>
+
+            </li><li class="group-header">Installation<ul class="guides"><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
+                  </li></ul>
+
+            </li><li class="group-header">Lua Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
+                  </li></ul>
+
+            </li><li class="group-header">Lua Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
+                  </li></ul>
+
+            </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/love/playing-audio/">Playing Audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
+                  </li></ul>
+
+            </li><li class="group-header">Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/basic/aabb/">AABB</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/tiles/">Tiles</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/animation/">Animation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/canvases/">Canvases</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
+                  </li></ul>
+
+            </li><li class="group-header">Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/shaders/">Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/compute-shaders/">Compute Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/box-blur/">Box Blur</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/outlines/">Outlines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/palette/">Palette</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/pixelation/">Pixelation</a>
+                  </li></ul>
+
+            </li><li class="group-header">Advanced<ul class="guides"><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
+                  </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
+                  </li></ul>
+
+            </li></ul>
+
+      </nav>
+    </div>
+
+    <main>
+      <article class="guide">
+        
+<h1 class="title">Playing Audio</h1>
+
+<p>Playing audio is done with:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span>
+</code></pre>
+<p><code>source</code> is an object of type <code>Source</code> which represents audio which we can play.</p>
+<p>To create a <code>Source</code> we:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> sound <span class="token operator">=</span> love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">newSource</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> sourceType<span class="token punctuation">)</span>
+</code></pre>
+<p><code>filename</code> is the relative path to the audio file in our project directory.</p>
+<p><code>sourceType</code> is a string constant that affects how the audio file will be decoded. Valid constants are <code>&quot;static&quot;</code>, <code>&quot;stream&quot;</code>, and <code>&quot;queue&quot;</code>.</p>
+<ul>
+<li><code>&quot;static&quot;</code>: is used for shorter audio like sound effects.</li>
+<li><code>&quot;stream&quot;</code>: is used for longer audio like music.</li>
+<li><code>&quot;queue&quot;</code>: is unique from the other two in its usage and is outside the scope of this article.</li>
+</ul>
+<p>Altogether to play audio we:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> source <span class="token operator">=</span> love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">newSource</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> sourceType<span class="token punctuation">)</span>
+love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span>
+</code></pre>
+<p>For example:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> sfx <span class="token operator">=</span> love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">newSource</span><span class="token punctuation">(</span><span class="token string">"assets/chirp.ogg"</span><span class="token punctuation">,</span> <span class="token string">"static"</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> music <span class="token operator">=</span> love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">newSource</span><span class="token punctuation">(</span><span class="token string">"assets/bach.ogg"</span><span class="token punctuation">,</span> <span class="token string">"stream"</span><span class="token punctuation">)</span>
+
+love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span>sfx<span class="token punctuation">)</span>
+love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span>music<span class="token punctuation">)</span>
+</code></pre>
+<p>Of course, we can do more than just play audio with love.audio and sources.</p>
+<p>We can pause it with:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">pause</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span>
+</code></pre>
+<p>And we can stop and rewind it to the beginning with:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">stop</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span>
+</code></pre>
+<p>We can also set the master volume with:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">setVolume</span><span class="token punctuation">(</span>volume<span class="token punctuation">)</span>
+</code></pre>
+<p>where <code>volume</code> is a number.</p>
+<p>It's important to note that we can not set the volume of a specified
+source with <code>love.audio.setVolume</code>. But, as <code>Source</code> is an object, it has methods that invoked in much the same way as <code>love.audio</code>.</p>
+<p>For instance:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>source<span class="token punctuation">:</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+source<span class="token punctuation">:</span><span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+source<span class="token punctuation">:</span><span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>So to set the volume of a specified source without affecting master volume.</p>
+<pre><code class="language-lua"><span data-attrs=""></span>source<span class="token punctuation">:</span><span class="token function">setVolume</span><span class="token punctuation">(</span>volume<span class="token punctuation">)</span>
+</code></pre>
+<p>Finally, should we want to make a source repeatedly restart and replay when it reaches the end of the audio we:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>source<span class="token punctuation">:</span><span class="token function">setLooping</span><span class="token punctuation">(</span><span class="token keyword">true</span><span class="token punctuation">)</span>
+</code></pre>
+<p>This is just a basic demonstration. We can find that there is we can do with <code>love.audio</code> and object type <code>Source</code> in the documentation on the wiki:</p>
+<ul>
+<li><a href="https://love2d.org/wiki/love.audio">https://love2d.org/wiki/love.audio</a></li>
+<li><a href="https://love2d.org/wiki/Source">https://love2d.org/wiki/Source</a></li>
+</ul>
+<p>Below is an interactive example of audio usage:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> sfx <span class="token operator">=</span> love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">newSource</span><span class="token punctuation">(</span><span class="token string">"assets/chirp.ogg"</span><span class="token punctuation">,</span> <span class="token string">"static"</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> music <span class="token operator">=</span> love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">newSource</span><span class="token punctuation">(</span><span class="token string">"assets/bach.ogg"</span><span class="token punctuation">,</span> <span class="token string">"stream"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">keypressed</span><span class="token punctuation">(</span>_<span class="token punctuation">,</span> scancode<span class="token punctuation">)</span>
+	<span class="token keyword">local</span> k <span class="token operator">=</span> love<span class="token punctuation">.</span>keyboard<span class="token punctuation">.</span><span class="token function">getKeyFromScancode</span><span class="token punctuation">(</span>scancode<span class="token punctuation">)</span>
+
+	<span class="token keyword">if</span> k <span class="token operator">==</span> <span class="token string">"up"</span> <span class="token keyword">then</span>
+		<span class="token keyword">local</span> volume <span class="token operator">=</span> love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">getVolume</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">setVolume</span><span class="token punctuation">(</span>math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>volume <span class="token operator">+</span> <span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token keyword">elseif</span> k <span class="token operator">==</span> <span class="token string">"down"</span> <span class="token keyword">then</span>
+		<span class="token keyword">local</span> volume <span class="token operator">=</span> love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">getVolume</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">setVolume</span><span class="token punctuation">(</span>math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>volume <span class="token operator">-</span> <span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+
+	<span class="token keyword">if</span> k <span class="token operator">==</span> <span class="token string">"return"</span> <span class="token keyword">then</span>
+		<span class="token keyword">if</span> <span class="token keyword">not</span> music<span class="token punctuation">:</span><span class="token function">isPlaying</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">then</span>
+			music<span class="token punctuation">:</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		<span class="token keyword">else</span>
+			music<span class="token punctuation">:</span><span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		<span class="token keyword">end</span>
+	<span class="token keyword">end</span>
+
+	<span class="token keyword">if</span> k <span class="token operator">==</span> <span class="token string">"space"</span> <span class="token keyword">then</span>
+		sfx<span class="token punctuation">:</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Master"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+	love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">"Volume: %0.2f"</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span>love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">getVolume</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span>
+
+	<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">drawSourceInfo</span><span class="token punctuation">(</span>source<span class="token punctuation">,</span> name<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+		<span class="token keyword">local</span> info <span class="token operator">=</span> <span class="token punctuation">{</span>
+			name<span class="token punctuation">,</span>
+			<span class="token punctuation">(</span><span class="token string">"Playing: %s"</span><span class="token punctuation">)</span>  <span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span>source<span class="token punctuation">:</span><span class="token function">isPlaying</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token punctuation">(</span><span class="token string">"Volume: %0.2f"</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span>source<span class="token punctuation">:</span><span class="token function">getVolume</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token punctuation">(</span><span class="token string">"Time: %0.2fs"</span><span class="token punctuation">)</span> <span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span>source<span class="token punctuation">:</span><span class="token function">tell</span><span class="token punctuation">(</span><span class="token string">"seconds"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">for</span> i<span class="token punctuation">,</span> v <span class="token keyword">in</span> <span class="token function">ipairs</span><span class="token punctuation">(</span>info<span class="token punctuation">)</span> <span class="token keyword">do</span>
+			love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token operator">+</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">16</span><span class="token punctuation">)</span>
+		<span class="token keyword">end</span>
+	<span class="token keyword">end</span>
+	<span class="token function">drawSourceInfo</span><span class="token punctuation">(</span>music<span class="token punctuation">,</span> <span class="token string">"Music"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+	<span class="token function">drawSourceInfo</span><span class="token punctuation">(</span>sfx<span class="token punctuation">,</span> <span class="token string">"SFX"</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+
+	<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">translateUSKeyboardKey</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> love<span class="token punctuation">.</span>keyboard<span class="token punctuation">.</span><span class="token function">getKeyFromScancode</span><span class="token punctuation">(</span>love<span class="token punctuation">.</span>keyboard<span class="token punctuation">.</span><span class="token function">getScancodeFromKey</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+
+	love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>
+		<span class="token punctuation">(</span><span class="token string">"%s/%s to adjust master volume."</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span>
+			<span class="token function">translateUSKeyboardKey</span><span class="token punctuation">(</span><span class="token string">"up"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token function">translateUSKeyboardKey</span><span class="token punctuation">(</span><span class="token string">"down"</span><span class="token punctuation">)</span>
+		<span class="token punctuation">)</span><span class="token punctuation">,</span>
+		<span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">100</span>
+	<span class="token punctuation">)</span>
+	love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>
+		<span class="token punctuation">(</span><span class="token string">"%s to toggle music state."</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span>
+			<span class="token function">translateUSKeyboardKey</span><span class="token punctuation">(</span><span class="token string">"return"</span><span class="token punctuation">)</span>
+		<span class="token punctuation">)</span><span class="token punctuation">,</span>
+		<span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">116</span>
+	<span class="token punctuation">)</span>
+	love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>
+		<span class="token punctuation">(</span><span class="token string">"%s to play sfx."</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">format</span><span class="token punctuation">(</span>
+			<span class="token function">translateUSKeyboardKey</span><span class="token punctuation">(</span><span class="token string">"space"</span><span class="token punctuation">)</span>
+		<span class="token punctuation">)</span><span class="token punctuation">,</span>
+		<span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">132</span>
+	<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-539" src="/love-cookbook/assets/love/love-js" width="300" height="300"></iframe>
+<script>
+const iframe_539 = document.getElementById('love-iframe-539');
+iframe_539.addEventListener('load', function() {
+iframe_539.contentWindow.postMessage({lua: `love.window.setMode(300, 300) 
+local sfx = love.audio.newSource("assets/chirp.ogg", "static")
+local music = love.audio.newSource("assets/bach.ogg", "stream")
+function love.keypressed(_, scancode)
+	local k = love.keyboard.getKeyFromScancode(scancode)
+	if k == "up" then
+ local volume = love.audio.getVolume()
+ love.audio.setVolume(math.min(volume + 0.1, 1))
+	elseif k == "down" then
+ local volume = love.audio.getVolume()
+ love.audio.setVolume(math.max(volume - 0.1, 0))
+	end
+	if k == "return" then
+ if not music:isPlaying() then
+ music:play()
+ else
+ music:pause()
+ end
+	end
+	if k == "space" then
+ sfx:play()
+	end
+end
+function love.draw()
+	love.graphics.print("Master", 0, 0)
+	love.graphics.print(("Volume: %0.2f"):format(love.audio.getVolume()), 0, 16)
+	local function drawSourceInfo(source, name, x, y)
+ local info = {
+ name,
+ ("Playing: %s") :format(tostring(source:isPlaying())),
+ ("Volume: %0.2f"):format(source:getVolume()),
+ ("Time: %0.2fs") :format(source:tell("seconds")),
+ }
+ for i, v in ipairs(info) do
+ love.graphics.print(v, x, y+(i-1)*16)
+ end
+	end
+	drawSourceInfo(music, "Music", 100, 0)
+	drawSourceInfo(sfx, "SFX", 200, 0)
+	local function translateUSKeyboardKey(k)
+ return love.keyboard.getKeyFromScancode(love.keyboard.getScancodeFromKey(k))
+	end
+	love.graphics.print(
+ ("%s/%s to adjust master volume."):format(
+ translateUSKeyboardKey("up"),
+ translateUSKeyboardKey("down")
+ ),
+ 0, 100
+	)
+	love.graphics.print(
+ ("%s to toggle music state."):format(
+ translateUSKeyboardKey("return")
+ ),
+ 0, 116
+	)
+	love.graphics.print(
+ ("%s to play sfx."):format(
+ translateUSKeyboardKey("space")
+ ),
+ 0, 132
+	)
+end
+`}, '*');
+});
+</script>
+
+
+<footer class="guide-footer">
+  <p></p>
+
+  <p>By: 
+  
+      <em>Dim</em>
+    
+  </p>
+</footer>
+      </article>
+    </main>
+    
+  </body>
+</html>
