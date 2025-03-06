@@ -5,7 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LÖVE cookbook | Reading errors</title>
+    <title>LÖVE Cookbook | Reading errors</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading errors</title>
+<meta name="title" content="Reading errors">
+<meta name="author" content="josh">
+<meta name="description" content="Running into errors in your code is an inevitable part of the process and it's important to understand how to read them effectively.">
+<meta name="generator" content="eleventy">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/love/reading-errors/">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Reading errors">
+<meta property="og:description" content="Running into errors in your code is an inevitable part of the process and it's important to understand how to read them effectively.">
+<meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta property="og:image:alt" content="LÖVE Cookbook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/love/reading-errors/">
+<meta name="twitter:title" content="Reading errors">
+<meta name="twitter:description" content="Running into errors in your code is an inevitable part of the process and it's important to understand how to read them effectively.">
+<meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta name="twitter:image:alt" content="LÖVE Cookbook">
+<link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/love/reading-errors/">
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
@@ -23,7 +46,6 @@
   </head>
   <body>
     <div class="sidebar">
-    
       <header>
         <a href="/love-cookbook/">
             <div class="logo">
@@ -142,11 +164,11 @@
 <span class="token keyword">end</span>
 </code></pre>
 <p>Changing that line to instead pass through <code>image</code> and rerunning the code shows us a lovely picture of a whale instead of an error.</p>
-<iframe class="love-embed" id="love-iframe-193" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<iframe class="love-embed" id="love-iframe-768" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
 <script>
-const iframe_193 = document.getElementById('love-iframe-193');
-iframe_193.addEventListener('load', function() {
-iframe_193.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+const iframe_768 = document.getElementById('love-iframe-768');
+iframe_768.addEventListener('load', function() {
+iframe_768.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
 local image = love.graphics.newImage("assets/whale.png")
 function love.draw()
  love.graphics.draw(image, 100, 100)
@@ -195,11 +217,11 @@ end
 <li><code>main.lua:18: in function 'load'</code> - aha!</li>
 </ul>
 <p>Our <code>make_whale</code> function was called from line 18 in main.lua's load function and that call was the one that directly led to the error being thrown. Looking back at our code we can see that line 18 looks a little different from the others with a typo: <code>make_whale(imaeg)</code> should be <code>make_whale(image)</code>!</p>
-<iframe class="love-embed" id="love-iframe-274" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<iframe class="love-embed" id="love-iframe-240" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
 <script>
-const iframe_274 = document.getElementById('love-iframe-274');
-iframe_274.addEventListener('load', function() {
-iframe_274.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+const iframe_240 = document.getElementById('love-iframe-240');
+iframe_240.addEventListener('load', function() {
+iframe_240.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
 local image = love.graphics.newImage("assets/whale.png")
 local whales = {}
 local function make_whale(sprite)

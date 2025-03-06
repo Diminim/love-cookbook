@@ -5,7 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LÖVE cookbook | Shaders</title>
+    <title>LÖVE Cookbook | Shaders</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shaders</title>
+<meta name="title" content="Shaders">
+<meta name="author" content="Jasper">
+<meta name="description" content="This guide is made for LÖVE 12.0!">
+<meta name="generator" content="eleventy">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/intermediate/shaders/">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Shaders">
+<meta property="og:description" content="This guide is made for LÖVE 12.0!">
+<meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta property="og:image:alt" content="LÖVE Cookbook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/intermediate/shaders/">
+<meta name="twitter:title" content="Shaders">
+<meta name="twitter:description" content="This guide is made for LÖVE 12.0!">
+<meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta name="twitter:image:alt" content="LÖVE Cookbook">
+<link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/intermediate/shaders/">
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
@@ -23,7 +46,6 @@
   </head>
   <body>
     <div class="sidebar">
-    
       <header>
         <a href="/love-cookbook/">
             <div class="logo">
@@ -283,11 +305,11 @@ By default, these values are interpolated, meaning halfway between, for example,
 <span class="token keyword">end</span>
 
 </code></pre>
-<iframe class="love-embed" id="love-iframe-259" src="/love-cookbook/assets/love/love-js" width="200" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-296" src="/love-cookbook/assets/love/love-js" width="200" height="200"></iframe>
 <script>
-const iframe_259 = document.getElementById('love-iframe-259');
-iframe_259.addEventListener('load', function() {
-iframe_259.contentWindow.postMessage({lua: `love.window.setMode(200, 200) 
+const iframe_296 = document.getElementById('love-iframe-296');
+iframe_296.addEventListener('load', function() {
+iframe_296.contentWindow.postMessage({lua: `love.window.setMode(200, 200) 
 local PI13 = math.pi * 2 / 3
 local mesh = love.graphics.newMesh({
  { 100 + math.cos(PI13 * 2 + math.pi / 6) * 100, 120 + math.sin(PI13 * 2 + math.pi / 6) * 100, 0, 0, 1, 0, 0 },

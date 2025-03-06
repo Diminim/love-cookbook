@@ -5,7 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LÖVE cookbook | Functions</title>
+    <title>LÖVE Cookbook | Functions</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Functions</title>
+<meta name="title" content="Functions">
+<meta name="author" content="Sheepolution">
+<meta name="description" content="With functions we can store a piece of code to be executed at different times, and multiple times.">
+<meta name="generator" content="eleventy">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/lua-basics/functions/">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Functions">
+<meta property="og:description" content="With functions we can store a piece of code to be executed at different times, and multiple times.">
+<meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta property="og:image:alt" content="LÖVE Cookbook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/lua-basics/functions/">
+<meta name="twitter:title" content="Functions">
+<meta name="twitter:description" content="With functions we can store a piece of code to be executed at different times, and multiple times.">
+<meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta name="twitter:image:alt" content="LÖVE Cookbook">
+<link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/lua-basics/functions/">
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
@@ -23,7 +46,6 @@
   </head>
   <body>
     <div class="sidebar">
-    
       <header>
         <a href="/love-cookbook/">
             <div class="logo">
@@ -219,11 +241,11 @@
     <span class="token function">draw_rectangle</span><span class="token punctuation">(</span><span class="token number">370</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-93" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-959" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_93 = document.getElementById('love-iframe-93');
-iframe_93.addEventListener('load', function() {
-iframe_93.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_959 = document.getElementById('love-iframe-959');
+iframe_959.addEventListener('load', function() {
+iframe_959.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local function draw_rectangle(x)
  love.graphics.rectangle("fill", x, 10, 100, 75)
 end

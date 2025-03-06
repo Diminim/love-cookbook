@@ -5,7 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LÖVE cookbook | Drawing an image</title>
+    <title>LÖVE Cookbook | Drawing an image</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drawing an image</title>
+<meta name="title" content="Drawing an image">
+<meta name="author" content="Sheepolution">
+<meta name="description" content="In this tutorial we will draw this whale.">
+<meta name="generator" content="eleventy">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/love/drawing-image/">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Drawing an image">
+<meta property="og:description" content="In this tutorial we will draw this whale.">
+<meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta property="og:image:alt" content="LÖVE Cookbook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/love/drawing-image/">
+<meta name="twitter:title" content="Drawing an image">
+<meta name="twitter:description" content="In this tutorial we will draw this whale.">
+<meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta name="twitter:image:alt" content="LÖVE Cookbook">
+<link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/love/drawing-image/">
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
@@ -23,7 +46,6 @@
   </head>
   <body>
     <div class="sidebar">
-    
       <header>
         <a href="/love-cookbook/">
             <div class="logo">
@@ -131,11 +153,11 @@
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-791" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe class="love-embed" id="love-iframe-663" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_791 = document.getElementById('love-iframe-791');
-iframe_791.addEventListener('load', function() {
-iframe_791.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_663 = document.getElementById('love-iframe-663');
+iframe_663.addEventListener('load', function() {
+iframe_663.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
  image = love.graphics.newImage("assets/whale.png")
@@ -150,11 +172,11 @@ end
 <p>Whale done! ;)</p>
 <h2 id="bonus-challenge" tabindex="-1">Bonus challenge <a class="anchor" href="#bonus-challenge">#</a></h2>
 <p>Make the whale move back and forth!</p>
-<iframe class="love-embed" id="love-iframe-686" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe class="love-embed" id="love-iframe-505" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_686 = document.getElementById('love-iframe-686');
-iframe_686.addEventListener('load', function() {
-iframe_686.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_505 = document.getElementById('love-iframe-505');
+iframe_505.addEventListener('load', function() {
+iframe_505.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()
