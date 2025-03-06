@@ -48,7 +48,7 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
 
@@ -64,7 +64,7 @@
 
             </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="active" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
-                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing Audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
@@ -131,11 +131,11 @@
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-311" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe class="love-embed" id="love-iframe-791" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_311 = document.getElementById('love-iframe-311');
-iframe_311.addEventListener('load', function() {
-iframe_311.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_791 = document.getElementById('love-iframe-791');
+iframe_791.addEventListener('load', function() {
+iframe_791.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 function love.load()
  image = love.graphics.newImage("assets/whale.png")
@@ -150,11 +150,11 @@ end
 <p>Whale done! ;)</p>
 <h2 id="bonus-challenge" tabindex="-1">Bonus challenge <a class="anchor" href="#bonus-challenge">#</a></h2>
 <p>Make the whale move back and forth!</p>
-<iframe class="love-embed" id="love-iframe-782" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
+<iframe class="love-embed" id="love-iframe-686" src="/love-cookbook/assets/love/love-js" width="800" height="300"></iframe>
 <script>
-const iframe_782 = document.getElementById('love-iframe-782');
-iframe_782.addEventListener('load', function() {
-iframe_782.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
+const iframe_686 = document.getElementById('love-iframe-686');
+iframe_686.addEventListener('load', function() {
+iframe_686.contentWindow.postMessage({lua: `love.window.setMode(800, 300) 
 local image
 local x, dir = 0, 1
 function love.load()

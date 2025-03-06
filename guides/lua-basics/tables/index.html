@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LÖVE cookbook | Tables and For-loops</title>
+    <title>LÖVE cookbook | Tables and for-loops</title>
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
@@ -48,7 +48,7 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
-                  </li><li><a class="active" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
 
@@ -64,7 +64,7 @@
 
             </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
-                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing Audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
@@ -104,7 +104,7 @@
     <main>
       <article class="guide">
         
-<h1 class="title">Tables and For-loops</h1>
+<h1 class="title">Tables and for-loops</h1>
 
 <p><strong>Tables</strong> are a type of value in which you can store multiple values. We create a table by using curly braces.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> fruits <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
@@ -184,7 +184,7 @@ table<span class="token punctuation">.</span><span class="token function">insert
 <span class="token keyword">end</span>
 </code></pre>
 <p>The loop repeats as long as the condition is true.</p>
-<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>Be careful! If the condition never becomes false, the while-loop will repeat indefintely, causing LÖVE to hang.</p>
+<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>Be careful! If the condition never becomes false, the while-loop will repeat indefinitely, causing LÖVE to hang.</p>
 </div>
 <p>It is possible to exit a loop early by using a <code>break</code>. It's somewhat similar to how you exit a function with <code>return</code>.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> a <span class="token operator">=</span> <span class="token number">0</span>

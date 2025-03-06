@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LÖVE cookbook | Playing Audio</title>
+    <title>LÖVE cookbook | Playing audio</title>
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
@@ -48,7 +48,7 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
 
@@ -64,7 +64,7 @@
 
             </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
-                  </li><li><a class="active" href="/love-cookbook/guides/love/playing-audio/">Playing Audio</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
@@ -104,7 +104,7 @@
     <main>
       <article class="guide">
         
-<h1 class="title">Playing Audio</h1>
+<h1 class="title">Playing audio</h1>
 
 <p>Playing audio is done with:</p>
 <pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>audio<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span>
@@ -232,11 +232,11 @@ source<span class="token punctuation">:</span><span class="token function">stop<
 	<span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-598" src="/love-cookbook/assets/love/love-js" width="300" height="300"></iframe>
+<iframe class="love-embed" id="love-iframe-521" src="/love-cookbook/assets/love/love-js" width="300" height="300"></iframe>
 <script>
-const iframe_598 = document.getElementById('love-iframe-598');
-iframe_598.addEventListener('load', function() {
-iframe_598.contentWindow.postMessage({lua: `love.window.setMode(300, 300) 
+const iframe_521 = document.getElementById('love-iframe-521');
+iframe_521.addEventListener('load', function() {
+iframe_521.contentWindow.postMessage({lua: `love.window.setMode(300, 300) 
 local sfx = love.audio.newSource("assets/chirp.ogg", "static")
 local music = love.audio.newSource("assets/bach.ogg", "stream")
 function love.keypressed(_, scancode)

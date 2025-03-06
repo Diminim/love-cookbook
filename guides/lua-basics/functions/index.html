@@ -48,7 +48,7 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
                   </li><li><a class="active" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
 
@@ -64,7 +64,7 @@
 
             </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
-                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing Audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
@@ -128,7 +128,7 @@
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Executing a function is called a <strong>function call</strong>. So in the example above we <ins>call</ins> the function <code>hello</code>.</p>
 </div>
 <h2 id="parameters" tabindex="-1">Parameters <a class="anchor" href="#parameters">#</a></h2>
-<p>Parameters are special kind of variables that functions can have. In the example below, the function has the parameter <code>animal</code>. What we put inbetween the parantheses when we call the function decides the value of the parameter for that function call.</p>
+<p>Parameters are special kind of variables that functions can have. In the example below, the function has the parameter <code>animal</code>. What we put between the parentheses when we call the function decides the value of the parameter for that function call.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">favorite</span><span class="token punctuation">(</span>animal<span class="token punctuation">)</span>
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"My favorite animal is the "</span> <span class="token operator">..</span> animal <span class="token operator">..</span> <span class="token string">"."</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
@@ -139,7 +139,7 @@
 <span class="token function">print</span><span class="token punctuation">(</span>animal<span class="token punctuation">)</span> <span class="token comment">-- Output: nil</span>
 </code></pre>
 <p>At the end we print <code>animal</code>, and it outputs <code>nil</code>. This is because parameters are automatically <ins>local variables</ins>. They are only available inside that function.</p>
-<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>The value we put inbetween the parantheses is called the <strong>argument</strong>.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>The value we put between the parentheses is called the <strong>argument</strong>.</p>
 <p>Adding an argument to your function call is called <strong>passing</strong>.</p>
 <p>So in the example above we <ins>pass</ins> the <ins>argument</ins> <code>&quot;whale&quot;</code>, <code>&quot;bear&quot;</code>, and <code>&quot;tiger&quot;</code>.</p>
 </div>
@@ -219,11 +219,11 @@
     <span class="token function">draw_rectangle</span><span class="token punctuation">(</span><span class="token number">370</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-289" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-93" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_289 = document.getElementById('love-iframe-289');
-iframe_289.addEventListener('load', function() {
-iframe_289.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_93 = document.getElementById('love-iframe-93');
+iframe_93.addEventListener('load', function() {
+iframe_93.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local function draw_rectangle(x)
  love.graphics.rectangle("fill", x, 10, 100, 75)
 end

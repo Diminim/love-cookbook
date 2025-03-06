@@ -48,7 +48,7 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
 
@@ -64,7 +64,7 @@
 
             </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
-                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing Audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
@@ -166,7 +166,7 @@ my_table<span class="token punctuation">[</span><span class="token number">1</sp
 </code></pre>
 <p>As you can see, our numbers are being doubled. But something weird is going on there at the end. We assign the number <code>3</code>, and it stays <code>3</code>. This is because <code>__newindex</code> only works for <ins>new</ins> indexes. Because <code>my_table[1]</code> already had a value, it doesn't trigger the event anymore.</p>
 <h2 id="index" tabindex="-1">index <a class="anchor" href="#index">#</a></h2>
-<p>The event <code>index</code> will trigger when trying to acces a property that the table doesn't have. With this, we can create special properties that would normally require us to use a function. Well, we do use a function, but we don't need to call that function ourselves. We only need to access the non-existing property.</p>
+<p>The event <code>index</code> will trigger when trying to access a property that the table doesn't have. With this, we can create special properties that would normally require us to use a function. Well, we do use a function, but we don't need to call that function ourselves. We only need to access the non-existing property.</p>
 <p>In the example below we have a triangle. We set the length of <code>a</code> and <code>b</code>, and let the metamethod calculate the length of <code>c</code>.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> my_triangle <span class="token operator">=</span> <span class="token punctuation">{</span>
     a <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span>

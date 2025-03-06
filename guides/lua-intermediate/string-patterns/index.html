@@ -48,7 +48,7 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
 
@@ -64,7 +64,7 @@
 
             </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
-                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing Audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
@@ -140,8 +140,8 @@
 <span class="token function">print</span><span class="token punctuation">(</span>message<span class="token punctuation">:</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token string">"%u.-%u"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- Output: Hello W</span>
 </code></pre>
 <h2 id="capturing" tabindex="-1">Capturing <a class="anchor" href="#capturing">#</a></h2>
-<p>But what if we don't care about the uppercase letters? Yes, the text we are looking for is surrounded by uppercase letters, but we only care about the characters inbetween. For this, we can use <strong>capturing</strong>.</p>
-<p>We can create a capture with parantheses <code>()</code>. Let's capture the characters inbetween the uppercase letters.</p>
+<p>But what if we don't care about the uppercase letters? Yes, the text we are looking for is surrounded by uppercase letters, but we only care about the characters in-between. For this, we can use <strong>capturing</strong>.</p>
+<p>We can create a capture with parentheses <code>()</code>. Let's capture the characters in-between the uppercase letters.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> message <span class="token operator">=</span> <span class="token string">"Hello WORLD how ARE You?"</span>
 <span class="token function">print</span><span class="token punctuation">(</span>message<span class="token punctuation">:</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token string">"%u(.-)%u"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- Output: ello</span>
 </code></pre>

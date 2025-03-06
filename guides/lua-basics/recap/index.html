@@ -48,7 +48,7 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
-                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and For-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
                   </li><li><a class="active" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
 
@@ -64,7 +64,7 @@
 
             </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
-                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing Audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
                   </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
@@ -188,7 +188,7 @@ my_object_table<span class="token punctuation">.</span>dot <span class="token op
 <div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Don't be discouraged if you have trouble understanding the code below. Learning individual concepts is one thing, but learning how to use them combined is a challenge on its own. Reread the chapters, experiment with the demos, try to make things yourself, and dare to take the next step even if you feel like you're not ready. Because that's how you learn.</p>
 </div>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- We declare the local variable rectangles, and assign a table as its value.</span>
-<span class="token keyword">local</span> rectangeList <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token keyword">local</span> rectangleList <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 
 <span class="token comment">-- We create the function createRectangle.</span>
 <span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">createRectangle</span><span class="token punctuation">(</span>direction<span class="token punctuation">)</span>
@@ -212,7 +212,7 @@ my_object_table<span class="token punctuation">.</span>dot <span class="token op
 
 <span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token comment">-- We loop through the list of rectangles</span>
-    <span class="token keyword">for</span> i<span class="token punctuation">,</span> rectangle <span class="token keyword">in</span> <span class="token function">ipairs</span><span class="token punctuation">(</span>rectangeList<span class="token punctuation">)</span> <span class="token keyword">do</span>
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span> rectangle <span class="token keyword">in</span> <span class="token function">ipairs</span><span class="token punctuation">(</span>rectangleList<span class="token punctuation">)</span> <span class="token keyword">do</span>
         <span class="token comment">-- Move the rectangle to the left or right based on its direction.</span>
         <span class="token keyword">if</span> rectangle<span class="token punctuation">.</span>direction <span class="token operator">==</span> <span class="token string">"left"</span> <span class="token keyword">then</span>
             rectangle<span class="token punctuation">.</span>x <span class="token operator">=</span> rectangle<span class="token punctuation">.</span>x <span class="token operator">-</span> <span class="token number">1</span>
@@ -224,7 +224,7 @@ my_object_table<span class="token punctuation">.</span>dot <span class="token op
 
 <span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token comment">-- We loop through the list of rectangles</span>
-    <span class="token keyword">for</span> i<span class="token punctuation">,</span> rectangle <span class="token keyword">in</span> <span class="token function">ipairs</span><span class="token punctuation">(</span>rectangeList<span class="token punctuation">)</span> <span class="token keyword">do</span>
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span> rectangle <span class="token keyword">in</span> <span class="token function">ipairs</span><span class="token punctuation">(</span>rectangleList<span class="token punctuation">)</span> <span class="token keyword">do</span>
         <span class="token comment">-- Draw the rectangle using its properties.</span>
         love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> rectangle<span class="token punctuation">.</span>x<span class="token punctuation">,</span> rectangle<span class="token punctuation">.</span>y<span class="token punctuation">,</span>
             rectangle<span class="token punctuation">.</span>width<span class="token punctuation">,</span> rectangle<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
@@ -243,16 +243,16 @@ my_object_table<span class="token punctuation">.</span>dot <span class="token op
 
     <span class="token comment">-- Call createRectangle, and pass the key as argument.</span>
     <span class="token comment">-- We add its returned value to the list of rectangles.</span>
-    table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>rectangeList<span class="token punctuation">,</span> <span class="token function">createRectangle</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>rectangleList<span class="token punctuation">,</span> <span class="token function">createRectangle</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-566" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-659" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_566 = document.getElementById('love-iframe-566');
-iframe_566.addEventListener('load', function() {
-iframe_566.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_659 = document.getElementById('love-iframe-659');
+iframe_659.addEventListener('load', function() {
+iframe_659.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 -- We declare the local variable rectangles, and assign a table as its value.
-local rectangeList = {}
+local rectangleList = {}
 -- We create the function createRectangle.
 local function createRectangle(direction)
  -- We create a new local variable named rectangle.
@@ -272,7 +272,7 @@ local function createRectangle(direction)
 end
 function love.update()
  -- We loop through the list of rectangles
- for i, rectangle in ipairs(rectangeList) do
+ for i, rectangle in ipairs(rectangleList) do
  -- Move the rectangle to the left or right based on its direction.
  if rectangle.direction == "left" then
  rectangle.x = rectangle.x - 1
@@ -283,7 +283,7 @@ function love.update()
 end
 function love.draw()
  -- We loop through the list of rectangles
- for i, rectangle in ipairs(rectangeList) do
+ for i, rectangle in ipairs(rectangleList) do
  -- Draw the rectangle using its properties.
  love.graphics.rectangle("fill", rectangle.x, rectangle.y,
  rectangle.width, rectangle.height)
@@ -299,7 +299,7 @@ function love.keypressed(key)
  -- Because of the 'return', we don't need to use an 'else'.
  -- Call createRectangle, and pass the key as argument.
  -- We add its returned value to the list of rectangles.
- table.insert(rectangeList, createRectangle(key))
+ table.insert(rectangleList, createRectangle(key))
 end
 `}, '*');
 });
