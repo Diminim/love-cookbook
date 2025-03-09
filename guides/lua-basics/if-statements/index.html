@@ -207,6 +207,12 @@ a <span class="token operator">==</span> <span class="token number">10</span> <s
 <li><code>a &lt;​= b</code> - Whether <code>a</code> is lower than or equal to <code>b</code>.</li>
 </ul>
 </div>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>We can do the same for strings!</p>
+<ul>
+<li><code>&quot;whale&quot; == &quot;apple&quot;</code> is <code>false</code> because it's not the same string.</li>
+<li><code>&quot;whale&quot; &gt; &quot;apple&quot;</code> is <code>true</code> because <code>&quot;w&quot;</code> is <em>higher</em> <ins>alphabetically</ins> than <code>&quot;a&quot;</code>.</li>
+</ul>
+</div>
 <p>We can use the keyword <code>not</code> to check if a value is <strong>not</strong> true.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> a <span class="token operator">=</span> <span class="token number">5</span> <span class="token operator">==</span> <span class="token number">8</span>
 
@@ -258,7 +264,7 @@ a <span class="token operator">==</span> <span class="token number">10</span> <s
 </code></pre>
 <h2 id="truthy-and-falsy" tabindex="-1">Truthy and falsy <a class="anchor" href="#truthy-and-falsy">#</a></h2>
 <p><span data-abstract="Truthy and falsy refer to state of values when used as a condition. The values `false` and `nil` are falsy. All other values are truthy."></span></p>
-<p>So far we have talked about booleans, and <code>true</code> or <code>false</code>, but if-statements can accept other values as well. We call these values <strong>truthy</strong>.</p>
+<p>So far we have talked about booleans, <code>true</code> and <code>false</code>, but if-statements can accept other values as well. We call these values <strong>truthy</strong>.</p>
 <pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">if</span> <span class="token number">15</span> <span class="token keyword">then</span>
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Fifteen!"</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
@@ -325,11 +331,11 @@ a <span class="token operator">==</span> <span class="token number">10</span> <s
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-11" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-999" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_11 = document.getElementById('love-iframe-11');
-iframe_11.addEventListener('load', function() {
-iframe_11.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_999 = document.getElementById('love-iframe-999');
+iframe_999.addEventListener('load', function() {
+iframe_999.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local frame = 0
 local x = 0
 function love.update()
@@ -363,11 +369,11 @@ end
     love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-299" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-264" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_299 = document.getElementById('love-iframe-299');
-iframe_299.addEventListener('load', function() {
-iframe_299.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_264 = document.getElementById('love-iframe-264');
+iframe_264.addEventListener('load', function() {
+iframe_264.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local x = 0
 function love.update()
  if love.keyboard.isDown("right") then
