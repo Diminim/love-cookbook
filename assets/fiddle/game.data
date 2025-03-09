@@ -1,0 +1,344 @@
+local function createUUID()
+    local uuid = ""
+    local chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    for i = 1, 30 do
+        local l = math.random(1, #chars)
+        uuid = uuid .. string.sub(chars, l, l)
+    end
+    return uuid
+end
+local uuid = createUUID()
+
+local realDir = love.filesystem.getSaveDirectory()
+local instanceDir = "/ext/"..uuid.."/"
+love.filesystem.createDirectory(instanceDir)
+
+
+local entranceFile
+JS.newRequest(
+    JS.stringFunc(
+        [[return getEntrance()]]
+    ),
+    function (data)
+        entranceFile = data
+    end
+)
+
+local directoryItems
+function stringSplit(str, sep) -- http://lua-users.org/wiki/SplitJoin
+    local sep, fields = sep or ":", {}
+    local pattern = string.format("([^%s]+)", sep)
+    string.gsub(str, pattern, function(c) fields[#fields+1] = c end)
+    return fields
+end
+JS.newRequest(
+    JS.stringFunc(
+        [[return getDirectoryItems()]]
+    ),
+    function (data)
+        directoryItems = stringSplit(data, ",")
+    end
+)
+
+
+
+
+local madeRequest = false
+function love.update()
+    if entranceFile and directoryItems then
+        if not madeRequest then
+            for _, v in ipairs(directoryItems) do
+                JS.newPromiseRequest(
+                    JS.stringFunc(
+                        [[readAndWrite("%s", "%s")]],
+                        realDir..instanceDir,
+                        v
+                    )
+                )
+            end
+            madeRequest = true
+        end
+
+        for _, path in pairs(directoryItems) do
+            if not love.filesystem.getInfo(instanceDir..path) then
+                return
+            end
+        end
+
+        love.update = nil
+        love.filesystem.mount(instanceDir, "")
+        love.filesystem.load(entranceFile)()
+    end
+endlove.filesystem.write("_", "") -- Wake up filesystem
+love.filesystem.remove("_")
+
+__requestQueue = {}
+_requestCount = 0
+_Request =
+{
+	command = "",
+	currentTime = 0,
+	timeOut = 2,
+	id = '0'
+}
+local os = love.system.getOS()
+local __defaultErrorFunction = nil
+local isDebugActive = false
+
+JS = {}
+
+function JS.callJS(funcToCall)
+	if (os == "Web") then
+		print("callJavascriptFunction " .. funcToCall)
+	end
+end
+
+--You can pass a set of commands here and, it is a syntactic sugar for executing many commands inside callJS, as it only calls a function
+--If you pass arguments to the func beyond the string, it will perform automatically string.format
+--Return statement is possible inside this structure
+--This will return a string containing a function to be called by JS.callJS
+local _unpack
+if (_VERSION == "Lua 5.1" or _VERSION == "LuaJIT") then
+	_unpack = unpack
+else
+	_unpack = table.unpack
+end
+function JS.stringFunc(str, ...)
+	str = "(function(){" .. str .. "})()"
+	if (#arg > 0) then
+		str = str:format(_unpack(arg))
+	end
+	str = str:gsub("[\n\t]", "")
+	return str
+end
+
+--The call will store in the webDB the return value from the function passed
+--it timeouts
+local function retrieveJS(funcToCall, id)
+	--Used for retrieveData function
+	JS.callJS("FS.writeFile('" .. love.filesystem.getSaveDirectory() .. "/__temp" .. id .. "', " .. funcToCall .. ");")
+end
+
+--Call JS.newRequest instead
+function _Request:new(isPromise, command, onDataLoaded, onError, timeout, id)
+	id = id or _requestCount
+	_requestCount = _requestCount + 1
+
+	local obj = {}
+	setmetatable(obj, self)
+	obj.command = command
+	obj.onError = onError or __defaultErrorFunction
+	if not isPromise then
+		retrieveJS(command, id)
+	else
+		JS.callJS(command)
+	end
+	obj.onDataLoaded = onDataLoaded
+	obj.timeOut = (timeout == nil) and obj.timeOut or timeout
+	obj.id = id
+
+
+	function obj:getData()
+		if love.filesystem.getInfo("__temp" .. self.id) then
+			return love.filesystem.read("__temp"..self.id)
+		end
+	end
+
+	function obj:purgeData()
+		--Data must be purged for not allowing old data to be retrieved
+		love.filesystem.remove("__temp" .. self.id)
+	end
+
+	function obj:update(dt)
+		self.timeOut = self.timeOut - dt
+
+		local retData = self:getData()
+
+		if ((retData ~= nil and retData ~= "nil") or self.timeOut <= 0) then
+			if (retData ~= nil and retData:match("ERROR") == nil) then
+				if isDebugActive then
+					print("Data has been retrieved " .. retData)
+				end
+				self.onDataLoaded(retData)
+			else
+				self.onError(self.id, retData)
+			end
+			self:purgeData()
+			return false
+		else
+			return true
+		end
+	end
+
+	return obj
+end
+
+--Place this function on love.update and set it to return if it returns false (This API is synchronous)
+function JS.retrieveData(dt)
+	local isRetrieving = #__requestQueue ~= 0
+	local deadRequests = {}
+	for i = 1, #__requestQueue do
+		local isUpdating = __requestQueue[i]:update(dt)
+		if not isUpdating then
+			table.insert(deadRequests, i)
+		end
+	end
+	for i = 1, #deadRequests do
+		if (isDebugActive) then
+			print("Request died: " .. deadRequests[i])
+		end
+		table.remove(__requestQueue, deadRequests[i])
+	end
+	return isRetrieving
+end
+
+--May only be used for functions that don't return a promise
+function JS.newRequest(funcToCall, onDataLoaded, onError, timeout, optionalId)
+	if (os ~= "Web") then
+		return
+	end
+	table.insert(__requestQueue,
+		_Request:new(false, funcToCall, onDataLoaded, onError, timeout or 5, optionalId))
+end
+
+--This function can be handled manually (in JS code)
+--How to: add the function call when your events resolve: FS.writeFile("Put love.filesystem.getSaveDirectory here", "Pass a string here (NUMBER DONT WORK"))
+--Or it can be handled by Lua, it auto sets your data if you write the following command:
+-- _$_(yourStringOrFunctionHere)
+function JS.newPromiseRequest(funcToCall, onDataLoaded, onError, timeout, optionalId)
+	if (os ~= "Web") then
+		return
+	end
+	optionalId = optionalId or _requestCount
+	funcToCall = funcToCall:gsub("_$_%(",
+		"FS.writeFile('" .. love.filesystem.getSaveDirectory() .. "/__temp" .. optionalId .. "', ")
+	table.insert(__requestQueue, _Request:new(true, funcToCall, onDataLoaded, onError, timeout or 5, optionalId))
+end
+
+--It receives the ID from ther request
+--Don't try printing the request.command, as it will execute the javascript command
+function JS.setDefaultErrorFunction(func)
+	__defaultErrorFunction = func
+end
+
+JS.setDefaultErrorFunction(function(id, error)
+	if (isDebugActive) then
+		local msg = "Data could not be loaded for id:'" .. id .. "'"
+		if (error) then
+			msg = msg .. "\nError: " .. error
+		end
+		print(msg)
+	end
+end)
+
+
+-- WebDB is known to be problematic https://github.com/Sheepolution/love-fiddle/issues/1
+-- JS.callJS(JS.stringFunc(
+--     [[
+--         __getWebDB("%s");
+--     ]]
+-- , "__LuaJSDB"))
+-- I have to make the directory unique to the call
+-- Then I think mount can handle the rest for me to prevent collisions
+-- could use the timestamp!
+-- ext/timestamp or uuid
+
+--[[
+	I can write a function in js, which is loaded by lua
+	That function can then setup the directories.
+	And when it's done writing, loadstring the entrance file.
+	I can provide something so the author doesn't have to touch js.lua
+]]
+
+--[[
+	I'm thinking of doing a second layer
+	So we have main, this is what lovejs runs
+	Then we have instance main, this is what is created
+	Then we have the actual user supplied files, this is what is loaded
+	Don't forget the lua cache
+]]
+
+function love.run()
+	if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
+
+	-- We don't want the first frame's dt to include time taken by love.load.
+	if love.timer then love.timer.step() end
+
+	local dt = 0
+
+	-- Main loop time.
+	return function()
+		-- Process events.
+		if love.event then
+			love.event.pump()
+			for name, a,b,c,d,e,f in love.event.poll() do
+				if name == "quit" then
+					if not love.quit or not love.quit() then
+						return a or 0
+					end
+				end
+				love.handlers[name](a,b,c,d,e,f)
+			end
+		end
+
+		-- Update dt, as we'll be passing it to update
+		if love.timer then dt = love.timer.step() end
+
+		-- maybe have a loading screen instead of returning?
+
+		-- local update, draw
+		-- if JS.retrieveData(dt) then
+		-- 	update = fiddle.update
+		-- 	draw   = fiddle.draw
+		-- else
+		-- 	update = love.update
+		-- 	draw   = love.draw
+		-- end
+
+		JS.retrieveData(dt)
+
+		-- Call update and draw
+		if love.update then love.update(dt) end -- will pass 0 if love.timer is disabled
+
+		if love.graphics and love.graphics.isActive() then
+			love.graphics.origin()
+			love.graphics.clear(love.graphics.getBackgroundColor())
+
+			if love.draw then love.draw() end
+
+			love.graphics.present()
+		end
+
+		if love.timer then love.timer.sleep(0.001) end
+	end
+end
+
+function love.load()
+	require "js"
+	love.filesystem.createDirectory("ext") -- Create a directory for writing external files
+	love.filesystem.load("instance.lua")()
+end
+
+function love.update(dt)
+
+end
+
+function love.draw()
+	-- I shouldn't have a loading screen but
+	-- cookwhale would rock
+	-- kissthechef
+
+	local y = 0
+	for i, filename in ipairs(love.filesystem.getDirectoryItems("")) do
+		love.graphics.print(filename, 0, y)
+		y = y + 16
+	end
+
+	-- recursive print
+	love.graphics.print("ext/", 0, y)
+	y = y + 16
+	for i, filename in ipairs(love.filesystem.getDirectoryItems("ext")) do
+		love.graphics.print(filename, 0, y)
+		y = y + 16
+	end
+end

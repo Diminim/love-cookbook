@@ -59,6 +59,7 @@
 
       <nav class="table-of-contents">
         <ul class="chapters"><li class="group-header"><ul class="guides"><li><a class="" href="/love-cookbook/guides/getting-started/">Getting started</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fiddle/">Fiddle</a>
                   </li></ul>
 
             </li><li class="group-header">Installation<ul class="guides"><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
@@ -163,11 +164,11 @@
 </code></pre>
 <h2 id="embedded-love" tabindex="-1">Embedded LOVE <a class="anchor" href="#embedded-love">#</a></h2>
 <p>We can embed LOVE windows with the <code>{% love %}</code> shortcode.</p>
-<iframe class="love-embed" id="love-iframe-146" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
+<iframe class="love-embed" id="love-iframe-715" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
 <script>
-const iframe_146 = document.getElementById('love-iframe-146');
-iframe_146.addEventListener('load', function() {
-iframe_146.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
+const iframe_715 = document.getElementById('love-iframe-715');
+iframe_715.addEventListener('load', function() {
+iframe_715.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
 function love.draw()
  love.graphics.printf("this is how we embed love.js", 0, 50, love.graphics.getWidth(), "center")
 end
@@ -181,7 +182,7 @@ end
 <footer class="guide-footer">
   <p></p>
 
-  <p>By: 
+  <p>By:
   
       <em>josh</em>
     
@@ -189,6 +190,6 @@ end
 </footer>
       </article>
     </main>
-    
+
   </body>
 </html>

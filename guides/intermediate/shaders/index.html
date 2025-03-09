@@ -59,6 +59,7 @@
 
       <nav class="table-of-contents">
         <ul class="chapters"><li class="group-header"><ul class="guides"><li><a class="" href="/love-cookbook/guides/getting-started/">Getting started</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fiddle/">Fiddle</a>
                   </li></ul>
 
             </li><li class="group-header">Installation<ul class="guides"><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
@@ -305,11 +306,11 @@ By default, these values are interpolated, meaning halfway between, for example,
 <span class="token keyword">end</span>
 
 </code></pre>
-<iframe class="love-embed" id="love-iframe-296" src="/love-cookbook/assets/love/love-js" width="200" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-411" src="/love-cookbook/assets/love/love-js" width="200" height="200"></iframe>
 <script>
-const iframe_296 = document.getElementById('love-iframe-296');
-iframe_296.addEventListener('load', function() {
-iframe_296.contentWindow.postMessage({lua: `love.window.setMode(200, 200) 
+const iframe_411 = document.getElementById('love-iframe-411');
+iframe_411.addEventListener('load', function() {
+iframe_411.contentWindow.postMessage({lua: `love.window.setMode(200, 200) 
 local PI13 = math.pi * 2 / 3
 local mesh = love.graphics.newMesh({
  { 100 + math.cos(PI13 * 2 + math.pi / 6) * 100, 120 + math.sin(PI13 * 2 + math.pi / 6) * 100, 0, 0, 1, 0, 0 },
@@ -365,7 +366,7 @@ This is because the z values of the pixels will lie outside of the [-1 to 1] ran
 <footer class="guide-footer">
   <p></p>
 
-  <p>By: 
+  <p>By:
   
       <em>Jasper</em>
     
@@ -373,6 +374,6 @@ This is because the z values of the pixels will lie outside of the [-1 to 1] ran
 </footer>
       </article>
     </main>
-    
+
   </body>
 </html>
