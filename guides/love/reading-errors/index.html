@@ -32,6 +32,7 @@
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
+    <script src="/love-cookbook/assets/js/mobile.js"></script>
 
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
@@ -43,6 +44,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" rel="stylesheet">
   </head>
   <body>
     <div class="sidebar">
@@ -127,7 +129,13 @@
     <main>
       <article class="guide">
         
-<h1 class="title">Reading errors</h1>
+<header class="guide-header">
+  <button type="button" class="menu-button">
+    <i class="material-symbols-outlined">menu</i>
+  </button>
+
+  <h1 class="title">Reading errors</h1>
+</header>
 
 <p>Running into errors in your code is an inevitable part of the process and it's important to understand how to read them effectively.</p>
 <h2 id="example" tabindex="-1">Example <a class="anchor" href="#example">#</a></h2>
@@ -165,11 +173,11 @@
 <span class="token keyword">end</span>
 </code></pre>
 <p>Changing that line to instead pass through <code>image</code> and rerunning the code shows us a lovely picture of a whale instead of an error.</p>
-<iframe class="love-embed" id="love-iframe-44" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<iframe class="love-embed" id="love-iframe-227" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
 <script>
-const iframe_44 = document.getElementById('love-iframe-44');
-iframe_44.addEventListener('load', function() {
-iframe_44.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+const iframe_227 = document.getElementById('love-iframe-227');
+iframe_227.addEventListener('load', function() {
+iframe_227.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
 local image = love.graphics.newImage("assets/whale.png")
 function love.draw()
  love.graphics.draw(image, 100, 100)
@@ -218,11 +226,11 @@ end
 <li><code>main.lua:18: in function 'load'</code> - aha!</li>
 </ul>
 <p>Our <code>make_whale</code> function was called from line 18 in main.lua's load function and that call was the one that directly led to the error being thrown. Looking back at our code we can see that line 18 looks a little different from the others with a typo: <code>make_whale(imaeg)</code> should be <code>make_whale(image)</code>!</p>
-<iframe class="love-embed" id="love-iframe-775" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<iframe class="love-embed" id="love-iframe-591" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
 <script>
-const iframe_775 = document.getElementById('love-iframe-775');
-iframe_775.addEventListener('load', function() {
-iframe_775.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+const iframe_591 = document.getElementById('love-iframe-591');
+iframe_591.addEventListener('load', function() {
+iframe_591.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
 local image = love.graphics.newImage("assets/whale.png")
 local whales = {}
 local function make_whale(sprite)

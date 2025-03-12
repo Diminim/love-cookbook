@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const highlightDiv = document.createElement("div");
         highlightDiv.className = "highlight-lines";
 
-        for (let i = 1; i <= totalLines; i++) {
+        for (let i = 1; i < totalLines; i++) {
             const highlightLine = document.createElement("div");
             highlightLine.className = "highlight-line";
             if (highlightLines.has(i)) {
@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
             highlightDiv.appendChild(highlightLine);
         }
 
-        wrapper.appendChild(pre.cloneNode(true));
         wrapper.appendChild(highlightDiv);
+        wrapper.appendChild(pre.cloneNode(true));
         pre.replaceWith(wrapper);
     });
 });

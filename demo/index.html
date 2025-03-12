@@ -32,6 +32,7 @@
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
+    <script src="/love-cookbook/assets/js/mobile.js"></script>
 
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
@@ -43,6 +44,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" rel="stylesheet">
   </head>
   <body>
     <div class="sidebar">
@@ -127,7 +129,13 @@
     <main>
       <article class="guide">
         
-<h1 class="title">Demo</h1>
+<header class="guide-header">
+  <button type="button" class="menu-button">
+    <i class="material-symbols-outlined">menu</i>
+  </button>
+
+  <h1 class="title">Demo</h1>
+</header>
 
 <h2 id="this-is-a-header" tabindex="-1">This is a header <a class="anchor" href="#this-is-a-header">#</a></h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lorem justo, maximus ut justo non, ornare tristique urna. Suspendisse laoreet scelerisque est quis aliquet. Aliquam neque velit, hendrerit eu sollicitudin ut, commodo eu dolor.</p>
@@ -164,11 +172,11 @@
 </code></pre>
 <h2 id="embedded-love" tabindex="-1">Embedded LOVE <a class="anchor" href="#embedded-love">#</a></h2>
 <p>We can embed LOVE windows with the <code>{% love %}</code> shortcode.</p>
-<iframe class="love-embed" id="love-iframe-500" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
+<iframe class="love-embed" id="love-iframe-744" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
 <script>
-const iframe_500 = document.getElementById('love-iframe-500');
-iframe_500.addEventListener('load', function() {
-iframe_500.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
+const iframe_744 = document.getElementById('love-iframe-744');
+iframe_744.addEventListener('load', function() {
+iframe_744.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
 function love.draw()
  love.graphics.printf("this is how we embed love.js", 0, 50, love.graphics.getWidth(), "center")
 end

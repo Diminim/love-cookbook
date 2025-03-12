@@ -32,6 +32,7 @@
 
     <script src="/love-cookbook/assets/js/codeblock.js"></script>
     <script src="/love-cookbook/assets/js/hover_preview.js"></script>
+    <script src="/love-cookbook/assets/js/mobile.js"></script>
 
     <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
     <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
@@ -43,6 +44,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" rel="stylesheet">
   </head>
   <body>
     <div class="sidebar">
@@ -127,7 +129,13 @@
     <main>
       <article class="guide">
         
-<h1 class="title">Recap</h1>
+<header class="guide-header">
+  <button type="button" class="menu-button">
+    <i class="material-symbols-outlined">menu</i>
+  </button>
+
+  <h1 class="title">Recap</h1>
+</header>
 
 <p>You have now learned the fundamentals of Lua.</p>
 <p>You have learned about <strong>variables</strong> and their <strong>types</strong>.</p>
@@ -269,11 +277,11 @@ my_object_table<span class="token punctuation">.</span>dot <span class="token op
     table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>rectangleList<span class="token punctuation">,</span> <span class="token function">createRectangle</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-725" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-686" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_725 = document.getElementById('love-iframe-725');
-iframe_725.addEventListener('load', function() {
-iframe_725.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_686 = document.getElementById('love-iframe-686');
+iframe_686.addEventListener('load', function() {
+iframe_686.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 -- We declare the local variable rectangles, and assign a table as its value.
 local rectangleList = {}
 -- We create the function createRectangle.

@@ -13,3 +13,10 @@
   /* from 300 to 700 */
   font-style: normal;
 }
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.5rem;
+}
