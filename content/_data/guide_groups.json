@@ -74,7 +74,8 @@
             "/guides/intermediate/box-blur/",
             "/guides/intermediate/outlines/",
             "/guides/intermediate/palette/",
-            "/guides/intermediate/pixelation/"
+            "/guides/intermediate/pixelation/",
+            "/guides/intermediate/vertex-shaders/"
         ]
     },
     {

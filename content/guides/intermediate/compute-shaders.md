@@ -3,10 +3,12 @@ title: "Compute Shaders"
 authors: [Jasper]
 date: 2025-02-21
 ---
+
+**Compute shaders** are a more general way to do calculations with GLSL, as opposed to the vertex and fragment shader, which are a lot more constrained.
+
 > [!CAUTION]
 > This guide is made for LÖVE 12.0!
 
-**Compute shaders** are a more general way to do calculations on the GPU, as opposed to the vertex and fragment shader, which are a lot more constrained.
 
 To edit data outside of the shader, we can use **SSBO's** (Shader storage buffer object) and textures.
 Textures need to be marked as computewritable with the `computewrite` tag, but we'll get to that.
@@ -35,23 +37,25 @@ the format can only be `uint16` and `uint32`.
 
 ## Thread groups
 
-Compute shaders are executed in three dimensional thread groups, each group has N amount of threads, which we can define using `local_size_n = m` in the compute shader later.
-Defining the local size to amount to 64 threads per thread group is usually optimal, threads within a thread group can communicate between eachother using `shared` variables
-They can also be synced meaning every thread has to be at the same point in execution to continue, though this should be done sparingly.
+Compute shaders are executed in three dimensional thread groups, each group has N amount of [threads](shaders#thread), which we can define using `local_size_n = m` in the compute shader later.
+Defining the local size to amount to 64 [threads](shaders#thread) per thread group is usually optimal, [threads](shaders#thread) within a thread group can communicate with eachother using `shared` variables.
+They can also be synced with [barriers](#barriers) meaning every [thread](shaders#thread) has to be at the same point in execution to continue, though this should be done sparingly.
 
 ### Built-in variables
 
-The local position in the thread group is stored in the `gl_LocalInvocationID` `uvec3`,     
-The position of the entire group is stored in the `gl_WorkGroupID` `uvec3`,      
-And finally the global position (group pos + local pos in group) is stored in the `gl_GlobalInvocationID` `uvec3` input variable       
+The local position in the thread group is stored in the `gl_LocalInvocationID` `uvec3`,
+The position of the entire group is stored in the `gl_WorkGroupID` `uvec3`,
+And finally the global position (group pos + local pos in group) is stored in the `gl_GlobalInvocationID` `uvec3` input variable  .     
 
 ## Particles
 
 let's start with a ~~small~~ compute shader for moving particles around on the screen.
-We have two shader files,       
-`updateParticles.glsl` Is the compute shader which edits the particle data stored in our SSBO, by moving them around.        
-`drawParticles.glsl` Is the **vertex** and **fragment shader** which draw the particles to the screen.      
-Finally, our `main.lua` file will tell the gpu how to update our particles and where they spawn initially.      
+We have two shader files,
+
+`updateParticles.glsl` Is the compute shader which edits the particle data stored in our SSBO, by moving them around.
+`drawParticles.glsl` Is the **vertex** and **fragment shader** which draw the particles to the screen.
+
+Finally, our `main.lua` file will tell GLSL how to update our particles and where they spawn initially.
 
 `updateParticles.glsl`
 ```glsl
@@ -211,6 +215,26 @@ end
 
 This compute shader will take any image with a size that is a multiple of 8, and calculate the average of those 64 pixels, then store it in another image.
 
+### Barriers
+
+To make sure all threads have read their data before we start calculating the average, we use a `barrier`, this will make sure all threads are at the same point in execution before continuing.
+
+Barriers only act between threads in the same thread group, meaning we can't sync all of the threads in the compute shader.
+GLSL has these barrier functions available:
+
+- `barrier`       
+Halts execution until all threads in the thread group have reached this point.
+- `memoryBarrier`     
+Ensures that all memory accesses before the barrier are visible to all threads in the thread group after the barrier.
+
+The following are variations of the `memoryBarrier` function, each only looking at a specific type of memory access:
+- groupMemoryBarrier        
+- memoryBarrierAtomicCounter        
+- memoryBarrierBuffer
+- memoryBarrierImage
+- memoryBarrierShared
+    
+
 ```glsl
 // 8*8*1 = 64 threads
 layout(local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
@@ -218,14 +242,14 @@ layout(local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
 // Input Texture
 uniform Image InputImage;
 
+layout(rgba8) uniform mediump restrict writeonly image2D OutputImage;
 // This line has way too many qualifiers :O
 // Let's break it down!
-// layout(rgba8), the type of an image needs to be defined beforehand, which we do like so.
-// uniform, meaning this can be set from the CPU,
-// mediump, meaning we want mediump precision
+// layout(rgba8), the type of an image needs to be defined beforehand, which we do like so. (rgba8 meaning the format of the image)
+// uniform, meaning this can be set from the CPU, which is necessary for images
+// mediump, meaning we want mediump precision (only really necessary for mobile)
 // restrict, allows the compiler to optimise read and write operations better
-// write, tells te compiler we only want to write to this image
-layout(rgba8) uniform mediump restrict writeonly image2D OutputImage;
+// writeonly, tells the compiler we only want to write to this image
 
 // Our first shared variable, every thread within the thread group can read and write to this!
 shared vec4[8][8] Colors;
@@ -247,16 +271,6 @@ void computemain() {
     // Now, if we were to try to calculate the average now, some threads might still be waiting on their texture fetch
     // and we'd be using random numbers (as variables aren't reset to a default when creating them)
 
-    // To sync our threads (WITHIN THE LOCAL THREAD GROUP) we can use any of the following functions:
-    /*
-        barrier
-        groupMemoryBarrier
-        memoryBarrier
-        memoryBarrierAtomicCounter
-        memoryBarrierBuffer
-        memoryBarrierImage
-        memoryBarrierShared
-    */
     barrier();
 
     // Let's let the first thread compute the Average
