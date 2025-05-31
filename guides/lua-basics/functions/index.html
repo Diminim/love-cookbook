@@ -74,6 +74,7 @@
                   </li><li><a class="active" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/gotchas/">Gotchas</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
 
@@ -250,11 +251,11 @@
     <span class="token function">draw_rectangle</span><span class="token punctuation">(</span><span class="token number">370</span><span class="token punctuation">)</span>
 <span class="token keyword">end</span>
 </code></pre>
-<iframe class="love-embed" id="love-iframe-687" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<iframe class="love-embed" id="love-iframe-1" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
 <script>
-const iframe_687 = document.getElementById('love-iframe-687');
-iframe_687.addEventListener('load', function() {
-iframe_687.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+const iframe_1 = document.getElementById('love-iframe-1');
+iframe_1.addEventListener('load', function() {
+iframe_1.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
 local function draw_rectangle(x)
  love.graphics.rectangle("fill", x, 10, 100, 75)
 end

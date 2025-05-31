@@ -272,6 +272,12 @@
       },
     
       {
+        "title": "Gotchas",
+        "url": "/guides/lua-basics/gotchas/",
+        "abstract": ""
+      },
+    
+      {
         "title": "",
         "url": "/dir.json",
         "abstract": ""

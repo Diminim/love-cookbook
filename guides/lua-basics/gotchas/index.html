@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LÖVE Cookbook | Gotchas</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gotchas</title>
+<meta name="title" content="Gotchas">
+<meta name="author" content="ellraiser">
+<meta name="description" content="Like all coding languages, Lua has a few 'gotchas' that are worth knowing about, especially if you're coming from another coding language where you might have expectations of certain syntax or functionality.">
+<meta name="generator" content="eleventy">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/lua-basics/gotchas/">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Gotchas">
+<meta property="og:description" content="Like all coding languages, Lua has a few 'gotchas' that are worth knowing about, especially if you're coming from another coding language where you might have expectations of certain syntax or functionality.">
+<meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta property="og:image:alt" content="LÖVE Cookbook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/lua-basics/gotchas/">
+<meta name="twitter:title" content="Gotchas">
+<meta name="twitter:description" content="Like all coding languages, Lua has a few 'gotchas' that are worth knowing about, especially if you're coming from another coding language where you might have expectations of certain syntax or functionality.">
+<meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta name="twitter:image:alt" content="LÖVE Cookbook">
+<link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/lua-basics/gotchas/">
+
+    <script src="/love-cookbook/assets/js/codeblock.js"></script>
+    <script src="/love-cookbook/assets/js/hover_preview.js"></script>
+    <script src="/love-cookbook/assets/js/mobile.js"></script>
+
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" rel="stylesheet">
+  </head>
+  <body>
+    <div class="sidebar">
+      <header>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
+      </header>
+
+      <nav class="table-of-contents">
+        <ul class="chapters"><li class="group-header"><ul class="guides"><li><a class="" href="/love-cookbook/guides/getting-started/">Getting started</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fiddle/">Fiddle</a>
+                  </li></ul>
+
+            </li><li class="group-header">Installation<ul class="guides"><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
+                  </li></ul>
+
+            </li><li class="group-header">Lua Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
+                  </li><li><a class="active" href="/love-cookbook/guides/lua-basics/gotchas/">Gotchas</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
+                  </li></ul>
+
+            </li><li class="group-header">Lua Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
+                  </li></ul>
+
+            </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
+                  </li></ul>
+
+            </li><li class="group-header">Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/basic/aabb/">AABB</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/tiles/">Tiles</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/animation/">Animation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/canvases/">Canvases</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
+                  </li></ul>
+
+            </li><li class="group-header">Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/shaders/">Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/compute-shaders/">Compute Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/box-blur/">Box Blur</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/outlines/">Outlines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/palette/">Palette</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/pixelation/">Pixelation</a>
+                  </li></ul>
+
+            </li><li class="group-header">Advanced<ul class="guides"><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
+                  </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
+                  </li></ul>
+
+            </li></ul>
+
+      </nav>
+    </div>
+
+    <main>
+      <article class="guide">
+        
+<header class="guide-header">
+  <button type="button" class="menu-button">
+    <i class="material-symbols-outlined">menu</i>
+  </button>
+
+  <h1 class="title">Gotchas</h1>
+</header>
+
+<p>Like all coding languages, Lua has a few 'gotchas' that are worth knowing about, especially if you're coming from another coding language where you might have expectations of certain syntax or functionality.</p>
+<p>These are some of the more common ones worth remembering.</p>
+<h2 id="arrays-start-at-1" tabindex="-1">Arrays Start At 1 <a class="anchor" href="#arrays-start-at-1">#</a></h2>
+<p>In Lua, all arrays start at 1, rather than the standard convention in most languages to start at 0.<br>
+This means to access the first item in a list, you need to specify <code>array[1]</code> not <code>array[0]</code>:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- print the first item in a list</span>
+<span class="token keyword">local</span> mascots <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'whale'</span><span class="token punctuation">,</span> <span class="token string">'duckloon'</span><span class="token punctuation">,</span> <span class="token string">'supertoast'</span><span class="token punctuation">}</span>
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'The first item is:'</span><span class="token punctuation">,</span> mascots<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">-- this would print 'nil'</span>
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'The first item is not:'</span><span class="token punctuation">,</span> mascots<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+</code></pre>
+<h2 id="not-equals-to" tabindex="-1">Not Equals To <a class="anchor" href="#not-equals-to">#</a></h2>
+<p>In a lot of languages, 'not equals to' is represented by <code>!=</code>.<br>
+However in Lua, that would be invalid syntax, and instead you need to use <code>~=</code></p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> mascots <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'whale'</span><span class="token punctuation">,</span> <span class="token string">'duckloon'</span><span class="token punctuation">,</span> <span class="token string">'supertoast'</span><span class="token punctuation">}</span>
+<span class="token comment">-- remember, list index starts at 1!</span>
+<span class="token keyword">for</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">#</span>mascots <span class="token keyword">do</span>
+  <span class="token keyword">if</span> mascots<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">~=</span> <span class="token string">'whale'</span> <span class="token keyword">then</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>mascots<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">' is not a whale!'</span><span class="token punctuation">)</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<h2 id="string-concatenation" tabindex="-1">String Concatenation <a class="anchor" href="#string-concatenation">#</a></h2>
+<p>In lots of languages, combining two strings together is as simple as using the <code>+</code> symbol.<br>
+However, Lua and will scold you for attempting to 'add' two strings together, as <code>+</code> is seen as a purely mathmatical operation.</p>
+<p>To combine two strings, you instead need to use two dots - <code>..</code>:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> first <span class="token operator">=</span> <span class="token string">'L'</span>
+<span class="token keyword">local</span> second <span class="token operator">=</span> <span class="token string">'Ö'</span>
+<span class="token keyword">local</span> third <span class="token operator">=</span> <span class="token string">'V'</span>
+<span class="token keyword">local</span> fourth <span class="token operator">=</span> <span class="token string">'E'</span>
+
+<span class="token keyword">local</span> bestFramework <span class="token operator">=</span> first <span class="token operator">..</span> second <span class="token operator">..</span> third <span class="token operator">..</span> fourth
+<span class="token function">print</span><span class="token punctuation">(</span>bestFramework<span class="token punctuation">)</span> <span class="token comment">-- will print 'LÖVE'</span>
+</code></pre>
+<p>One handy thing Lua does do though, is any number used with the concatenation operator will automatically convert it to a string:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> scale <span class="token operator">=</span> <span class="token string">'Fahrenheit'</span>
+<span class="token keyword">local</span> temperature <span class="token operator">=</span> <span class="token number">451</span>
+
+<span class="token keyword">local</span> result <span class="token operator">=</span> scale <span class="token operator">..</span> <span class="token string">' '</span> <span class="token operator">..</span> temperature
+<span class="token function">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span> <span class="token comment">-- will print 'Fahrenheit 451'</span>
+</code></pre>
+<p>Keep this in mind if you accidentally use the concatenation operator with 2 numbers, as <code>1+1</code> will give <code>2</code>, but <code>1..1</code> will give <code>'11'</code>.</p>
+<h2 id="operator-assignments" tabindex="-1">Operator Assignments <a class="anchor" href="#operator-assignments">#</a></h2>
+<p>In many languages, operator assignments allow you to do shorthands for modifying or iterating on a variable.<br>
+In Lua, these operators, such as <code>+=</code>, <code>*=</code> and <code>++</code>, do not exist.</p>
+<p>Instead you have to use the variable again in your assignment:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> count <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">for</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100</span> <span class="token keyword">do</span>
+  <span class="token comment">-- in other languages you might do 'count += 1' or 'count ++'</span>
+  <span class="token comment">-- no such luck here im afraid!</span>
+  count <span class="token operator">=</span> count <span class="token operator">+</span> <span class="token number">1</span> 
+<span class="token keyword">end</span>
+</code></pre>
+<h2 id="global-variables" tabindex="-1">Global Variables <a class="anchor" href="#global-variables">#</a></h2>
+<p>In some languages, defining globals is explicit - like in C where you might write <code>global thing</code>.<br>
+In Lua, unless you use <code>local</code> your variable will be global by default!</p>
+<p>This can lead to unintended issues, for example overwriting the wrong variable, so it's best to use <code>local</code> unless you specifically need that variable to have global access.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- without the 'local' modifyer this is now a global!</span>
+name <span class="token operator">=</span> <span class="token string">'LÖVE'</span> 
+<span class="token comment">-- this means you could access it via the global table</span>
+<span class="token function">print</span><span class="token punctuation">(</span>_G<span class="token punctuation">[</span><span class="token string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment">-- but it's a global so you can access it just from the variable name too</span>
+<span class="token function">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+
+<span class="token comment">-- use 'local' to make sure it doesn't interfere with other variables or keep it in scope</span>
+<span class="token keyword">local</span> mascot <span class="token operator">=</span> <span class="token string">'Whale'</span>
+<span class="token function">print</span><span class="token punctuation">(</span>_G<span class="token punctuation">[</span><span class="token string">'mascot'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">-- will be nil</span>
+</code></pre>
+<h2 id="truthy%2Ffalsey" tabindex="-1">Truthy/Falsey <a class="anchor" href="#truthy%2Ffalsey">#</a></h2>
+<p>Different languages have different opinions on what is a &quot;truthy&quot; value and what is a &quot;falsey&quot; value - i.e. values that will return <code>true</code> or <code>false</code>.</p>
+<p>In Lua, only <code>false</code> and <code>nil</code> are considered &quot;falsey&quot; - everything else is considered true!</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> truthy <span class="token operator">=</span> <span class="token keyword">true</span>
+<span class="token keyword">local</span> falsey <span class="token operator">=</span> <span class="token keyword">false</span>
+<span class="token keyword">local</span> null <span class="token operator">=</span> <span class="token keyword">nil</span>
+<span class="token keyword">local</span> zero <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">local</span> empty <span class="token operator">=</span> <span class="token string">''</span>
+
+<span class="token keyword">if</span> null <span class="token keyword">then</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'nil is false'</span><span class="token punctuation">)</span> <span class="token keyword">end</span> <span class="token comment">-- won't print, null is false</span>
+<span class="token keyword">if</span> falsey <span class="token keyword">then</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'false is false'</span><span class="token punctuation">)</span> <span class="token keyword">end</span> <span class="token comment">-- won't print, false is false</span>
+
+<span class="token keyword">if</span> truthy <span class="token keyword">then</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'true is true!'</span><span class="token punctuation">)</span> <span class="token keyword">end</span> <span class="token comment">-- will print, true is true</span>
+<span class="token keyword">if</span> empty <span class="token keyword">then</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'empty is true!'</span><span class="token punctuation">)</span> <span class="token keyword">end</span> <span class="token comment">-- will print, empty string is true</span>
+<span class="token keyword">if</span> zero <span class="token keyword">then</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'0 is true'</span><span class="token punctuation">)</span> <span class="token keyword">end</span> <span class="token comment">-- will print, 0 is true!</span>
+</code></pre>
+<h2 id="multiple-returns" tabindex="-1">Multiple Returns <a class="anchor" href="#multiple-returns">#</a></h2>
+<p>In Lua, functions can return multiple values!<br>
+You can access the returned variables using a list of variables assignment:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">doThing</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token string">'whale'</span><span class="token punctuation">,</span> <span class="token string">'duckloon'</span>
+<span class="token keyword">end</span>
+<span class="token keyword">local</span> a<span class="token punctuation">,</span> b <span class="token operator">=</span> <span class="token function">doThing</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token comment">-- will print 'whale' and 'duckloon'</span>
+
+<span class="token comment">-- we can also store this in a table:</span>
+<span class="token keyword">local</span> result <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token function">doThing</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+<span class="token comment">-- result is now {'whale', 'duckloon'}</span>
+<span class="token function">print</span><span class="token punctuation">(</span>result<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">-- will print 'whale'</span>
+</code></pre>
+<p>If you only need the first variable from a function that returns multiple values, you can do a few options:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">doThing</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token string">'whale'</span><span class="token punctuation">,</span> <span class="token string">'duckloon'</span>
+<span class="token keyword">end</span>
+<span class="token comment">-- Option A: just only specify one variable with the return</span>
+<span class="token keyword">local</span> a <span class="token operator">=</span> <span class="token function">doThing</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">-- will print 'whale'</span>
+
+<span class="token comment">-- Option B: add extra brackets</span>
+<span class="token keyword">local</span> b<span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">doThing</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> c<span class="token punctuation">)</span> <span class="token comment">-- will print 'whale' and nil</span>
+</code></pre>
+<p>It's also worth noting that using a function that returns multiple variables as an argument to another function can have some unintended results:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">rollDice</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">6</span>
+<span class="token keyword">end</span>
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">multiplyResult</span><span class="token punctuation">(</span>value1<span class="token punctuation">,</span> value2<span class="token punctuation">,</span> mult<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>value1 <span class="token operator">+</span> value2<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>mult <span class="token keyword">or</span> <span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- this evaluates as multiplyResult(6, 6, nil)</span>
+<span class="token keyword">local</span> resultA <span class="token operator">=</span> <span class="token function">multiplyResult</span><span class="token punctuation">(</span><span class="token function">rollDice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>resultA<span class="token punctuation">)</span> <span class="token comment">-- 120</span>
+
+<span class="token comment">-- however this evaluates as multiplyResult(6, 10, nil) - the second returned value is lost!</span>
+<span class="token keyword">local</span> resultB <span class="token operator">=</span> <span class="token function">multiplyResult</span><span class="token punctuation">(</span><span class="token function">rollDice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>resultB<span class="token punctuation">)</span> <span class="token comment">-- 160</span>
+</code></pre>
+
+
+<footer class="guide-footer">
+  <p></p>
+
+  <p>By:
+  
+      <em>ellraiser</em>
+    
+  </p>
+</footer>
+      </article>
+    </main>
+
+  </body>
+</html>

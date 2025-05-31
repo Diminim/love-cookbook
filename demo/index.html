@@ -74,6 +74,7 @@
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/gotchas/">Gotchas</a>
                   </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
                   </li></ul>
 
@@ -172,11 +173,11 @@
 </code></pre>
 <h2 id="embedded-love" tabindex="-1">Embedded LOVE <a class="anchor" href="#embedded-love">#</a></h2>
 <p>We can embed LOVE windows with the <code>{% love %}</code> shortcode.</p>
-<iframe class="love-embed" id="love-iframe-744" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
+<iframe class="love-embed" id="love-iframe-374" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
 <script>
-const iframe_744 = document.getElementById('love-iframe-744');
-iframe_744.addEventListener('load', function() {
-iframe_744.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
+const iframe_374 = document.getElementById('love-iframe-374');
+iframe_374.addEventListener('load', function() {
+iframe_374.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
 function love.draw()
  love.graphics.printf("this is how we embed love.js", 0, 50, love.graphics.getWidth(), "center")
 end
