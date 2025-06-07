@@ -13,19 +13,19 @@
 <title>Compute Shaders</title>
 <meta name="title" content="Compute Shaders">
 <meta name="author" content="Jasper">
-<meta name="description" content="This guide is made for LÖVE 12.0!">
+<meta name="description" content="Compute shaders are a more general way to do calculations with GLSL, as opposed to the vertex and fragment shader, which are a lot more constrained.">
 <meta name="generator" content="eleventy">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/intermediate/compute-shaders/">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="Compute Shaders">
-<meta property="og:description" content="This guide is made for LÖVE 12.0!">
+<meta property="og:description" content="Compute shaders are a more general way to do calculations with GLSL, as opposed to the vertex and fragment shader, which are a lot more constrained.">
 <meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta property="og:image:alt" content="LÖVE Cookbook">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/intermediate/compute-shaders/">
 <meta name="twitter:title" content="Compute Shaders">
-<meta name="twitter:description" content="This guide is made for LÖVE 12.0!">
+<meta name="twitter:description" content="Compute shaders are a more general way to do calculations with GLSL, as opposed to the vertex and fragment shader, which are a lot more constrained.">
 <meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta name="twitter:image:alt" content="LÖVE Cookbook">
 <link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/intermediate/compute-shaders/">
@@ -116,6 +116,7 @@
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/outlines/">Outlines</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/palette/">Palette</a>
                   </li><li><a class="" href="/love-cookbook/guides/intermediate/pixelation/">Pixelation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/vertex-shaders/">Vertex Shaders</a>
                   </li></ul>
 
             </li><li class="group-header">Advanced<ul class="guides"><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
@@ -138,9 +139,9 @@
   <h1 class="title">Compute Shaders</h1>
 </header>
 
+<p><strong>Compute shaders</strong> are a more general way to do calculations with GLSL, as opposed to the vertex and fragment shader, which are a lot more constrained.</p>
 <div class="markdown-alert markdown-alert-caution"><p class="markdown-alert-title"><svg class="octicon octicon-stop mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Caution</p><p>This guide is made for LÖVE 12.0!</p>
 </div>
-<p><strong>Compute shaders</strong> are a more general way to do calculations on the GPU, as opposed to the vertex and fragment shader, which are a lot more constrained.</p>
 <p>To edit data outside of the shader, we can use <strong>SSBO's</strong> (Shader storage buffer object) and textures.
 Textures need to be marked as computewritable with the <code>computewrite</code> tag, but we'll get to that.</p>
 <p><strong>SSBO's</strong> are a way to store a large amount of data.
@@ -169,19 +170,19 @@ the format can only be <code>uint16</code> and <code>uint32</code>.</p>
 <div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>When defining `buffers` in GLSL, LÖVE automatically adds the std430 qualifier, which allows for better packing of data. So we don't have to add that.</p><p></p>
 </div>
 <h2 id="thread-groups" tabindex="-1">Thread groups <a class="anchor" href="#thread-groups">#</a></h2>
-<p>Compute shaders are executed in three dimensional thread groups, each group has N amount of threads, which we can define using <code>local_size_n = m</code> in the compute shader later.
-Defining the local size to amount to 64 threads per thread group is usually optimal, threads within a thread group can communicate between eachother using <code>shared</code> variables
-They can also be synced meaning every thread has to be at the same point in execution to continue, though this should be done sparingly.</p>
+<p>Compute shaders are executed in three dimensional thread groups, each group has N amount of <a href="../shaders#thread" data-preview="../shaders#thread">threads</a>, which we can define using <code>local_size_n = m</code> in the compute shader later.
+Defining the local size to amount to 64 <a href="../shaders#thread" data-preview="../shaders#thread">threads</a> per thread group is usually optimal, <a href="../shaders#thread" data-preview="../shaders#thread">threads</a> within a thread group can communicate with eachother using <code>shared</code> variables.
+They can also be synced with <a href="#barriers">barriers</a> meaning every <a href="../shaders#thread" data-preview="../shaders#thread">thread</a> has to be at the same point in execution to continue, though this should be done sparingly.</p>
 <h3 id="built-in-variables" tabindex="-1">Built-in variables <a class="anchor" href="#built-in-variables">#</a></h3>
-<p>The local position in the thread group is stored in the <code>gl_LocalInvocationID</code> <code>uvec3</code>,<br>
-The position of the entire group is stored in the <code>gl_WorkGroupID</code> <code>uvec3</code>,<br>
-And finally the global position (group pos + local pos in group) is stored in the <code>gl_GlobalInvocationID</code> <code>uvec3</code> input variable</p>
+<p>The local position in the thread group is stored in the <code>gl_LocalInvocationID</code> <code>uvec3</code>,
+The position of the entire group is stored in the <code>gl_WorkGroupID</code> <code>uvec3</code>,
+And finally the global position (group pos + local pos in group) is stored in the <code>gl_GlobalInvocationID</code> <code>uvec3</code> input variable  .</p>
 <h2 id="particles" tabindex="-1">Particles <a class="anchor" href="#particles">#</a></h2>
 <p>let's start with a <s>small</s> compute shader for moving particles around on the screen.
-We have two shader files,<br>
-<code>updateParticles.glsl</code> Is the compute shader which edits the particle data stored in our SSBO, by moving them around.<br>
-<code>drawParticles.glsl</code> Is the <strong>vertex</strong> and <strong>fragment shader</strong> which draw the particles to the screen.<br>
-Finally, our <code>main.lua</code> file will tell the gpu how to update our particles and where they spawn initially.</p>
+We have two shader files,</p>
+<p><code>updateParticles.glsl</code> Is the compute shader which edits the particle data stored in our SSBO, by moving them around.
+<code>drawParticles.glsl</code> Is the <strong>vertex</strong> and <strong>fragment shader</strong> which draw the particles to the screen.</p>
+<p>Finally, our <code>main.lua</code> file will tell GLSL how to update our particles and where they spawn initially.</p>
 <p><code>updateParticles.glsl</code></p>
 <pre><code class="language-glsl"><span data-attrs=""></span><span class="token comment">// A final local size amounting to 64 is optimal.</span>
 <span class="token keyword">layout</span><span class="token punctuation">(</span>local_size_x <span class="token operator">=</span> <span class="token number">64</span><span class="token punctuation">,</span> local_size_y <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> local_size_z <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">in</span><span class="token punctuation">;</span>
@@ -332,20 +333,38 @@ buffer<span class="token punctuation">:</span><span class="token function">setAr
 <div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>`Image` and `image2D` are two different things, the first defining a 2D sampler (Readonly texture), the other a 2D image (Read / Write texture)</p><p></p>
 </div>
 <p>This compute shader will take any image with a size that is a multiple of 8, and calculate the average of those 64 pixels, then store it in another image.</p>
+<h3 id="barriers" tabindex="-1">Barriers <a class="anchor" href="#barriers">#</a></h3>
+<p>To make sure all threads have read their data before we start calculating the average, we use a <code>barrier</code>, this will make sure all threads are at the same point in execution before continuing.</p>
+<p>Barriers only act between threads in the same thread group, meaning we can't sync all of the threads in the compute shader.
+GLSL has these barrier functions available:</p>
+<ul>
+<li><code>barrier</code><br>
+Halts execution until all threads in the thread group have reached this point.</li>
+<li><code>memoryBarrier</code><br>
+Ensures that all memory accesses before the barrier are visible to all threads in the thread group after the barrier.</li>
+</ul>
+<p>The following are variations of the <code>memoryBarrier</code> function, each only looking at a specific type of memory access:</p>
+<ul>
+<li>groupMemoryBarrier</li>
+<li>memoryBarrierAtomicCounter</li>
+<li>memoryBarrierBuffer</li>
+<li>memoryBarrierImage</li>
+<li>memoryBarrierShared</li>
+</ul>
 <pre><code class="language-glsl"><span data-attrs=""></span><span class="token comment">// 8*8*1 = 64 threads</span>
 <span class="token keyword">layout</span><span class="token punctuation">(</span>local_size_x <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">,</span> local_size_y <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">,</span> local_size_z <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">in</span><span class="token punctuation">;</span>
 
 <span class="token comment">// Input Texture</span>
 <span class="token keyword">uniform</span> Image InputImage<span class="token punctuation">;</span>
 
+<span class="token keyword">layout</span><span class="token punctuation">(</span>rgba8<span class="token punctuation">)</span> <span class="token keyword">uniform</span> <span class="token keyword">mediump</span> <span class="token keyword">restrict</span> <span class="token keyword">writeonly</span> <span class="token keyword">image2D</span> OutputImage<span class="token punctuation">;</span>
 <span class="token comment">// This line has way too many qualifiers :O</span>
 <span class="token comment">// Let's break it down!</span>
-<span class="token comment">// layout(rgba8), the type of an image needs to be defined beforehand, which we do like so.</span>
-<span class="token comment">// uniform, meaning this can be set from the CPU,</span>
-<span class="token comment">// mediump, meaning we want mediump precision</span>
+<span class="token comment">// layout(rgba8), the type of an image needs to be defined beforehand, which we do like so. (rgba8 meaning the format of the image)</span>
+<span class="token comment">// uniform, meaning this can be set from the CPU, which is necessary for images</span>
+<span class="token comment">// mediump, meaning we want mediump precision (only really necessary for mobile)</span>
 <span class="token comment">// restrict, allows the compiler to optimise read and write operations better</span>
-<span class="token comment">// write, tells te compiler we only want to write to this image</span>
-<span class="token keyword">layout</span><span class="token punctuation">(</span>rgba8<span class="token punctuation">)</span> <span class="token keyword">uniform</span> <span class="token keyword">mediump</span> <span class="token keyword">restrict</span> <span class="token keyword">writeonly</span> <span class="token keyword">image2D</span> OutputImage<span class="token punctuation">;</span>
+<span class="token comment">// writeonly, tells the compiler we only want to write to this image</span>
 
 <span class="token comment">// Our first shared variable, every thread within the thread group can read and write to this!</span>
 <span class="token keyword">shared</span> <span class="token keyword">vec4</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span> Colors<span class="token punctuation">;</span>
@@ -367,16 +386,6 @@ buffer<span class="token punctuation">:</span><span class="token function">setAr
     <span class="token comment">// Now, if we were to try to calculate the average now, some threads might still be waiting on their texture fetch</span>
     <span class="token comment">// and we'd be using random numbers (as variables aren't reset to a default when creating them)</span>
 
-    <span class="token comment">// To sync our threads (WITHIN THE LOCAL THREAD GROUP) we can use any of the following functions:</span>
-    <span class="token comment">/*
-        barrier
-        groupMemoryBarrier
-        memoryBarrier
-        memoryBarrierAtomicCounter
-        memoryBarrierBuffer
-        memoryBarrierImage
-        memoryBarrierShared
-    */</span>
     <span class="token function">barrier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token comment">// Let's let the first thread compute the Average</span>

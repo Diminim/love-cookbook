@@ -272,6 +272,12 @@
       },
     
       {
+        "title": "Vertex Shaders",
+        "url": "/guides/intermediate/vertex-shaders/",
+        "abstract": ""
+      },
+    
+      {
         "title": "Gotchas",
         "url": "/guides/lua-basics/gotchas/",
         "abstract": ""
