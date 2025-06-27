@@ -86,12 +86,6 @@
       },
     
       {
-        "title": "OOP",
-        "url": "/guides/intermediate/oop/",
-        "abstract": ""
-      },
-    
-      {
         "title": "Stencil states",
         "url": "/guides/intermediate/stencil-states/",
         "abstract": ""
@@ -274,6 +268,12 @@
       {
         "title": "Vertex Shaders",
         "url": "/guides/intermediate/vertex-shaders/",
+        "abstract": ""
+      },
+    
+      {
+        "title": "OOP",
+        "url": "/guides/intermediate/oop/",
         "abstract": ""
       },
     
