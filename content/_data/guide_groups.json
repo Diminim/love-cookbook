@@ -85,5 +85,11 @@
             "/guides/advanced/physics/",
             "/guides/advanced/threads/"
         ]
+    },
+    {
+        "name": "Recipes",
+        "guide_urls": [
+            "/guides/recipes/steam/"
+        ]
     }
 ]
