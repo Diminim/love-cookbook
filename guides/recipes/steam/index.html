@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LÖVE Cookbook | Steam</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steam</title>
+<meta name="title" content="Steam">
+<meta name="author" content="Sheepolution">
+<meta name="generator" content="eleventy">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/recipes/steam/">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Steam">
+<meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta property="og:image:alt" content="LÖVE Cookbook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/recipes/steam/">
+<meta name="twitter:title" content="Steam">
+<meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta name="twitter:image:alt" content="LÖVE Cookbook">
+<link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/recipes/steam/">
+
+    <script src="/love-cookbook/assets/js/codeblock.js"></script>
+    <script src="/love-cookbook/assets/js/hover_preview.js"></script>
+    <script src="/love-cookbook/assets/js/mobile.js"></script>
+
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" rel="stylesheet">
+  </head>
+  <body>
+    <div class="sidebar">
+      <header>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
+      </header>
+
+      <nav class="table-of-contents">
+        <ul class="chapters"><li class="group-header"><ul class="guides"><li><a class="" href="/love-cookbook/guides/getting-started/">Getting started</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fiddle/">Fiddle</a>
+                  </li></ul>
+
+            </li><li class="group-header">Installation<ul class="guides"><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
+                  </li></ul>
+
+            </li><li class="group-header">Lua Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/gotchas/">Gotchas</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
+                  </li></ul>
+
+            </li><li class="group-header">Lua Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
+                  </li></ul>
+
+            </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
+                  </li></ul>
+
+            </li><li class="group-header">Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/basic/aabb/">AABB</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/tiles/">Tiles</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/animation/">Animation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/canvases/">Canvases</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
+                  </li></ul>
+
+            </li><li class="group-header">Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/shaders/">Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/compute-shaders/">Compute Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/box-blur/">Box Blur</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/outlines/">Outlines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/palette/">Palette</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/pixelation/">Pixelation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/vertex-shaders/">Vertex Shaders</a>
+                  </li></ul>
+
+            </li><li class="group-header">Advanced<ul class="guides"><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
+                  </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
+                  </li></ul>
+
+            </li><li class="group-header">Recipes<ul class="guides"><li><a class="active" href="/love-cookbook/guides/recipes/steam/">Steam</a>
+                  </li></ul>
+
+            </li></ul>
+
+      </nav>
+    </div>
+
+    <main>
+      <article class="guide">
+        
+<header class="guide-header">
+  <button type="button" class="menu-button">
+    <i class="material-symbols-outlined">menu</i>
+  </button>
+
+  <h1 class="title">Steam</h1>
+</header>
+
+<p><span data-abstract="Steam"></span></p>
+<p>If you want to put your game on Steam, you might also want to add some Steam specific features, like achievements or multiplayer. There are many <a href="https://store.steampowered.com/curator/44895761-Made-With-L%25C3%2596VE/">LÖVE games on Steam</a> already, so yes, it is possible to have these features when using LÖVE.</p>
+<h2 id="luasteam" tabindex="-1">luasteam <a class="anchor" href="#luasteam">#</a></h2>
+<p>To connect with the Steam API, we will be using <a href="https://github.com/uspgamedev/luasteam">luasteam</a>. Get the <code>.dll</code> or <code>.so</code> for your system, and put this file in your project folder. In this chapter we will assume you placed it at the root of your project. Also at the root create a  <code>steam_appid.txt</code> with either your app's ID, or with <code>480</code>, the id for the example game <a href="https://steamdb.info/app/480/info/">Spacewar</a>.</p>
+<p>Download the <a href="https://partner.steamgames.com/downloads/list">steamworks_sdk.zip</a> (you need a Steamworks account). Navigate to <code>sdk -&gt; redistributable_bin -&gt; [your OS]</code> and copy the <code>steam_api64.dll</code> / <code>libsteam_api.so</code>. Place this not at your project folder, but in your LOVE folder (i.e. where <code>love.exe</code> is).</p>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>You might want to set yourself to invisible on Steam, or hide notifications another way. Otherwise your friends will start to asking what Spacewar is, and why you're restarting it every 5 minutes.</p>
+</div>
+<p>Generally, loading Steam is the first thing you want to do in your game. At the top of your main.lua, place the following code:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> Steam <span class="token operator">=</span> require <span class="token string">"luasteam"</span>
+Steam<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>You might get the following messages:</p>
+<pre><code>Setting breakpad minidump AppID = 480
+SteamInternal_SetMinidumpSteamID:  Caching Steam ID: 0123456789 [API loaded no]
+</code></pre>
+<p>This is because you don't load your game through stream. You can ignore it.</p>
+</div>
+<p>You can now use the <a href="https://partner.steamgames.com/doc/api">Steam API</a>, but not all of Steam API has been implemented in luasteam. Check the <a href="https://luasteam.readthedocs.io/en/stable/">luasteam</a> docs to see what is implemented and how it works.</p>
+<p>For example, we can use <a href="https://luasteam.readthedocs.io/en/stable/friends.html#friends.activateGameOverlay"><code>Steam.friends.activateGameOverlay(&quot;community&quot;)</code></a> to open the community tab, and use <a href="https://luasteam.readthedocs.io/en/stable/user_stats.html#userStats.setAchievement"><code>Steam.friends.setAchievement(name)</code></a> to unlock an achievement for the player.</p>
+<h2 id="multiplayer" tabindex="-1">Multiplayer <a class="anchor" href="#multiplayer">#</a></h2>
+<p>We can use the Steam API to create a multiplayer game. We're going to assume you know the basics of online multiplayer and networking. We will be using the P2P API, where we have one server and one or more connecting clients. At the end of this chapter is a full example implementation.</p>
+<h3 id="socket" tabindex="-1">Socket <a class="anchor" href="#socket">#</a></h3>
+<p>We can let one player, the server, create a P2P socket with <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.createListenSocketP2P"><code>createListenSocketP2P()</code></a>. Other players can then connect to this socket with <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.connectP2P"><code>connectP2P(steamID)</code></a>. The <code>steamID</code> is the ID of the player who created the server.</p>
+<p>To get this ID, the server can</p>
+<ul>
+<li>Invite the player using <a href="https://luasteam.readthedocs.io/en/stable/friends.html#friends.inviteUserToGame"><code>inviteUserToGame(connect_string)</code></a>.</li>
+<li>Enable the &quot;Join game&quot; button on their profile with <a href="https://luasteam.readthedocs.io/en/stable/friends.html#friends.setRichPresence"><code>setRichPresence(&quot;connect&quot;, connect_string)</code></a>.</li>
+</ul>
+<p>The <code>connect_string</code> in this case is the <code>steamID</code> of the player who hosts the server, which we can get with <a href="https://luasteam.readthedocs.io/en/stable/user.html#user.getSteamID"><code>getSteamID()</code></a>. Upon accepting the connection the callback <a href="https://luasteam.readthedocs.io/en/stable/friends.html#friends.onGameRichPresenceJoinRequested"><code>onGameRichPresenceJoinRequested</code></a> is called. In here, we can connect to the server using <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.connectP2P"><code>connectP2P(steamID)</code></a>.</p>
+<p>Using the callback <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.onConnectionChanged"><code>onConnectionChanged</code></a> we capture whenever there is a change in a connection. It comes with a <code>data</code> table, which tells us the state of the connection. If it's a client connecting to the server, we can accept the connection with <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.acceptConnection"><code>acceptConnection(connection)</code></a>.</p>
+<p>Because we use callbacks, we need to call <a href="https://luasteam.readthedocs.io/en/stable/steam_api.html#runCallbacks"><code>runCallbacks()</code></a> every frame.</p>
+<pre><code class="language-lua"><span data-attrs=""></span>Steam <span class="token operator">=</span> require <span class="token string">"luasteam"</span>
+Steam<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">local</span> server <span class="token operator">=</span> <span class="token keyword">true</span> <span class="token comment">-- Change to false for the client</span>
+<span class="token keyword">local</span> connectionId
+
+<span class="token keyword">if</span> server <span class="token keyword">then</span>
+	connectionId <span class="token operator">=</span> Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">createListenSocketP2P</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+	Steam<span class="token punctuation">.</span>friends<span class="token punctuation">.</span><span class="token function">setRichPresence</span><span class="token punctuation">(</span><span class="token string">"connect"</span><span class="token punctuation">,</span> <span class="token function">tostring</span><span class="token punctuation">(</span>Steam<span class="token punctuation">.</span>user<span class="token punctuation">.</span><span class="token function">getSteamID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> Steam<span class="token punctuation">.</span>friends<span class="token punctuation">.</span><span class="token function">onGameRichPresenceJoinRequested</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+	Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">connectP2P</span><span class="token punctuation">(</span>Steam<span class="token punctuation">.</span>extra<span class="token punctuation">.</span><span class="token function">parseUint64</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>connect<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+	
+	<span class="token comment">-- This way we allow friends of this person to join the server as well.</span>
+	Steam<span class="token punctuation">.</span>friends<span class="token punctuation">.</span><span class="token function">setRichPresence</span><span class="token punctuation">(</span><span class="token string">"connect"</span><span class="token punctuation">,</span> data<span class="token punctuation">.</span>connect<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">onConnectionChanged</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+	<span class="token keyword">local</span> state <span class="token operator">=</span> data<span class="token punctuation">.</span>state
+	<span class="token keyword">local</span> conn <span class="token operator">=</span> data<span class="token punctuation">.</span>connection
+
+	<span class="token keyword">if</span> state <span class="token operator">==</span> <span class="token string">"Connecting"</span> <span class="token keyword">then</span>
+		<span class="token keyword">if</span> server <span class="token keyword">then</span>
+			Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">acceptConnection</span><span class="token punctuation">(</span>conn<span class="token punctuation">)</span>
+		<span class="token keyword">end</span>
+	<span class="token keyword">elseif</span> state <span class="token operator">==</span> <span class="token string">"Connected"</span> <span class="token keyword">then</span>
+		<span class="token comment">-- As the server we accept the connection, so we can ignore this.</span>
+		<span class="token keyword">if</span> <span class="token keyword">not</span> server <span class="token keyword">then</span>
+			<span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Connected!"</span><span class="token punctuation">)</span>
+			connectionId <span class="token operator">=</span> conn
+		<span class="token keyword">end</span>
+	<span class="token keyword">elseif</span> state <span class="token operator">==</span> <span class="token string">"ClosedByPeer"</span> <span class="token keyword">then</span>
+		<span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"The client ended the connection (e.g. closing the game)."</span><span class="token punctuation">)</span>
+	<span class="token keyword">elseif</span> state <span class="token operator">==</span> <span class="token string">"ProblemDetectedLocally"</span> <span class="token keyword">then</span>
+		<span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"I'm sure it's nothing..."</span><span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>dt<span class="token punctuation">)</span>
+	Steam<span class="token punctuation">.</span><span class="token function">runCallbacks</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<h3 id="messaging" tabindex="-1">Messaging <a class="anchor" href="#messaging">#</a></h3>
+<p>Now that we have a connection, we want to send information back and forth using <em>messages</em>. We do this by usign a <ins>poll group</ins>.</p>
+<p>Along with creating a socket, we also create a poll group using <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.createPollGroup"><code>createPollGroup()</code></a>. Every time a client connects, we assign it to the poll group using <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.setConnectionPollGroup"><code>setConnectionPollGroup(connection, pollGroup)</code></a>. This way we can use the poll group to poll for messages of all clients with <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.receiveMessagesOnPollGroup"><code>receiveMessagesOnPollGroup(pollGroup)</code></a>. A client only needs to receive messages from the server, so it can use <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.receiveMessagesOnConnection"><code>receiveMessagesOnConnection(connectionId)</code></a> instead. We receive these messages as a table in the following format:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token punctuation">{</span>
+	<span class="token number">1</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+		conn <span class="token operator">=</span> <span class="token number">5235</span><span class="token punctuation">,</span>
+		msg <span class="token operator">=</span> <span class="token string">"A message"</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token number">2</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+		conn <span class="token operator">=</span> <span class="token number">5235</span><span class="token punctuation">,</span>
+		msg <span class="token operator">=</span> <span class="token string">"Another message"</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token number">3</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+		conn <span class="token operator">=</span> <span class="token number">5678</span><span class="token punctuation">,</span>
+		msg <span class="token operator">=</span> <span class="token string">"Yet another message"</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>We can send a message with <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.sendMessageToConnection"><code>sendMessageToConnection(connection, message, flag)</code></a>. The <code>flag</code> decides what method is used when sending the message (i.e. reliable means it will make sure the message is received). Check the <a href="https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.sendMessageToConnection">documentation</a> for more information.</p>
+<h3 id="summary" tabindex="-1">Summary <a class="anchor" href="#summary">#</a></h3>
+<p>Below is an example of a P2P implementation, with commentary on what the functions do, and links to the relevant documentation.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> server <span class="token operator">=</span> <span class="token keyword">true</span> <span class="token comment">-- Change to false for the client</span>
+<span class="token keyword">local</span> connectionId
+
+<span class="token keyword">local</span> pollGroup
+
+Steam <span class="token operator">=</span> require <span class="token string">"luasteam"</span>
+Steam<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">-- We call this to let Steam know that we want to use the networking sockets API.</span>
+<span class="token comment">-- Which probably won't do much in this example, but it can save you a delay.</span>
+<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.initAuthentication</span>
+Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">initAuthentication</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> server <span class="token keyword">then</span>
+	<span class="token comment">-- We create a P2P server.</span>
+	<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.createListenSocketP2P</span>
+	connectionId <span class="token operator">=</span> Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">createListenSocketP2P</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+
+	<span class="token comment">-- This will be used to poll for incoming messages from clients.</span>
+	<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.createPollGroup</span>
+	pollGroup <span class="token operator">=</span> Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">createPollGroup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	<span class="token comment">-- This allows friends to right click -> "Join game".</span>
+	<span class="token comment">-- Or the player right clicks -> "Invite to play".</span>
+	<span class="token comment">-- We set the steam ID of the server as the key.</span>
+	<span class="token comment">-- When the player creates a P2P server, their steam ID is used as the ID to connect with the server.</span>
+	<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/friends.html#friends.setRichPresence</span>
+	Steam<span class="token punctuation">.</span>friends<span class="token punctuation">.</span><span class="token function">setRichPresence</span><span class="token punctuation">(</span><span class="token string">"connect"</span><span class="token punctuation">,</span> <span class="token function">tostring</span><span class="token punctuation">(</span>Steam<span class="token punctuation">.</span>user<span class="token punctuation">.</span><span class="token function">getSteamID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- Callback that is called when the player clicks on "Join game" or accepts the invite.</span>
+<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/friends.html#friends.onGameRichPresenceJoinRequested</span>
+<span class="token keyword">function</span> Steam<span class="token punctuation">.</span>friends<span class="token punctuation">.</span><span class="token function">onGameRichPresenceJoinRequested</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+	<span class="token comment">-- We have two options here:</span>
+	<span class="token comment">-- 1. Use data.steamIDFriend</span>
+	<span class="token comment">-- 2. Use data.connect (the key that we passed)</span>
+	<span class="token comment">-- By using option 2 we can have the client copy the key, so that people can join them as well.</span>
+	<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.connectP2P</span>
+	Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">connectP2P</span><span class="token punctuation">(</span>Steam<span class="token punctuation">.</span>extra<span class="token punctuation">.</span><span class="token function">parseUint64</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>connect<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+	
+	<span class="token comment">-- This way we allow friends of this person to join the server.</span>
+	Steam<span class="token punctuation">.</span>friends<span class="token punctuation">.</span><span class="token function">setRichPresence</span><span class="token punctuation">(</span><span class="token string">"connect"</span><span class="token punctuation">,</span> data<span class="token punctuation">.</span>connect<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- Callback that is called when a connection arrives/changes.</span>
+<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.onConnectionChanged</span>
+<span class="token keyword">function</span> Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">onConnectionChanged</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+	<span class="token keyword">local</span> state <span class="token operator">=</span> data<span class="token punctuation">.</span>state
+	<span class="token keyword">local</span> conn <span class="token operator">=</span> data<span class="token punctuation">.</span>connection
+
+	<span class="token comment">-- The state tells us what happened to the connection.</span>
+	<span class="token comment">-- https://partner.steamgames.com/doc/api/ISteamNetworkingSockets#2</span>
+	<span class="token keyword">if</span> state <span class="token operator">==</span> <span class="token string">"Connecting"</span> <span class="token keyword">then</span>
+		<span class="token keyword">if</span> server <span class="token keyword">then</span>
+			<span class="token comment">-- A client is connecting. We accept the connection.</span>
+			<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.acceptConnection</span>
+			Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">acceptConnection</span><span class="token punctuation">(</span>conn<span class="token punctuation">)</span>
+
+			<span class="token comment">-- We assign the connection to the poll group, so we can receive messages from it.</span>
+			<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.setConnectionPollGroup</span>
+			Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">setConnectionPollGroup</span><span class="token punctuation">(</span>conn<span class="token punctuation">,</span> pollGroup<span class="token punctuation">)</span>
+		<span class="token keyword">end</span>
+	<span class="token keyword">elseif</span> state <span class="token operator">==</span> <span class="token string">"Connected"</span> <span class="token keyword">then</span>
+		<span class="token comment">-- As the server we accept the connection, so we can ignore this.</span>
+		<span class="token keyword">if</span> <span class="token keyword">not</span> server <span class="token keyword">then</span>
+			<span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Connected!"</span><span class="token punctuation">)</span>
+			connectionId <span class="token operator">=</span> conn
+		<span class="token keyword">end</span>
+	<span class="token keyword">elseif</span> state <span class="token operator">==</span> <span class="token string">"ClosedByPeer"</span> <span class="token keyword">then</span>
+		<span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"The client ended the connection (e.g. closing the game)."</span><span class="token punctuation">)</span>
+	<span class="token keyword">elseif</span> state <span class="token operator">==</span> <span class="token string">"ProblemDetectedLocally"</span> <span class="token keyword">then</span>
+		<span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"I'm sure it's nothing..."</span><span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token comment">-- Call this every frame to run the callbacks when an event happened.</span>
+	<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/steam_api.html#runCallbacks</span>
+	Steam<span class="token punctuation">.</span><span class="token function">runCallbacks</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	<span class="token keyword">local</span> n<span class="token punctuation">,</span> messages
+	<span class="token keyword">if</span> server <span class="token keyword">then</span>
+		<span class="token comment">-- We poll for incoming messages from clients.</span>
+		<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.receiveMessagesOnPollGroup</span>
+		n<span class="token punctuation">,</span> messages <span class="token operator">=</span> Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">receiveMessagesOnPollGroup</span><span class="token punctuation">(</span>pollGroup<span class="token punctuation">)</span>
+	<span class="token keyword">else</span>
+		<span class="token comment">-- We poll for incoming messages from the server.</span>
+		<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.receiveMessagesOnConnection</span>
+		n<span class="token punctuation">,</span> messages <span class="token operator">=</span> Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">receiveMessagesOnConnection</span><span class="token punctuation">(</span>connectionId<span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+
+	<span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">then</span>
+		<span class="token comment">-- No messages.</span>
+		<span class="token keyword">return</span>
+	<span class="token keyword">end</span>
+
+	<span class="token keyword">for</span> _<span class="token punctuation">,</span> data <span class="token keyword">in</span> <span class="token function">ipairs</span><span class="token punctuation">(</span>messages<span class="token punctuation">)</span> <span class="token keyword">do</span>
+		<span class="token comment">-- data.msg is the string that was passed.</span>
+		<span class="token function">print</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>msg<span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">keypressed</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> server <span class="token keyword">or</span> <span class="token keyword">not</span> connectionId <span class="token keyword">then</span> <span class="token keyword">return</span> <span class="token keyword">end</span>
+	<span class="token keyword">if</span> k <span class="token operator">==</span> <span class="token string">"space"</span> <span class="token keyword">then</span>
+		<span class="token comment">-- We send a message to the server.</span>
+		<span class="token comment">-- https://luasteam.readthedocs.io/en/stable/networking_sockets.html#networkingSockets.sendMessageToConnection</span>
+		<span class="token keyword">local</span> method <span class="token operator">=</span> Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span>flags<span class="token punctuation">.</span>Send_Reliable
+		Steam<span class="token punctuation">.</span>networkingSockets<span class="token punctuation">.</span><span class="token function">sendMessageToConnection</span><span class="token punctuation">(</span>connectionId<span class="token punctuation">,</span> <span class="token string">"Hello world!"</span><span class="token punctuation">,</span> method<span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+
+
+<footer class="guide-footer">
+  <p></p>
+
+  <p>By:
+  
+      <em>Sheepolution</em>
+    
+  </p>
+</footer>
+      </article>
+    </main>
+
+  </body>
+</html>

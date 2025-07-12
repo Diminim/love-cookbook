@@ -12,20 +12,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Input</title>
 <meta name="title" content="Input">
-<meta name="author" content="">
-<meta name="description" content="Not yet written: contribute to this page on GitHub.">
+<meta name="author" content="Sheepolution">
 <meta name="generator" content="eleventy">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/love/input/">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="Input">
-<meta property="og:description" content="Not yet written: contribute to this page on GitHub.">
 <meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta property="og:image:alt" content="LÖVE Cookbook">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/love/input/">
 <meta name="twitter:title" content="Input">
-<meta name="twitter:description" content="Not yet written: contribute to this page on GitHub.">
 <meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta name="twitter:image:alt" content="LÖVE Cookbook">
 <link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/love/input/">
@@ -123,6 +120,9 @@
                   </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
                   </li></ul>
 
+            </li><li class="group-header">Recipes<ul class="guides"><li><a class="" href="/love-cookbook/guides/recipes/steam/">Steam</a>
+                  </li></ul>
+
             </li></ul>
 
       </nav>
@@ -139,7 +139,404 @@
   <h1 class="title">Input</h1>
 </header>
 
-<p>Not yet written: contribute to this page on <a href="https://github.com/Diminim/love-cookbook">GitHub</a>.</p>
+<p><span data-abstract="LÖVE has API for input through keyboard, mouse and joystick."></span></p>
+<p>What is a game without some interaction? Good thing LÖVE's API has various functions regarding input.</p>
+<p>Input can be separated into three categories:</p>
+<ul>
+<li>Keyboard</li>
+<li>Mouse</li>
+<li>Joystick</li>
+</ul>
+<h2 id="keyboard" tabindex="-1">Keyboard <a class="anchor" href="#keyboard">#</a></h2>
+<p>With input we generally want to know three things:</p>
+<ul>
+<li>If a key is being held down</li>
+<li>The moment a key was pressed</li>
+<li>The moment a key was released</li>
+</ul>
+<h3 id="isdown" tabindex="-1">isDown <a class="anchor" href="#isdown">#</a></h3>
+<p>To check if a key is being hold down we use <a href="https://love2d.org/wiki/love.keyboard.isDown" target="_blank"><code>love.keyboard.isDown(key)</code></a>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> x <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> love<span class="token punctuation">.</span>keyboard<span class="token punctuation">.</span><span class="token function">isDown</span><span class="token punctuation">(</span><span class="token string">"right"</span><span class="token punctuation">)</span> <span class="token keyword">then</span>
+        x <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token keyword">elseif</span> x <span class="token operator">></span> <span class="token number">0</span> <span class="token keyword">then</span>
+        x <span class="token operator">=</span> x <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-459" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_459 = document.getElementById('love-iframe-459');
+iframe_459.addEventListener('load', function() {
+iframe_459.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+local x = 0
+function love.update()
+ if love.keyboard.isDown("right") then
+ x = x + 1
+ elseif x > 0 then
+ x = x - 1
+ end
+end
+function love.draw()
+ love.graphics.rectangle("fill", x, 50, 100, 100)
+end
+`}, '*');
+});
+</script>
+<p>The function accepts multiple arguments, so you can check if any of a list of keys is down.</p>
+<pre><code class="language-lua"><span data-attrs="2"></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> love<span class="token punctuation">.</span>keyboard<span class="token punctuation">.</span><span class="token function">isDown</span><span class="token punctuation">(</span><span class="token string">"right"</span><span class="token punctuation">,</span> <span class="token string">"d"</span><span class="token punctuation">,</span> <span class="token string">"l"</span><span class="token punctuation">)</span> <span class="token keyword">then</span>
+        x <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token keyword">elseif</span> x <span class="token operator">></span> <span class="token number">0</span> <span class="token keyword">then</span>
+        x <span class="token operator">=</span> x <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>If we want to check if multiple keys are down at the same time we call the function twice and use <code>and</code>.</p>
+<pre><code class="language-lua"><span data-attrs="2"></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> love<span class="token punctuation">.</span>keyboard<span class="token punctuation">.</span><span class="token function">isDown</span><span class="token punctuation">(</span><span class="token string">"right"</span><span class="token punctuation">)</span> <span class="token keyword">and</span> love<span class="token punctuation">.</span>keyboard<span class="token punctuation">.</span><span class="token function">isDown</span><span class="token punctuation">(</span><span class="token string">"lshift"</span><span class="token punctuation">)</span> <span class="token keyword">then</span>
+        x <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token keyword">elseif</span> x <span class="token operator">></span> <span class="token number">0</span> <span class="token keyword">then</span>
+        x <span class="token operator">=</span> x <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p><code>&quot;lshift&quot;</code> in the example above refers to the left shift button. Check out the <a href="https://love2d.org/wiki/KeyConstant" target="_blank"><code>KeyConstant</code></a> page for a list of all the keys.</p>
+<h3 id="pressed-%2F-released" tabindex="-1">pressed / released <a class="anchor" href="#pressed-%2F-released">#</a></h3>
+<p>Pressing and releasing a key are <em>events</em>, and to capture such events we use a <a href="../../lua-basics/functions#callbacks" data-preview="../../lua-basics/functions#callbacks">callback</a>. In this case the callbacks <a href="https://love2d.org/wiki/love.keypressed" target="_blank"><code>love.keypressed</code></a> and <a href="https://love2d.org/wiki/love.keyreleased" target="_blank"><code>love.keyreleased</code></a>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> score <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>score<span class="token punctuation">,</span> <span class="token number">42</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">keypressed</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> key <span class="token operator">==</span> <span class="token string">"up"</span> <span class="token keyword">then</span>
+        score <span class="token operator">=</span> score <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">keyreleased</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> key <span class="token operator">==</span> <span class="token string">"down"</span> <span class="token keyword">then</span>
+        score <span class="token operator">=</span> score <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-352" src="/love-cookbook/assets/love/love-js" width="100" height="100"></iframe>
+<script>
+const iframe_352 = document.getElementById('love-iframe-352');
+iframe_352.addEventListener('load', function() {
+iframe_352.contentWindow.postMessage({lua: `love.window.setMode(100, 100) 
+local score = 0
+function love.draw()
+ love.graphics.print(score, 42, 40)
+end
+function love.keypressed(key)
+ if key == "up" then
+ score = score + 1
+ end
+end
+function love.keyreleased(key)
+ if key == "down" then
+ score = score - 1
+ end
+end
+`}, '*');
+});
+</script>
+<p>A problem with this is that our code can become very detached. What if deep inside our update function we want to know if a key was pressed? We can make a simple function to help with this.</p>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>You can also consider using an input library like <a href="https://github.com/tesselode/baton">baton</a>.</p>
+</div>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> score <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">local</span> keysPressed <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">wasPressed</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> keysPressed<span class="token punctuation">[</span>key<span class="token punctuation">]</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>dt<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token function">wasPressed</span><span class="token punctuation">(</span><span class="token string">"space"</span><span class="token punctuation">)</span> <span class="token keyword">then</span>
+        score <span class="token operator">=</span> score <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token keyword">end</span>
+
+    <span class="token comment">-- Reset the list of pressed keys.</span>
+    keysPressed <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>score<span class="token punctuation">,</span> <span class="token number">42</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">keypressed</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    keysPressed<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">true</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-5" src="/love-cookbook/assets/love/love-js" width="100" height="100"></iframe>
+<script>
+const iframe_5 = document.getElementById('love-iframe-5');
+iframe_5.addEventListener('load', function() {
+iframe_5.contentWindow.postMessage({lua: `love.window.setMode(100, 100) 
+local score = 0
+local keysPressed = {}
+local function wasPressed(key)
+ return keysPressed[key]
+end
+function love.update(dt)
+ if wasPressed("space") then
+ score = score + 1
+ end
+ -- Reset the list of pressed keys.
+ keysPressed = {}
+end
+function love.draw()
+ love.graphics.print(score, 42, 40)
+end
+function love.keypressed(key)
+ keysPressed[key] = true
+end
+`}, '*');
+});
+</script>
+<h3 id="textinput" tabindex="-1">textinput <a class="anchor" href="#textinput">#</a></h3>
+<p>If you have a game where you can enter your name, it would be troublesome to use <a href="https://love2d.org/wiki/love.keypressed" target="_blank"><code>love.keypressed</code></a> for it. You'd have to check if shift is being held down to decide whether the entered key is uppercase or not, for example.</p>
+<p>Luckily, LÖVE also has the callback <a href="https://love2d.org/wiki/love.textinput" target="_blank"><code>love.textinput</code></a>. If the user used the combination that would type the dollar sign, then the text we get is the dollar sign.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> name <span class="token operator">=</span> <span class="token string">""</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Your name: "</span> <span class="token operator">..</span> name<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">textinput</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span>
+    name <span class="token operator">=</span> name <span class="token operator">..</span> text
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">keypressed</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> key <span class="token operator">==</span> <span class="token string">"backspace"</span> <span class="token keyword">then</span>
+        name <span class="token operator">=</span> name<span class="token punctuation">:</span><span class="token function">sub</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-260" src="/love-cookbook/assets/love/love-js" width="300" height="100"></iframe>
+<script>
+const iframe_260 = document.getElementById('love-iframe-260');
+iframe_260.addEventListener('load', function() {
+iframe_260.contentWindow.postMessage({lua: `love.window.setMode(300, 100) 
+local name = ""
+function love.draw()
+ love.graphics.print("Your name: " .. name, 10, 40)
+end
+function love.textinput(text)
+ name = name .. text
+end
+function love.keypressed(key)
+ if key == "backspace" then
+ name = name:sub(0, -2)
+ end
+end
+`}, '*');
+});
+</script>
+<h2 id="mouse" tabindex="-1">Mouse <a class="anchor" href="#mouse">#</a></h2>
+<p>The mouse input API is very similar to that of the keyboard:</p>
+<ul>
+<li><a href="https://love2d.org/wiki/love.mouse.isDown" target="_blank"><code>love.mouse.isDown(key)</code></a></li>
+<li><a href="https://love2d.org/wiki/love.keypressed" target="_blank"><code>love.keypressed</code></a></li>
+<li><a href="https://love2d.org/wiki/love.keyreleased" target="_blank"><code>love.keyreleased</code></a></li>
+</ul>
+<p>But instead of a string, we pass a number:</p>
+<ul>
+<li><code>1</code> is the primary mouse button (probably left-click).</li>
+<li><code>2</code> is the secondary mouse button (probably right-click)</li>
+<li><code>3</code> is the middle mouse button.</li>
+<li>Further buttons are mouse dependent (e.g. some mice have buttons on the side).</li>
+</ul>
+<p>The mouse also has a position on the screen, which is passed along with the callbacks.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> circle <span class="token operator">=</span> <span class="token punctuation">{</span>
+    x <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">,</span>
+    y <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> circle<span class="token punctuation">.</span>x<span class="token punctuation">,</span> circle<span class="token punctuation">.</span>y<span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">mousepressed</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> button<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> button <span class="token operator">==</span> <span class="token number">1</span> <span class="token keyword">then</span>
+        circle<span class="token punctuation">.</span>x <span class="token operator">=</span> x
+        circle<span class="token punctuation">.</span>y <span class="token operator">=</span> y
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-251" src="/love-cookbook/assets/love/love-js" width="300" height="300"></iframe>
+<script>
+const iframe_251 = document.getElementById('love-iframe-251');
+iframe_251.addEventListener('load', function() {
+iframe_251.contentWindow.postMessage({lua: `love.window.setMode(300, 300) 
+local circle = {
+ x = 100,
+ y = 100,
+}
+function love.draw()
+ love.graphics.circle("fill", circle.x, circle.y, 20)
+end
+function love.mousepressed(x, y, button)
+ if button == 1 then
+ circle.x = x
+ circle.y = y
+ end
+end
+`}, '*');
+});
+</script>
+<p>We can also use <a href="https://love2d.org/wiki/love.mousemoved" target="_blank"><code>love.mousemoved</code></a> to get the new position each time the mouse moved, or <a href="https://love2d.org/wiki/love.mouse.getPosition" target="_blank"><code>love.mouse.getPosition</code></a> to always get the current position of the mouse.</p>
+<p>With the callback <a href="https://love2d.org/wiki/love.wheelmoved" target="_blank"><code>love.wheelmoved</code></a> we capture the event of the mouse wheel being used. A positive value indicates upwards movement.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> radius <span class="token operator">=</span> <span class="token number">10</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">local</span> x<span class="token punctuation">,</span> y <span class="token operator">=</span> love<span class="token punctuation">.</span>mouse<span class="token punctuation">.</span><span class="token function">getPosition</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> radius<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">wheelmoved</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> y <span class="token operator">></span> <span class="token number">0</span> <span class="token keyword">then</span>
+        radius <span class="token operator">=</span> radius <span class="token operator">+</span> <span class="token number">3</span>
+    <span class="token keyword">elseif</span> y <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token keyword">then</span>
+        radius <span class="token operator">=</span> radius <span class="token operator">-</span> <span class="token number">3</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-3" src="/love-cookbook/assets/love/love-js" width="300" height="300"></iframe>
+<script>
+const iframe_3 = document.getElementById('love-iframe-3');
+iframe_3.addEventListener('load', function() {
+iframe_3.contentWindow.postMessage({lua: `love.window.setMode(300, 300) 
+local radius = 10
+function love.draw()
+ local x, y = love.mouse.getPosition()
+ love.graphics.circle("fill", x, y, radius)
+end
+function love.wheelmoved(x, y)
+ if y > 0 then
+ radius = radius + 3
+ elseif y < 0 then
+ radius = radius - 3
+ end
+end
+`}, '*');
+});
+</script>
+<h2 id="joystick" tabindex="-1">Joystick <a class="anchor" href="#joystick">#</a></h2>
+<p>For controller input we use <a href="https://love2d.org/wiki/love.joystick" target="_blank"><code>love.joystick</code></a>. With the function <a href="https://love2d.org/wiki/love.joystick.getJoysticks" target="_blank"><code>love.joystick.getJoysticks()</code></a> we get all the connected joysticks.</p>
+<p>A <em>joystick</em> is any type of controller, like an Xbox controller or a PlayStation controller, but also a dance pad or a Wii Fit Balance Board. A standard controller, like the first two, are considered <ins>gamepads</ins>. These are joysticks who's buttons can be mapped to a common layout.</p>
+<p><img src="/love-cookbook/assets/img/input/360_controller.png" alt=""></p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Following the pattern in the image above, the A button refers to the bottom button of the four <em>face buttons</em>. This means that <code>&quot;a&quot;</code> refers to the X button on a PlayStation controller, and <code>&quot;x&quot;</code> refers to the square button. Check out the <a href="https://love2d.org/wiki/GamepadButton" target="_blank"><code>GamepadButton</code></a> page for all gamepad buttons.</p>
+</div>
+<p>In this section we will focus on gamepads. We can check if a joystick is a gamepad by using <a href="https://love2d.org/wiki/Joystick:isGamepad" target="_blank"><code>Joystick:isGamepad()</code></a>.</p>
+<p>Again, the gamepad input API follows a similar pattern:</p>
+<ul>
+<li><a href="https://love2d.org/wiki/joystick:isGamepadDown" target="_blank"><code>joystick:isGamepadDown(button)</code></a></li>
+<li><a href="https://love2d.org/wiki/love.gamepadpressed" target="_blank"><code>love.gamepadpressed</code></a></li>
+<li><a href="https://love2d.org/wiki/love.gamepadreleased" target="_blank"><code>love.gamepadreleased</code></a></li>
+</ul>
+<p>If we want to check if player 2 is holding down the A button, we can use <a href="https://love2d.org/wiki/Joystick:getID" target="_blank"><code>Joystick:getID()</code></a> to check from which player the joystick is.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>dt<span class="token punctuation">)</span>
+    <span class="token keyword">local</span> joysticks <span class="token operator">=</span> love<span class="token punctuation">.</span>joystick<span class="token punctuation">.</span><span class="token function">getJoysticks</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">for</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">#</span>joysticks <span class="token keyword">do</span>
+        <span class="token keyword">local</span> id <span class="token operator">=</span> joystick<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token function">getID</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> id <span class="token operator">==</span> <span class="token number">2</span> <span class="token keyword">then</span>
+            <span class="token keyword">if</span> joystick<span class="token punctuation">:</span><span class="token function">isGamepadDown</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span> <span class="token keyword">then</span> <span class="token comment">-- If not a gamepad, it will return false.</span>
+                <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Player 2 is holding down A!"</span><span class="token punctuation">)</span>
+            <span class="token keyword">end</span>
+        <span class="token keyword">end</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>With <a href="https://love2d.org/wiki/love.gamepadpressed" target="_blank"><code>love.gamepadpressed</code></a> and <a href="https://love2d.org/wiki/love.gamepadreleased" target="_blank"><code>love.gamepadreleased</code></a> we get the joystick that pressed it, along with the pressed button.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">gamepadpressed</span><span class="token punctuation">(</span>joystick<span class="token punctuation">,</span> button<span class="token punctuation">)</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Player "</span> <span class="token operator">..</span> joystick<span class="token punctuation">:</span><span class="token function">getID</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">..</span> <span class="token string">" pressed the button "</span> <span class="token operator">..</span> button<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">gamepadreleased</span><span class="token punctuation">(</span>joystick<span class="token punctuation">,</span> button<span class="token punctuation">)</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Player "</span> <span class="token operator">..</span> joystick<span class="token punctuation">:</span><span class="token function">getID</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">..</span> <span class="token string">" released the button "</span> <span class="token operator">..</span> button<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<h3 id="axes" tabindex="-1">Axes <a class="anchor" href="#axes">#</a></h3>
+<p>Besides buttons, a gamepad also has control sticks and triggers. These have more than a pressed/non-pressed state, as you can move the control stick slightly to the right, or hold down the right trigger halfway.</p>
+<p>The axes can be accessed using <a href="https://love2d.org/wiki/Joystick:getGamepadAxis" target="_blank"><code>Joystick:getGamepadAxis(axis)</code></a>.</p>
+<p>The <code>axis</code> argument needs to be a string.</p>
+<ul>
+<li><code>&quot;leftx&quot;</code> - The x-axis of the left thumbstick.</li>
+<li><code>&quot;lefty&quot;</code> - The y-axis of the left thumbstick.</li>
+<li><code>&quot;rightx&quot;</code> -  The x-axis of the right thumbstick.</li>
+<li><code>&quot;righty&quot;</code> -  The y-axis of the right thumbstick.</li>
+<li><code>&quot;triggerleft&quot;</code> - Left analog trigger.</li>
+<li><code>&quot;triggerright&quot;</code> - Right analog trigger.</li>
+</ul>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>dt<span class="token punctuation">)</span>
+    <span class="token keyword">local</span> joysticks <span class="token operator">=</span> love<span class="token punctuation">.</span>joystick<span class="token punctuation">.</span><span class="token function">getJoysticks</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">local</span> player1 <span class="token operator">=</span> joysticks<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">local</span> x <span class="token operator">=</span> player1<span class="token punctuation">:</span><span class="token function">getGamepadAxis</span><span class="token punctuation">(</span><span class="token string">"leftx"</span><span class="token punctuation">)</span>
+    <span class="token keyword">local</span> y <span class="token operator">=</span> player1<span class="token punctuation">:</span><span class="token function">getGamepadAxis</span><span class="token punctuation">(</span><span class="token string">"lefty"</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> x <span class="token operator">></span> <span class="token number">0.5</span> <span class="token keyword">and</span> y <span class="token operator">&lt;</span> <span class="token number">0.5</span> <span class="token keyword">then</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Holding the left control stick in the upper right corner."</span><span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+
+    <span class="token keyword">local</span> rightTrigger <span class="token operator">=</span> player1<span class="token punctuation">:</span><span class="token function">getGamepadAxis</span><span class="token punctuation">(</span><span class="token string">"triggerright"</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> rightTrigger <span class="token operator">></span> <span class="token number">0.3</span> <span class="token keyword">then</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Slightly holding down the right trigger"</span><span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>With some controllers the control stick is never perfectly in the center. Take this into account when using axes, by using a threshold.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> x <span class="token operator">=</span> player1<span class="token punctuation">:</span><span class="token function">getGamepadAxis</span><span class="token punctuation">(</span><span class="token string">"rightx"</span><span class="token punctuation">)</span>
+ 
+<span class="token keyword">if</span> x <span class="token operator">></span> <span class="token number">0</span> <span class="token keyword">then</span>
+    <span class="token comment">-- Value could be something like 0.01</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Holding right apparently?"</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">if</span> x <span class="token operator">></span> <span class="token number">0.2</span> <span class="token keyword">then</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Definitely holding right! (Though slightly)"</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+</div>
+<p>The change in axis also has a callback: <a href="https://love2d.org/wiki/love.gamepadaxis" target="_blank"><code>love.gamepadaxis</code></a>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">gamepadaxis</span><span class="token punctuation">(</span>joystick<span class="token punctuation">,</span> axis<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> joystick<span class="token punctuation">:</span><span class="token function">getID</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">3</span> <span class="token keyword">then</span>
+        <span class="token keyword">if</span> axis <span class="token operator">==</span> <span class="token string">"lefttrigger"</span> <span class="token keyword">then</span>
+            <span class="token keyword">if</span> value <span class="token operator">></span> <span class="token number">0.5</span> <span class="token keyword">then</span>
+                <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"The left trigger of player 3 is pressed halfway."</span><span class="token punctuation">)</span>
+            <span class="token keyword">end</span>
+        <span class="token keyword">end</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<h3 id="rumble" tabindex="-1">Rumble <a class="anchor" href="#rumble">#</a></h3>
+<p>Most modern controllers support rumble. We can set the rumble using <a href="https://love2d.org/wiki/Joystick:setVibration" target="_blank"><code>Joystick:setVibration(left, right)</code></a>. You can set the vibration of the left and right motor seperately, but generally you'd want these to be the same.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">gamepadpressed</span><span class="token punctuation">(</span>joystick<span class="token punctuation">,</span> button<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> button <span class="token operator">==</span> <span class="token string">"a"</span> <span class="token keyword">then</span>
+        joystick<span class="token punctuation">:</span><span class="token function">setVibration</span><span class="token punctuation">(</span><span class="token number">.5</span><span class="token punctuation">,</span> <span class="token number">.5</span><span class="token punctuation">)</span> <span class="token comment">-- Vibrate on half strength.</span>
+    <span class="token keyword">end</span>
+
+    <span class="token keyword">if</span> button <span class="token operator">==</span> <span class="token string">"b"</span> <span class="token keyword">then</span>
+        joystick<span class="token punctuation">:</span><span class="token function">setVibration</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment">-- Vibrate on full strength for 3 seconds.</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">gamepadreleased</span><span class="token punctuation">(</span>joystick<span class="token punctuation">,</span> button<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> button <span class="token operator">==</span> <span class="token string">"a"</span> <span class="token keyword">then</span>
+        joystick<span class="token punctuation">:</span><span class="token function">setVibration</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">-- Stop vibrating.</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
 
 
 <footer class="guide-footer">
@@ -147,6 +544,8 @@
 
   <p>By:
   
+      <em>Sheepolution</em>
+    
   </p>
 </footer>
       </article>

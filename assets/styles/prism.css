@@ -20,9 +20,8 @@ pre[class*=language-] {
     -ms-hyphens: none;
     hyphens: none;
 
-    /* I'm unsure if these are actually needed?
-    position: relative; 
-    z-index: 2; */
+    position: relative;
+    z-index: 2;
 }
 
 code[class*=language-] ::-moz-selection,
@@ -158,6 +157,7 @@ pre:has(code[class*=language-]) {
     justify-content: center;
     align-items: center;
 }
+
 .highlight-line {
     width: 100%;
     height: 1.5em;

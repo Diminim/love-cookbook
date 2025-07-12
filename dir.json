@@ -110,12 +110,6 @@
       },
     
       {
-        "title": "Input",
-        "url": "/guides/love/input/",
-        "abstract": ""
-      },
-    
-      {
         "title": "Functions",
         "url": "/guides/lua-basics/functions/",
         "abstract": "A callback is a function that is passed to another function. The latter function will, at some point, call the callback, often while passing useful information."
@@ -281,6 +275,18 @@
         "title": "Gotchas",
         "url": "/guides/lua-basics/gotchas/",
         "abstract": ""
+      },
+    
+      {
+        "title": "Input",
+        "url": "/guides/love/input/",
+        "abstract": "LÖVE has API for input through keyboard, mouse and joystick."
+      },
+    
+      {
+        "title": "Steam",
+        "url": "/guides/recipes/steam/",
+        "abstract": "Steam"
       },
     
       {

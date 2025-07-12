@@ -123,6 +123,9 @@
                   </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
                   </li></ul>
 
+            </li><li class="group-header">Recipes<ul class="guides"><li><a class="" href="/love-cookbook/guides/recipes/steam/">Steam</a>
+                  </li></ul>
+
             </li></ul>
 
       </nav>
@@ -174,11 +177,11 @@
 </code></pre>
 <h2 id="embedded-love" tabindex="-1">Embedded LOVE <a class="anchor" href="#embedded-love">#</a></h2>
 <p>We can embed LOVE windows with the <code>{% love %}</code> shortcode.</p>
-<iframe class="love-embed" id="love-iframe-598" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
+<iframe class="love-embed" id="love-iframe-280" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
 <script>
-const iframe_598 = document.getElementById('love-iframe-598');
-iframe_598.addEventListener('load', function() {
-iframe_598.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
+const iframe_280 = document.getElementById('love-iframe-280');
+iframe_280.addEventListener('load', function() {
+iframe_280.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
 function love.draw()
  love.graphics.printf("this is how we embed love.js", 0, 50, love.graphics.getWidth(), "center")
 end
