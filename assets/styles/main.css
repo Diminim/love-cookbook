@@ -39,6 +39,27 @@ main {
   margin: 0 1rem;
 }
 
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: auto;
+  max-width: max-content;
+}
+
+td,
+th {
+  border: 1px solid var(--color-faded-2);
+  padding: 8px;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--color-text);
+  color: white;
+}
+
 /* html {
   scroll-behavior: smooth;
   overflow-y: scroll;
@@ -107,8 +128,9 @@ main {
   grid-template-columns: 1;
   grid-template-rows: 1;
 }
-.logo > .logo-hover-img,
-.logo > .logo-unhover-img {
+
+.logo>.logo-hover-img,
+.logo>.logo-unhover-img {
   grid-area: 1 / 1 / -1 / -1;
 }
 
@@ -116,9 +138,11 @@ main {
 .logo-hover-img {
   opacity: 0;
 }
+
 .logo:hover .logo-unhover-img {
   opacity: 0;
 }
+
 .logo:hover .logo-hover-img {
   opacity: 1;
 }
@@ -133,7 +157,8 @@ main {
   list-style: none;
   padding-left: 1rem;
 }
-.table-of-contents .chapters > li {
+
+.table-of-contents .chapters>li {
   font-weight: 700;
   color: var(--color-text);
 }
@@ -143,14 +168,14 @@ main {
   padding-left: 2rem;
 }
 
-.table-of-contents .guides > li a {
+.table-of-contents .guides>li a {
   font-weight: 500;
   text-decoration: none;
   color: var(--color-text);
   position: relative;
 }
 
-.table-of-contents .guides > li a:before {
+.table-of-contents .guides>li a:before {
   content: '';
   display: inline-block;
   width: .25rem;
@@ -159,17 +184,17 @@ main {
   left: -.75rem;
   top: .1rem;
   border-radius: .1rem;
-  
+
   background-color: var(--color-text);
   opacity: 0;
   transition: opacity 0.1s;
 }
 
-.table-of-contents .guides > li a:hover:before {
+.table-of-contents .guides>li a:hover:before {
   opacity: 1;
 }
 
-.table-of-contents .guides > li a.active:before {
+.table-of-contents .guides>li a.active:before {
   opacity: 1;
 }
 
@@ -208,7 +233,8 @@ main {
 }
 
 .guide .menu-button {
-  display: none; /* is flexbox for mobile */
+  display: none;
+  /* is flexbox for mobile */
   align-items: center;
   justify-content: center;
   width: 3rem;
@@ -220,9 +246,11 @@ main {
   background-color: var(--color-background);
   transition: background-color .05s;
 }
+
 .guide .menu-button:active {
   background-color: var(--color-faded-2);
 }
+
 .guide .menu-button i {
   font-size: 2rem;
 }
@@ -235,28 +263,48 @@ main {
   border-bottom: solid .1rem var(--color-faded-2);
   padding: .5rem 0;
   margin-top: 3rem;
-  
+
   font-size: 3rem;
   line-height: 1;
 }
 
-.guide h1 { font-size: 2.0rem; font-weight: bold; }
-.guide h2 { font-size: 1.8rem; font-weight: bold; }
-.guide h3 { font-size: 1.6rem; font-weight: bold; }
-.guide h4 { font-size: 1.4rem; }
-.guide h5 { font-size: 1.2rem; }
-.guide h6 { font-size: 1.0rem; }
+.guide h1 {
+  font-size: 2.0rem;
+  font-weight: bold;
+}
+
+.guide h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.guide h3 {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.guide h4 {
+  font-size: 1.4rem;
+}
+
+.guide h5 {
+  font-size: 1.2rem;
+}
+
+.guide h6 {
+  font-size: 1.0rem;
+}
 
 .guide :is(h1, h2, h3, h4, h5, h6) {
   margin: 0;
   margin-top: 1rem;
-  
+
   color: var(--color-text);
   font-family: "Nunito", serif;
 }
 
 /* combinatorial way to remove margins on subsequent headers */
-.guide :is(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
+.guide :is(h1, h2, h3, h4, h5, h6)+ :is(h1, h2, h3, h4, h5, h6) {
   margin-top: 0;
 }
 
@@ -267,11 +315,12 @@ main {
   opacity: 0;
   transition: opacity .1s;
 }
+
 .guide :is(h1, h2, h3, h4, h5, h6):hover a {
   opacity: .75;
 }
 
-.guide code, 
+.guide code,
 .guide .code-block {
   border: .1rem solid var(--color-faded-2);
   border-radius: .25rem;
@@ -280,6 +329,7 @@ main {
   font-family: "Fira Code", serif;
   /* font-size: .9rem; */
 }
+
 .guide code {
   padding: 0 .2rem;
 }
@@ -313,6 +363,7 @@ main {
   display: block;
   border-radius: .25rem;
 }
+
 .love-embed:focus {
   outline: var(--color-whale) solid .25rem;
 }
@@ -322,7 +373,8 @@ main {
   html {
     overflow: hidden;
   }
-  html:has( .sidebar.active) {
+
+  html:has(.sidebar.active) {
     overflow-y: hidden;
   }
 
@@ -337,6 +389,7 @@ main {
   .guide-header .menu-button {
     display: flex;
   }
+
   .guide {
     /* 
     Setting the body element's box-sixing to border-box ignores its bottom padding?
@@ -355,10 +408,11 @@ main {
     left: -25rem;
     top: 0;
     border-right: .1rem solid var(--color-faded-1);
-    
+
     background-color: var(--color-background-panel);
     transition: left .1s;
   }
+
   .sidebar.active {
     left: 0;
   }
@@ -367,4 +421,4 @@ main {
     opacity: 1;
     transition: opacity .1s;
   }
-} 
+}

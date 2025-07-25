@@ -12,20 +12,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deltatime</title>
 <meta name="title" content="Deltatime">
-<meta name="author" content="">
-<meta name="description" content="Not yet written: contribute to this page on GitHub.">
+<meta name="author" content="Sheepolution">
+<meta name="description" content="Some computers are faster than others. This means that two computers can run our code at different speeds. With the code below, for example, the rectangle will move at different speeds on different computers. This is troublesome, because it could mean that our player character runs a lot faster or slower than intended. To fix this, we use a number called deltatime.">
 <meta name="generator" content="eleventy">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/love/deltatime/">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="Deltatime">
-<meta property="og:description" content="Not yet written: contribute to this page on GitHub.">
+<meta property="og:description" content="Some computers are faster than others. This means that two computers can run our code at different speeds. With the code below, for example, the rectangle will move at different speeds on different computers. This is troublesome, because it could mean that our player character runs a lot faster or slower than intended. To fix this, we use a number called deltatime.">
 <meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta property="og:image:alt" content="LÖVE Cookbook">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/love/deltatime/">
 <meta name="twitter:title" content="Deltatime">
-<meta name="twitter:description" content="Not yet written: contribute to this page on GitHub.">
+<meta name="twitter:description" content="Some computers are faster than others. This means that two computers can run our code at different speeds. With the code below, for example, the rectangle will move at different speeds on different computers. This is troublesome, because it could mean that our player character runs a lot faster or slower than intended. To fix this, we use a number called deltatime.">
 <meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta name="twitter:image:alt" content="LÖVE Cookbook">
 <link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/love/deltatime/">
@@ -142,7 +142,180 @@
   <h1 class="title">Deltatime</h1>
 </header>
 
-<p>Not yet written: contribute to this page on <a href="https://github.com/Diminim/love-cookbook">GitHub</a>.</p>
+<p>Some computers are faster than others. This means that two computers can run our code at different speeds. With the code below, for example, the rectangle will move at different speeds on different computers. This is troublesome, because it could mean that our player character runs a lot faster or slower than intended. To fix this, we use a number called <strong>deltatime</strong>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> x <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>dt<span class="token punctuation">)</span>
+    x <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token number">10</span>
+
+    <span class="token keyword">if</span> x <span class="token operator">></span> <span class="token number">750</span> <span class="token keyword">then</span>
+        x <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-484" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_484 = document.getElementById('love-iframe-484');
+iframe_484.addEventListener('load', function() {
+iframe_484.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+local x = 0
+function love.update(dt)
+ x = x + 10
+ if x > 750 then
+ x = 0
+ end
+end
+function love.draw()
+ love.graphics.rectangle("fill", x, 100, 50, 50)
+end
+`}, '*');
+});
+</script>
+<p>Deltatime, or <code>dt</code> for short, is the time it took to process the last frame. More specifically, it's the duration between the start of the last frame and the start of the current frame.</p>
+<p>We can get deltatime by adding it as a parameter to <code>love.update</code>. When LÖVE calls <code>love.update</code>, it will pass <code>dt</code>. By multiplying a number with <code>dt</code>, we can make our rectangle move with the same speed for everyone.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>With a frame we mean a single cycle of both calling love.update and love.draw. Inside these functions you have all sorts of operations happening, from calculating collision and drawing images. These operations take time. For a game to run smoothly, it needs to run 60 frames per seconds (fps). This equals to <code>1 / 60</code> seconds, meaning 0.016667 seconds.</p>
+<p>In a normal scenario the speed a computer takes to process a single frame constantly changes each frame. In this chapter we'll use a constant deltatime to make it easier to explain.</p>
+</div>
+<p>Frames are fast, and therefore deltatime is generally a low number. When you print <code>dt</code> you'll get a different decimal number every frame. To explain deltatime, let's use an extreme example of very slow computers.</p>
+<ul>
+<li>On computer A, our game runs with 20 fps</li>
+<li>On computer B, our game runs with 4 fps.</li>
+</ul>
+<p>Because <code>dt</code> is the time between two frames, and computer A runs our game with 20 frames per second, we can calculate the average deltatime with <code>1 / 20</code>. This gives us <code>0.05</code> seconds. In other words: when running a game with 20 fps, each frame takes about <code>0.05</code> seconds to process.</p>
+<p>For computer B, which runs with 4 fps, the calculation is <code>1 / 4</code>, which is <code>0.2</code> seconds.</p>
+<p>We can use the earlier example of the rectangle. By multiplying its movement with deltatime, the rectangle will move equally as fast on both computer A and B.</p>
+<ul>
+<li>After 1 second, computer A will have multiplied <code>10</code> (speed) by <code>0.05</code> (dt) for <code>20</code> (fps) times. The calculation is <code>10 * 0.05 * 20</code>, which results to <code>10</code>.</li>
+<li>After 1 second, computer B will have multiplied <code>10</code> (speed) by <code>0.25</code> (dt) for <code>4</code> (fps) times. The calculation is <code>10 * 0.25 * 4</code>, which results to <code>10</code>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Computer</th>
+<th>Speed</th>
+<th>FPS</th>
+<th>dt</th>
+<th>Calculation</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>10</td>
+<td>20 fps</td>
+<td>0.05</td>
+<td>10 * 20 * 0.05</td>
+<td>10</td>
+</tr>
+<tr>
+<td>B</td>
+<td>10</td>
+<td>4 fps</td>
+<td>0.25</td>
+<td>10 * 4 * 0.25</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>dt<span class="token punctuation">)</span>
+    x <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token number">10</span> <span class="token operator">*</span> dt
+
+    <span class="token keyword">if</span> x <span class="token operator">></span> <span class="token number">750</span> <span class="token keyword">then</span>
+        x <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-228" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_228 = document.getElementById('love-iframe-228');
+iframe_228.addEventListener('load', function() {
+iframe_228.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+local x = 0
+function love.update(dt)
+ x = x + 10 * dt
+ if x > 750 then
+ x = 0
+ end
+end
+function love.draw()
+ love.graphics.rectangle("fill", x, 100, 50, 50)
+end
+`}, '*');
+});
+</script>
+<h2 id="when-to-use-deltatime%3F" tabindex="-1">When to use deltatime? <a class="anchor" href="#when-to-use-deltatime%3F">#</a></h2>
+<p>So now we know how deltatime works, and that we can use it to make updates in our game equal among all computers. But as a beginner it can be confusing when exactly to use deltatime. It's tempting to use it everywhere.</p>
+<pre><code class="language-lua"><span data-attrs="7-10"></span><span class="token keyword">local</span> x <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">local</span> score <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>dt<span class="token punctuation">)</span>
+    x <span class="token operator">=</span> x <span class="token operator">+</span> <span class="token number">500</span> <span class="token operator">*</span> dt <span class="token comment">-- Changed to 500</span>
+
+    <span class="token keyword">if</span> x <span class="token operator">></span> <span class="token number">750</span> <span class="token keyword">then</span>
+        x <span class="token operator">=</span> <span class="token number">0</span>
+        score <span class="token operator">=</span> score <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>score<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<iframe class="love-embed" id="love-iframe-184" src="/love-cookbook/assets/love/love-js" width="800" height="200"></iframe>
+<script>
+const iframe_184 = document.getElementById('love-iframe-184');
+iframe_184.addEventListener('load', function() {
+iframe_184.contentWindow.postMessage({lua: `love.window.setMode(800, 200) 
+local x = 0
+local score = 0
+function love.update(dt)
+ x = x + 500 * dt -- Changed to 500
+ if x > 750 then
+ x = 0
+ score = score + 1
+ end
+end
+function love.draw()
+ love.graphics.print(score, 10, 10)
+ love.graphics.rectangle("fill", x, 100, 50, 50)
+end
+`}, '*');
+});
+</script>
+<p>In the example above I don't use deltatime when adding to the score. This is because it's an event that is <ins>not frame-dependent</ins>. It is an action that is triggered by a one-frame event (<code>x</code> being higher than <code>750</code>). In comparison, the rectangle moving is a continious event happening over multiple frames.</p>
+<p>Here are some more examples:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Use deltatime?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Moving upwards when holding the up arrow key</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Clicking on a button to increase your score</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Decrease health when player touches a spike</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Slowly decrease health while player is standing in lava</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
 
 
 <footer class="guide-footer">
@@ -150,6 +323,8 @@
 
   <p>By:
   
+      <em>Sheepolution</em>
+    
   </p>
 </footer>
       </article>
