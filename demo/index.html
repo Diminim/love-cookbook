@@ -178,11 +178,11 @@
 </code></pre>
 <h2 id="embedded-love" tabindex="-1">Embedded LOVE <a class="anchor" href="#embedded-love">#</a></h2>
 <p>We can embed LOVE windows with the <code>{% love %}</code> shortcode.</p>
-<iframe class="love-embed" id="love-iframe-312" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
+<iframe class="love-embed" id="love-iframe-360" src="/love-cookbook/assets/love/love-js" width="300" height="150"></iframe>
 <script>
-const iframe_312 = document.getElementById('love-iframe-312');
-iframe_312.addEventListener('load', function() {
-iframe_312.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
+const iframe_360 = document.getElementById('love-iframe-360');
+iframe_360.addEventListener('load', function() {
+iframe_360.contentWindow.postMessage({lua: `love.window.setMode(300, 150) 
 function love.draw()
  love.graphics.printf("this is how we embed love.js", 0, 50, love.graphics.getWidth(), "center")
 end

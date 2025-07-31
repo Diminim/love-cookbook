@@ -20,12 +20,6 @@
       },
     
       {
-        "title": "AABB",
-        "url": "/guides/basic/aabb/",
-        "abstract": ""
-      },
-    
-      {
         "title": "Angle &amp; distance",
         "url": "/guides/basic/angle-and-distance/",
         "abstract": ""
@@ -278,12 +272,6 @@
       },
     
       {
-        "title": "LÖVE",
-        "url": "/guides/installation/love/",
-        "abstract": ""
-      },
-    
-      {
         "title": "Filesystem",
         "url": "/guides/love/filesystem/",
         "abstract": ""
@@ -292,6 +280,18 @@
       {
         "title": "Lua",
         "url": "/guides/lua-basics/lua/",
+        "abstract": ""
+      },
+    
+      {
+        "title": "AABB",
+        "url": "/guides/basic/aabb/",
+        "abstract": ""
+      },
+    
+      {
+        "title": "LÖVE",
+        "url": "/guides/installation/love/",
         "abstract": ""
       },
     

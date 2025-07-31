@@ -12,20 +12,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AABB</title>
 <meta name="title" content="AABB">
-<meta name="author" content="">
-<meta name="description" content="Not yet written: contribute to this page on GitHub.">
+<meta name="author" content="ellraiser">
+<meta name="description" content="AABB stands for &quot;Axis Aligned Bounding Box&quot;, and is a way of checking whether two objects are overlapping.">
 <meta name="generator" content="eleventy">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/basic/aabb/">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="AABB">
-<meta property="og:description" content="Not yet written: contribute to this page on GitHub.">
+<meta property="og:description" content="AABB stands for &quot;Axis Aligned Bounding Box&quot;, and is a way of checking whether two objects are overlapping.">
 <meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta property="og:image:alt" content="LÖVE Cookbook">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/basic/aabb/">
 <meta name="twitter:title" content="AABB">
-<meta name="twitter:description" content="Not yet written: contribute to this page on GitHub.">
+<meta name="twitter:description" content="AABB stands for &quot;Axis Aligned Bounding Box&quot;, and is a way of checking whether two objects are overlapping.">
 <meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta name="twitter:image:alt" content="LÖVE Cookbook">
 <link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/basic/aabb/">
@@ -143,7 +143,592 @@
   <h1 class="title">AABB</h1>
 </header>
 
-<p>Not yet written: contribute to this page on <a href="https://github.com/Diminim/love-cookbook">GitHub</a>.</p>
+<p>AABB stands for &quot;Axis Aligned Bounding Box&quot;, and is a way of checking whether two objects are overlapping.</p>
+<p>For game development, it can be used for a whole host of things, from checking if the cursor is hovering over a specific UI element, to deciding if a player has collided with a solid object, or whether an enemy attack has hit the player.</p>
+<h2 id="bounding-boxes" tabindex="-1">Bounding Boxes <a class="anchor" href="#bounding-boxes">#</a></h2>
+<p>A bounding box is simply a square or rectangle that represents the boundary of a given thing. By using a bounding box you can seperate collision logic from the size of the sprites being drawn.</p>
+<p>A simple representation of a bounding box could look like this, shortened to <code>bbox</code> in the table:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- button 'object'</span>
+<span class="token keyword">local</span> button <span class="token operator">=</span> <span class="token punctuation">{</span>
+  x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span>
+  y <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span>
+  w <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">,</span>
+  h <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">,</span>
+  bbox <span class="token operator">=</span> <span class="token punctuation">{</span>
+    x1 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span>
+    x2 <span class="token operator">=</span> <span class="token number">104</span><span class="token punctuation">,</span>
+    y1 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span>
+    y2 <span class="token operator">=</span> <span class="token number">36</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">-- draw button + bounding box</span>
+love<span class="token punctuation">.</span>draw <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">'fill'</span><span class="token punctuation">,</span> button<span class="token punctuation">.</span>x<span class="token punctuation">,</span> button<span class="token punctuation">.</span>y<span class="token punctuation">,</span> button<span class="token punctuation">.</span>w<span class="token punctuation">,</span> button<span class="token punctuation">.</span>h<span class="token punctuation">)</span>
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">local</span> bbox <span class="token operator">=</span> button<span class="token punctuation">.</span>bbox
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">'line'</span><span class="token punctuation">,</span> button<span class="token punctuation">.</span>x<span class="token operator">+</span>bbox<span class="token punctuation">.</span>x1<span class="token punctuation">,</span> button<span class="token punctuation">.</span>y<span class="token operator">+</span>bbox<span class="token punctuation">.</span>y1<span class="token punctuation">,</span> bbox<span class="token punctuation">.</span>x2<span class="token operator">-</span>bbox<span class="token punctuation">.</span>x1<span class="token punctuation">,</span> bbox<span class="token punctuation">.</span>y2<span class="token operator">-</span>bbox<span class="token punctuation">.</span>y1<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>If you ran the code above you'd see the the following:</p>
+<iframe class="love-embed" id="love-iframe-484" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<script>
+const iframe_484 = document.getElementById('love-iframe-484');
+iframe_484.addEventListener('load', function() {
+iframe_484.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+local button = {
+ x = 10,
+ y = 20,
+ w = 100,
+ h = 32,
+ bbox = {
+ x1 = -4,
+ x2 = 104,
+ y1 = -4,
+ y2 = 36
+ }
+}
+love.draw = function()
+ love.graphics.setColor(1, 0, 0, 1)
+ love.graphics.rectangle('fill', button.x, button.y, button.w, button.h)
+ love.graphics.setColor(1, 1, 1, 1)
+ local bbox = button.bbox
+ love.graphics.rectangle('line', button.x+bbox.x1, button.y+bbox.y1, bbox.x2-bbox.x1, bbox.y2-bbox.y1)
+end
+`}, '*');
+});
+</script>
+<p>The idea here is we have a 100px x 32px 'button', but we want to make it a bit easier for a player to click it as it's quite small.<br>
+Our bounding box is defined as being 4px bigger in all directions, related to the button's own x + y position.</p>
+<p>We could have defined the bbox with exact co-ordinates relative to our x=10, y=20, i.e.:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>bbox <span class="token operator">=</span> <span class="token punctuation">{</span>
+  x1 <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token comment">-- x = 10, -4</span>
+  x2 <span class="token operator">=</span> <span class="token number">114</span><span class="token punctuation">,</span> <span class="token comment">-- x = 10, +100, +4</span>
+  y1 <span class="token operator">=</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token comment">-- y = 20, -4</span>
+  y2 <span class="token operator">=</span> <span class="token number">56</span> <span class="token comment">-- y = 20, +32, +4</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>However if your button get's moved (for example, when the window is resized), these bounding box values would be wrong and need updating.<br>
+By storing relative bounding box values, we can easily calculate the bounding box's actual values when needed.</p>
+<p>If you wanted you could even make a function for it:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- button 'object'</span>
+<span class="token keyword">local</span> button <span class="token operator">=</span> <span class="token punctuation">{</span> 
+  x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span> w <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">,</span> h <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">,</span>
+  bbox <span class="token operator">=</span> <span class="token punctuation">{</span> 
+    x1 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span> 
+    x2 <span class="token operator">=</span> <span class="token number">104</span><span class="token punctuation">,</span> 
+    y1 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span> 
+    y2 <span class="token operator">=</span> <span class="token number">36</span> 
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">-- get bbox for an object</span>
+<span class="token keyword">function</span> <span class="token function">getBbox</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    x1 <span class="token operator">=</span> obj<span class="token punctuation">.</span>x <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x1<span class="token punctuation">,</span>
+    x2 <span class="token operator">=</span> obj<span class="token punctuation">.</span>x <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x1 <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x2<span class="token punctuation">,</span>
+    y1 <span class="token operator">=</span> obj<span class="token punctuation">.</span>y <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y1<span class="token punctuation">,</span>
+    y2 <span class="token operator">=</span> obj<span class="token punctuation">.</span>y <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y1 <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y2<span class="token punctuation">,</span>
+    w <span class="token operator">=</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x2 <span class="token operator">-</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x1<span class="token punctuation">,</span>
+    h <span class="token operator">=</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y2 <span class="token operator">-</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y1
+  <span class="token punctuation">}</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- draw button + it's bbox</span>
+love<span class="token punctuation">.</span>draw <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">'fill'</span><span class="token punctuation">,</span> button<span class="token punctuation">.</span>x<span class="token punctuation">,</span> button<span class="token punctuation">.</span>y<span class="token punctuation">,</span> button<span class="token punctuation">.</span>w<span class="token punctuation">,</span> button<span class="token punctuation">.</span>h<span class="token punctuation">)</span>
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">local</span> bbox <span class="token operator">=</span> <span class="token function">getBbox</span><span class="token punctuation">(</span>button<span class="token punctuation">)</span>
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">'line'</span><span class="token punctuation">,</span> bbox<span class="token punctuation">.</span>x1<span class="token punctuation">,</span> bbox<span class="token punctuation">.</span>y1<span class="token punctuation">,</span> bbox<span class="token punctuation">.</span>w<span class="token punctuation">,</span> bbox<span class="token punctuation">.</span>h<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>This means that even if our button position got moved around it would still be accurate.</p>
+<p>Now we have a bounding box, we can use it to check for collisions - whether that's with a point or with another bounding box.</p>
+<h2 id="point-collision" tabindex="-1">Point Collision <a class="anchor" href="#point-collision">#</a></h2>
+<p>To check if a given point is inside a bounding box, we can simply check that the point falls 'inside' the box.<br>
+We can do this by simply check all four points:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> <span class="token function">inBounds</span><span class="token punctuation">(</span>px<span class="token punctuation">,</span> py<span class="token punctuation">,</span> bx1<span class="token punctuation">,</span> bx2<span class="token punctuation">,</span> by1<span class="token punctuation">,</span> by2<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> px <span class="token operator">>=</span> bx1 <span class="token keyword">and</span> px <span class="token operator">&lt;=</span> bx2 <span class="token keyword">and</span> py <span class="token operator">>=</span> by1 <span class="token keyword">and</span> py <span class="token operator">&lt;=</span> by2
+<span class="token keyword">end</span>
+</code></pre>
+<p>Essentially we're checking first if the point's x position is between the bounding box's left and right planes.<br>
+Then we're checking if the point's y position is between the top and bottom planes.</p>
+<p>If a point is inside the bounding box, all four conditions would be true.</p>
+<p>Let's use our button from earlier, but now introduce a check using the mouse position:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- button 'object'</span>
+<span class="token keyword">local</span> button <span class="token operator">=</span> <span class="token punctuation">{</span> 
+  x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span> w <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">,</span> h <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">,</span>
+  highlighted <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">,</span>
+  bbox <span class="token operator">=</span> <span class="token punctuation">{</span> 
+    x1 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span> 
+    x2 <span class="token operator">=</span> <span class="token number">104</span><span class="token punctuation">,</span> 
+    y1 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span> 
+    y2 <span class="token operator">=</span> <span class="token number">36</span> 
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">-- get bbox for an object</span>
+<span class="token keyword">function</span> <span class="token function">getBbox</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    x1 <span class="token operator">=</span> obj<span class="token punctuation">.</span>x <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x1<span class="token punctuation">,</span>
+    x2 <span class="token operator">=</span> obj<span class="token punctuation">.</span>x <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x1 <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x2<span class="token punctuation">,</span>
+    y1 <span class="token operator">=</span> obj<span class="token punctuation">.</span>y <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y1<span class="token punctuation">,</span>
+    y2 <span class="token operator">=</span> obj<span class="token punctuation">.</span>y <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y1 <span class="token operator">+</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y2<span class="token punctuation">,</span>
+    w <span class="token operator">=</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x2 <span class="token operator">-</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>x1<span class="token punctuation">,</span>
+    h <span class="token operator">=</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y2 <span class="token operator">-</span> obj<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>y1
+  <span class="token punctuation">}</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- check if point is in a bbox bounding</span>
+<span class="token keyword">function</span> <span class="token function">inBounds</span><span class="token punctuation">(</span>px<span class="token punctuation">,</span> py<span class="token punctuation">,</span> bbox<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> px <span class="token operator">>=</span> bbox<span class="token punctuation">.</span>x1 <span class="token keyword">and</span> px <span class="token operator">&lt;=</span> bbox<span class="token punctuation">.</span>x2 <span class="token keyword">and</span> py <span class="token operator">>=</span> bbox<span class="token punctuation">.</span>y1 <span class="token keyword">and</span> py <span class="token operator">&lt;=</span> bbox<span class="token punctuation">.</span>y2
+<span class="token keyword">end</span>
+
+<span class="token comment">-- draw button</span>
+love<span class="token punctuation">.</span>draw <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> button<span class="token punctuation">.</span>highlighted <span class="token keyword">then</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">else</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token keyword">end</span>
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">'fill'</span><span class="token punctuation">,</span> button<span class="token punctuation">.</span>x<span class="token punctuation">,</span> button<span class="token punctuation">.</span>y<span class="token punctuation">,</span> button<span class="token punctuation">.</span>w<span class="token punctuation">,</span> button<span class="token punctuation">.</span>h<span class="token punctuation">)</span>
+  love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- check mouse position overlapping button</span>
+love<span class="token punctuation">.</span>update <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  button<span class="token punctuation">.</span>highlighted <span class="token operator">=</span> <span class="token function">inBounds</span><span class="token punctuation">(</span>love<span class="token punctuation">.</span>mouse<span class="token punctuation">.</span><span class="token function">getX</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> love<span class="token punctuation">.</span>mouse<span class="token punctuation">.</span><span class="token function">getY</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">getBbox</span><span class="token punctuation">(</span>button<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Now when you hover the mouse position over the button, it changes from green to red!</p>
+<p>You also might have noticed we stopped drawing the bounding box in the last example - it's useful to draw it when you're in development so you can sense-check your collisions, but once they're working you probably don't want to draw them!</p>
+<p>As we now know when the button is highlighted, we could then run some logic in a mouse press event to handle the button being 'clicked!'<br>
+If we add some additional code like:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>mousepressed <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">-- if button is selected</span>
+  <span class="token keyword">if</span> button<span class="token punctuation">.</span>highlighted <span class="token operator">==</span> <span class="token keyword">true</span> <span class="token keyword">then</span>
+    <span class="token comment">-- move button to another position on the screen (screen size is 800x600)</span>
+    <span class="token comment">-- need to account for the button size so we dont move it offscreen</span>
+    button<span class="token punctuation">.</span>x <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">800</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">)</span>
+    button<span class="token punctuation">.</span>y <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">600</span><span class="token operator">-</span><span class="token number">32</span><span class="token punctuation">)</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Then anytime we click the button it'll move! You can try it out below:</p>
+<iframe class="love-embed" id="love-iframe-146" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<script>
+const iframe_146 = document.getElementById('love-iframe-146');
+iframe_146.addEventListener('load', function() {
+iframe_146.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+-- button 'object'
+local button = { 
+ x = 10, y = 20, w = 100, h = 32,
+ highlighted = false,
+ bbox = { 
+ x1 = -4, 
+ x2 = 104, 
+ y1 = -4, 
+ y2 = 36 
+ }
+}
+-- get bbox for an object
+function getBbox(obj)
+ return {
+ x1 = obj.x + obj.bbox.x1,
+ x2 = obj.x + obj.bbox.x1 + obj.bbox.x2,
+ y1 = obj.y + obj.bbox.y1,
+ y2 = obj.y + obj.bbox.y1 + obj.bbox.y2,
+ w = obj.bbox.x2 - obj.bbox.x1,
+ h = obj.bbox.y2 - obj.bbox.y1
+ }
+end
+-- check if point is in a bbox bounding
+function inBounds(px, py, bbox)
+ return px >= bbox.x1 and px <= bbox.x2 and py >= bbox.y1 and py <= bbox.y2
+end
+-- draw button + it's bbox
+love.draw = function()
+ if button.highlighted then
+ love.graphics.setColor(1, 0, 0, 1)
+ else
+ love.graphics.setColor(0, 1, 0, 1)
+ end
+ love.graphics.rectangle('fill', button.x, button.y, button.w, button.h)
+ love.graphics.setColor(1, 1, 1, 1)
+end
+-- check mouse position overlapping button
+love.update = function()
+ button.highlighted = inBounds(love.mouse.getX(), love.mouse.getY(), getBbox(button))
+end
+love.mousepressed = function()
+ -- if button is selected
+ if button.highlighted == true then
+ -- move button to another position on the screen (screen size is 800x600)
+ -- need to account for the button size so we dont move it offscreen
+ button.x = love.math.random(0, 800-100)
+ button.y = love.math.random(0, 600-32)
+ end
+end
+`}, '*');
+});
+</script>
+<p>Checking point collision is the cornerstone of any game UI, as all your UI elements will have their own bounding box that may or may not match the sprite drawn.<br>
+You can then go through all your UI elements checking the mouse position to find out which is currently highlighted for interaction.</p>
+<h2 id="box-collision" tabindex="-1">Box Collision <a class="anchor" href="#box-collision">#</a></h2>
+<p>Say we don't have a point but instead we have two bounding boxes, say a player and a wall.<br>
+We don't have a single point to check anymore, instead we have four points!</p>
+<p>Of course, we could simply just check each of the four points of the other bounding box in the same way we checked a single one:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> <span class="token function">inBounds</span><span class="token punctuation">(</span>px<span class="token punctuation">,</span> py<span class="token punctuation">,</span> bbox<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> px <span class="token operator">>=</span> bbox<span class="token punctuation">.</span>x1 <span class="token keyword">and</span> px <span class="token operator">&lt;=</span> bbox<span class="token punctuation">.</span>x2 <span class="token keyword">and</span> py <span class="token operator">>=</span> bbox<span class="token punctuation">.</span>y1 <span class="token keyword">and</span> py <span class="token operator">&lt;=</span> bbox<span class="token punctuation">.</span>y2
+<span class="token keyword">end</span>
+
+<span class="token keyword">local</span> bbox1 <span class="token operator">=</span> <span class="token punctuation">{</span> x1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> y1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> x2 <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">,</span> y1 <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">}</span>
+<span class="token keyword">local</span> bbox2 <span class="token operator">=</span> <span class="token punctuation">{</span> x1 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span> y1 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span> x2 <span class="token operator">=</span> <span class="token number">52</span><span class="token punctuation">,</span> y1 <span class="token operator">=</span> <span class="token number">52</span><span class="token punctuation">}</span>
+
+<span class="token keyword">local</span> check_tl <span class="token operator">=</span> <span class="token function">inBounds</span><span class="token punctuation">(</span>bbox2<span class="token punctuation">.</span>x1<span class="token punctuation">,</span> bbox2<span class="token punctuation">.</span>y1<span class="token punctuation">,</span> bbox1<span class="token punctuation">)</span>
+<span class="token keyword">local</span> check_tr <span class="token operator">=</span> <span class="token function">inBounds</span><span class="token punctuation">(</span>bbox2<span class="token punctuation">.</span>x2<span class="token punctuation">,</span> bbox2<span class="token punctuation">.</span>y1<span class="token punctuation">,</span> bbox1<span class="token punctuation">)</span>
+<span class="token keyword">local</span> check_bl <span class="token operator">=</span> <span class="token function">inBounds</span><span class="token punctuation">(</span>bbox2<span class="token punctuation">.</span>x1<span class="token punctuation">,</span> bbox2<span class="token punctuation">.</span>y2<span class="token punctuation">,</span> bbox1<span class="token punctuation">)</span>
+<span class="token keyword">local</span> check_br <span class="token operator">=</span> <span class="token function">inBounds</span><span class="token punctuation">(</span>bbox2<span class="token punctuation">.</span>x2<span class="token punctuation">,</span> bbox2<span class="token punctuation">.</span>y2<span class="token punctuation">,</span> bbox1<span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> check_tl <span class="token keyword">or</span> check_tr <span class="token keyword">or</span> check_bl <span class="token keyword">or</span> checkbr <span class="token keyword">then</span>
+  <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'boxes overlap!'</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>This would work fine, however there is an easier formula we can use to save having to check all the points in that way.</p>
+<p>We can do this by simplfying the checks we do by considering the following:</p>
+<ul>
+<li>If Box #1's left edge (b1.x1) is to the right of Box #2's right edge (b2.x2) - then Box #1 is on the right of Box #2</li>
+<li>If Box #1's right edge (b1.x2) is to the left of Box #2's left edge (b2.x1) - then Box #1 is on the left of Box #2</li>
+</ul>
+<p>Similarly for the y co-ordinates:</p>
+<ul>
+<li>If Box #1's top edge (b1.y1) is below Box #2's bottom edge (b2.y2) - then Box #1 is below Box #2</li>
+<li>If Box #1's bottom edge (b1.y2) is below Box #2's top edge (b2.y1) - then Box #1 is above Box #2</li>
+</ul>
+<p>All four of these statements would mean that an overlap is impossible, so any one of these checks being true means the boxes are not overlapping:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> bbox1 <span class="token operator">=</span> <span class="token punctuation">{</span> x1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> y1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> x2 <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">,</span> y2 <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">}</span>
+<span class="token keyword">local</span> bbox2 <span class="token operator">=</span> <span class="token punctuation">{</span> x1 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span> y1 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span> x2 <span class="token operator">=</span> <span class="token number">52</span><span class="token punctuation">,</span> y2 <span class="token operator">=</span> <span class="token number">52</span><span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">not_overlapping</span><span class="token punctuation">(</span>b1<span class="token punctuation">,</span> b2<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> b1<span class="token punctuation">.</span>x1 <span class="token operator">>=</span> b2<span class="token punctuation">.</span>x2 <span class="token keyword">or</span> b1<span class="token punctuation">.</span>x2 <span class="token operator">&lt;=</span> b2<span class="token punctuation">.</span>x1 <span class="token keyword">or</span> b1<span class="token punctuation">.</span>y1 <span class="token operator">>=</span> b2<span class="token punctuation">.</span>y2 <span class="token keyword">or</span> b1<span class="token punctuation">.</span>y2 <span class="token operator">&lt;=</span> b2<span class="token punctuation">.</span>y1
+<span class="token keyword">end</span>
+
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">not_overlapping</span><span class="token punctuation">(</span>bbox1<span class="token punctuation">,</span> bbox2<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- false, the boxes ARE overlapping</span>
+</code></pre>
+<p>We can use the inverse of these statements to make a formula for overlapping:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> bbox1 <span class="token operator">=</span> <span class="token punctuation">{</span> x1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> y1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> x2 <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">,</span> y2 <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">}</span>
+<span class="token keyword">local</span> bbox2 <span class="token operator">=</span> <span class="token punctuation">{</span> x1 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span> y1 <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span> x2 <span class="token operator">=</span> <span class="token number">52</span><span class="token punctuation">,</span> y2 <span class="token operator">=</span> <span class="token number">52</span><span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">overlapping</span><span class="token punctuation">(</span>b1<span class="token punctuation">,</span> b2<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> b1<span class="token punctuation">.</span>x1 <span class="token operator">&lt;</span> b2<span class="token punctuation">.</span>x2 <span class="token keyword">and</span> b1<span class="token punctuation">.</span>x2 <span class="token operator">></span> b2<span class="token punctuation">.</span>x1 <span class="token keyword">and</span> b1<span class="token punctuation">.</span>y1 <span class="token operator">&lt;</span> b2<span class="token punctuation">.</span>y2 <span class="token keyword">and</span> b1<span class="token punctuation">.</span>y2 <span class="token operator">></span> b2<span class="token punctuation">.</span>y1
+<span class="token keyword">end</span>
+
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">overlapping</span><span class="token punctuation">(</span>bbox1<span class="token punctuation">,</span> bbox2<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- true, the boxes are overlapping</span>
+</code></pre>
+<p>Let's make a quick example to see that in action - we'll make a bunch of boxes on screen each with different positions and sizes.</p>
+<p>Then we'll check all the boxes that are overlapping with another box and change their color.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- check overlapping</span>
+<span class="token keyword">function</span> <span class="token function">overlapping</span><span class="token punctuation">(</span>b1<span class="token punctuation">,</span> b2<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> b1<span class="token punctuation">.</span>x1 <span class="token operator">&lt;</span> b2<span class="token punctuation">.</span>x2 <span class="token keyword">and</span> b1<span class="token punctuation">.</span>x2 <span class="token operator">></span> b2<span class="token punctuation">.</span>x1 <span class="token keyword">and</span> b1<span class="token punctuation">.</span>y1 <span class="token operator">&lt;</span> b2<span class="token punctuation">.</span>y2 <span class="token keyword">and</span> b1<span class="token punctuation">.</span>y2 <span class="token operator">></span> b2<span class="token punctuation">.</span>y1
+<span class="token keyword">end</span>
+
+<span class="token comment">-- make 100 random boxes</span>
+<span class="token keyword">local</span> boxes <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">makeBoxes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  boxes <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment">-- clear</span>
+  <span class="token keyword">for</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100</span> <span class="token keyword">do</span>
+    <span class="token comment">-- random boxes in screen bounds</span>
+    <span class="token keyword">local</span> x <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">800</span><span class="token operator">-</span><span class="token number">32</span><span class="token punctuation">)</span>
+    <span class="token keyword">local</span> y <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">600</span><span class="token operator">-</span><span class="token number">32</span><span class="token punctuation">)</span>
+    <span class="token keyword">local</span> w <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span>
+    <span class="token keyword">local</span> h <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span>
+    table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>boxes<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      x1 <span class="token operator">=</span> x<span class="token punctuation">,</span>
+      y1 <span class="token operator">=</span> y<span class="token punctuation">,</span>
+      x2 <span class="token operator">=</span> x<span class="token operator">+</span>w<span class="token punctuation">,</span>
+      y2 <span class="token operator">=</span> y<span class="token operator">+</span>h<span class="token punctuation">,</span>
+      w <span class="token operator">=</span> w<span class="token punctuation">,</span>
+      h <span class="token operator">=</span> h<span class="token punctuation">,</span>
+      overlapping <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- for each box, check every other box if overlapping</span>
+<span class="token keyword">function</span> <span class="token function">checkBoxes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">for</span> b<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">#</span>boxes <span class="token keyword">do</span>
+    <span class="token keyword">for</span> o<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">#</span>boxes <span class="token keyword">do</span>
+      <span class="token keyword">if</span> boxes<span class="token punctuation">[</span>b<span class="token punctuation">]</span> <span class="token operator">~=</span> boxes<span class="token punctuation">[</span>o<span class="token punctuation">]</span> <span class="token keyword">and</span> <span class="token function">overlapping</span><span class="token punctuation">(</span>boxes<span class="token punctuation">[</span>b<span class="token punctuation">]</span><span class="token punctuation">,</span> boxes<span class="token punctuation">[</span>o<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">then</span>
+        boxes<span class="token punctuation">[</span>b<span class="token punctuation">]</span><span class="token punctuation">.</span>overlapping <span class="token operator">=</span> <span class="token keyword">true</span>
+      <span class="token keyword">end</span>
+    <span class="token keyword">end</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- make boxes and check on load</span>
+love<span class="token punctuation">.</span>load <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token function">makeBoxes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token function">checkBoxes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- draw boxes</span>
+love<span class="token punctuation">.</span>draw <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">for</span> b<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">#</span>boxes <span class="token keyword">do</span>
+    <span class="token keyword">local</span> box <span class="token operator">=</span> boxes<span class="token punctuation">[</span>b<span class="token punctuation">]</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> box<span class="token punctuation">.</span>overlapping <span class="token keyword">then</span>
+      love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">'fill'</span><span class="token punctuation">,</span> box<span class="token punctuation">.</span>x1<span class="token punctuation">,</span> box<span class="token punctuation">.</span>y1<span class="token punctuation">,</span> box<span class="token punctuation">.</span>w<span class="token punctuation">,</span> box<span class="token punctuation">.</span>h<span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">'line'</span><span class="token punctuation">,</span> box<span class="token punctuation">.</span>x1<span class="token punctuation">,</span> box<span class="token punctuation">.</span>y1<span class="token punctuation">,</span> box<span class="token punctuation">.</span>w<span class="token punctuation">,</span> box<span class="token punctuation">.</span>h<span class="token punctuation">)</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- make new boxes if pressing space</span>
+love<span class="token punctuation">.</span>keypressed <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span>
+  <span class="token keyword">if</span> k <span class="token operator">==</span> <span class="token string">'space'</span> <span class="token keyword">then</span>
+    <span class="token function">makeBoxes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">checkBoxes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>You can try it out below! Press 'Space' to re-create the boxes in new positions.<br>
+Any boxes that overlap will be rendered in pink - the bounding box lines are also drawn to make things clearer.</p>
+<iframe class="love-embed" id="love-iframe-337" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<script>
+const iframe_337 = document.getElementById('love-iframe-337');
+iframe_337.addEventListener('load', function() {
+iframe_337.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+-- check overlapping
+function overlapping(b1, b2)
+ return b1.x1 < b2.x2 and b1.x2 > b2.x1 and b1.y1 < b2.y2 and b1.y2 > b2.y1
+end
+-- make 100 random boxes
+local boxes = {}
+function makeBoxes()
+ boxes = {} -- clear
+ for i=1,100 do
+ -- random boxes in screen bounds
+ local x = love.math.random(0, 800-32)
+ local y = love.math.random(0, 600-32)
+ local w = love.math.random(16, 32)
+ local h = love.math.random(16, 32)
+ table.insert(boxes, {
+ x1 = x,
+ y1 = y,
+ x2 = x+w,
+ y2 = y+h,
+ w = w,
+ h = h,
+ overlapping = false,
+ })
+ end
+end
+-- for each box, check every other box if overlapping
+function checkBoxes()
+ for b=1,#boxes do
+ for o=1,#boxes do
+ if boxes[b] ~= boxes[o] and overlapping(boxes[b], boxes[o]) then
+ boxes[b].overlapping = true
+ end
+ end
+ end
+end
+-- make boxes and check on load
+love.load = function()
+ makeBoxes()
+ checkBoxes()
+end
+-- draw boxes
+love.draw = function()
+ for b=1,#boxes do
+ local box = boxes[b]
+ love.graphics.setColor(0.1, 0.1, 0.1, 1)
+ if box.overlapping then
+ love.graphics.setColor(1, 0, 1, 1)
+ end
+ love.graphics.rectangle('fill', box.x1, box.y1, box.w, box.h)
+ love.graphics.setColor(1, 1, 1, 1)
+ love.graphics.rectangle('line', box.x1, box.y1, box.w, box.h)
+ end
+end
+-- make new boxes if pressing space
+love.keypressed = function(k)
+ if k == 'space' then
+ makeBoxes()
+ checkBoxes()
+ end
+end
+`}, '*');
+});
+</script>
+<p>For an even more advanced example, let's have all the boxes moving around and then when they're colliding they can light up.</p>
+<p>For our movement, we'll simply give each box an angle and a speed, and have them bounce when they hit the boundaries of the window.<br>
+Then every frame we can check each box agaisnt all over boxes for whether it's overlapping with something or not:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- check overlapping</span>
+<span class="token keyword">function</span> <span class="token function">overlapping</span><span class="token punctuation">(</span>b1<span class="token punctuation">,</span> b2<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> b1<span class="token punctuation">.</span>x1 <span class="token operator">&lt;</span> b2<span class="token punctuation">.</span>x2 <span class="token keyword">and</span> b1<span class="token punctuation">.</span>x2 <span class="token operator">></span> b2<span class="token punctuation">.</span>x1 <span class="token keyword">and</span> b1<span class="token punctuation">.</span>y1 <span class="token operator">&lt;</span> b2<span class="token punctuation">.</span>y2 <span class="token keyword">and</span> b1<span class="token punctuation">.</span>y2 <span class="token operator">></span> b2<span class="token punctuation">.</span>y1
+<span class="token keyword">end</span>
+
+<span class="token comment">-- make boxes</span>
+<span class="token keyword">local</span> boxes <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+love<span class="token punctuation">.</span>load <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">for</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100</span> <span class="token keyword">do</span>
+    <span class="token comment">-- random boxes in screen bounds</span>
+    <span class="token keyword">local</span> x <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">800</span><span class="token operator">-</span><span class="token number">32</span><span class="token punctuation">)</span>
+    <span class="token keyword">local</span> y <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">600</span><span class="token operator">-</span><span class="token number">32</span><span class="token punctuation">)</span>
+    table<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>boxes<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      x1 <span class="token operator">=</span> x<span class="token punctuation">,</span>
+      y1 <span class="token operator">=</span> y<span class="token punctuation">,</span>
+      x2 <span class="token operator">=</span> x<span class="token operator">+</span><span class="token number">16</span><span class="token punctuation">,</span>
+      y2 <span class="token operator">=</span> y<span class="token operator">+</span><span class="token number">16</span><span class="token punctuation">,</span>
+      w <span class="token operator">=</span> <span class="token number">16</span><span class="token punctuation">,</span>
+      h <span class="token operator">=</span> <span class="token number">16</span><span class="token punctuation">,</span>
+      angle <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">rad</span><span class="token punctuation">(</span>love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">360</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      speed <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      overlapping <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- update boxes</span>
+love<span class="token punctuation">.</span>update <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">for</span> b<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">#</span>boxes <span class="token keyword">do</span>
+    <span class="token keyword">local</span> box <span class="token operator">=</span> boxes<span class="token punctuation">[</span>b<span class="token punctuation">]</span>
+    <span class="token comment">-- calculate delta based on angle</span>
+    <span class="token keyword">local</span> vy <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">sin</span><span class="token punctuation">(</span>box<span class="token punctuation">.</span>angle<span class="token punctuation">)</span> <span class="token operator">*</span> box<span class="token punctuation">.</span>speed
+    <span class="token keyword">local</span> vx <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">cos</span><span class="token punctuation">(</span>box<span class="token punctuation">.</span>angle<span class="token punctuation">)</span> <span class="token operator">*</span> box<span class="token punctuation">.</span>speed
+    box<span class="token punctuation">.</span>x1 <span class="token operator">=</span> box<span class="token punctuation">.</span>x1 <span class="token operator">+</span> vx
+    box<span class="token punctuation">.</span>y1 <span class="token operator">=</span> box<span class="token punctuation">.</span>y1 <span class="token operator">+</span> vy
+    <span class="token comment">-- update x2/y2 as our box has moved so our bounding box has too</span>
+    box<span class="token punctuation">.</span>x2 <span class="token operator">=</span> box<span class="token punctuation">.</span>x1 <span class="token operator">+</span> box<span class="token punctuation">.</span>w
+    box<span class="token punctuation">.</span>y2 <span class="token operator">=</span> box<span class="token punctuation">.</span>y1 <span class="token operator">+</span> box<span class="token punctuation">.</span>h
+    <span class="token comment">-- check overlap with other boxes</span>
+    <span class="token keyword">local</span> overlap <span class="token operator">=</span> <span class="token keyword">false</span>
+    <span class="token keyword">for</span> o<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">#</span>boxes <span class="token keyword">do</span>
+      <span class="token keyword">if</span> boxes<span class="token punctuation">[</span>b<span class="token punctuation">]</span> <span class="token operator">~=</span> boxes<span class="token punctuation">[</span>o<span class="token punctuation">]</span> <span class="token keyword">and</span> <span class="token function">overlapping</span><span class="token punctuation">(</span>boxes<span class="token punctuation">[</span>b<span class="token punctuation">]</span><span class="token punctuation">,</span> boxes<span class="token punctuation">[</span>o<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">then</span>
+        overlap <span class="token operator">=</span> <span class="token keyword">true</span>
+        <span class="token keyword">break</span>
+      <span class="token keyword">end</span>
+    <span class="token keyword">end</span>
+    box<span class="token punctuation">.</span>overlapping <span class="token operator">=</span> overlap
+    <span class="token comment">-- bounce if we hit the edge of the screen</span>
+    <span class="token keyword">if</span> box<span class="token punctuation">.</span>x1 <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token keyword">or</span> box<span class="token punctuation">.</span>x2 <span class="token operator">>=</span> <span class="token number">800</span> <span class="token keyword">then</span>
+      box<span class="token punctuation">.</span>angle <span class="token operator">=</span> box<span class="token punctuation">.</span>angle <span class="token operator">*</span> math<span class="token punctuation">.</span>pi
+    <span class="token keyword">end</span>
+    <span class="token keyword">if</span> box<span class="token punctuation">.</span>y1 <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token keyword">or</span> box<span class="token punctuation">.</span>y2 <span class="token operator">>=</span> <span class="token number">600</span> <span class="token keyword">then</span>
+      box<span class="token punctuation">.</span>angle <span class="token operator">=</span> box<span class="token punctuation">.</span>angle <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>math<span class="token punctuation">.</span>pi<span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">-- draw boxes</span>
+love<span class="token punctuation">.</span>draw <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">for</span> b<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">#</span>boxes <span class="token keyword">do</span>
+    <span class="token keyword">local</span> box <span class="token operator">=</span> boxes<span class="token punctuation">[</span>b<span class="token punctuation">]</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">0.1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> box<span class="token punctuation">.</span>overlapping <span class="token keyword">then</span>
+      love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">'fill'</span><span class="token punctuation">,</span> box<span class="token punctuation">.</span>x1<span class="token punctuation">,</span> box<span class="token punctuation">.</span>y1<span class="token punctuation">,</span> box<span class="token punctuation">.</span>w<span class="token punctuation">,</span> box<span class="token punctuation">.</span>h<span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">rectangle</span><span class="token punctuation">(</span><span class="token string">'line'</span><span class="token punctuation">,</span> box<span class="token punctuation">.</span>x1<span class="token punctuation">,</span> box<span class="token punctuation">.</span>y1<span class="token punctuation">,</span> box<span class="token punctuation">.</span>w<span class="token punctuation">,</span> box<span class="token punctuation">.</span>h<span class="token punctuation">)</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>You can try it out below here:</p>
+<iframe class="love-embed" id="love-iframe-400" src="/love-cookbook/assets/love/love-js" width="800" height="600"></iframe>
+<script>
+const iframe_400 = document.getElementById('love-iframe-400');
+iframe_400.addEventListener('load', function() {
+iframe_400.contentWindow.postMessage({lua: `love.window.setMode(800, 600) 
+-- check overlapping
+function overlapping(b1, b2)
+ return b1.x1 < b2.x2 and b1.x2 > b2.x1 and b1.y1 < b2.y2 and b1.y2 > b2.y1
+end
+-- make boxes
+local boxes = {}
+love.load = function()
+ for i=1,100 do
+ -- random boxes in screen bounds
+ local x = love.math.random(0, 800-32)
+ local y = love.math.random(0, 600-32)
+ table.insert(boxes, {
+ x1 = x,
+ y1 = y,
+ x2 = x+16,
+ y2 = y+16,
+ w = 16,
+ h = 16,
+ angle = math.rad(love.math.random(0, 360)),
+ speed = 1,
+ overlapping = false,
+ })
+ end
+end
+-- update boxes
+love.update = function()
+ for b=1,#boxes do
+ local box = boxes[b]
+ -- calculate delta based on angle
+ local vy = math.sin(box.angle) * box.speed
+ local vx = math.cos(box.angle) * box.speed
+ box.x1 = box.x1 + vx
+ box.y1 = box.y1 + vy
+ -- update x2/y2 as our box has moved so our bounding box has too
+ box.x2 = box.x1 + box.w
+ box.y2 = box.y1 + box.h
+ -- check overlap with other boxes
+ local overlap = false
+ for o=1,#boxes do
+ if boxes[b] ~= boxes[o] and overlapping(boxes[b], boxes[o]) then
+ overlap = true
+ break
+ end
+ end
+ box.overlapping = overlap
+ -- bounce if we hit the edge of the screen
+ if box.x1 <= 0 then
+ box.angle = box.angle * math.pi
+ box.x1 = 0
+ end
+ if box.x2 >= 800 then
+ box.angle = box.angle * math.pi
+ box.x2 = 800-16
+ end
+ if box.y1 <= 0 then
+ box.angle = box.angle * (2*math.pi)
+ box.y1 = 0
+ end
+ if box.y2 >= 600 then
+ box.angle = box.angle * (2*math.pi)
+ box.y2 = 600-16
+ end
+ end
+end
+-- draw boxes
+love.draw = function()
+ for b=1,#boxes do
+ local box = boxes[b]
+ love.graphics.setColor(0.1, 0.1, 0.1, 1)
+ if box.overlapping then
+ love.graphics.setColor(1, 0, 1, 1)
+ end
+ love.graphics.rectangle('fill', box.x1, box.y1, box.w, box.h)
+ love.graphics.setColor(1, 1, 1, 1)
+ love.graphics.rectangle('line', box.x1, box.y1, box.w, box.h)
+ end
+end
+`}, '*');
+});
+</script>
+<p>You may be thinking that it's a lot for you to be checking potentially 100 boxes per box every frame - however computers are very fast.<br>
+That being said, if you start having a lot of different objects, then it'll be better to start looking into ways to group them together into areas or chunks, or exlude some objects from checks (like say if they were offscreen). That way you can reduce the number of checks that are needed per box by reducing the number of possible boxes it can collide with.</p>
+<p>AABB is great for some basic collision checking (say for a top-down game), or for handling your GUI elements and interacting with them, but when it comes to more complex physics, you should look more at the <code>love.physics</code> module which uses something called Box2D to model physics.</p>
+<p>This will give you a lot more control over the types of collisions and you can better handle things colliding and reacting 'realistically'.</p>
 
 
 <footer class="guide-footer">
@@ -151,6 +736,8 @@
 
   <p>By:
   
+      <em>ellraiser</em>
+    
   </p>
 </footer>
       </article>
