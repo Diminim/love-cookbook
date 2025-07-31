@@ -12,20 +12,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lua</title>
 <meta name="title" content="Lua">
-<meta name="author" content="">
-<meta name="description" content="Lua is the programming language that LÖVE uses.">
+<meta name="author" content="ellraiser">
+<meta name="description" content="Lua is the programming language that LÖVE uses! Lua (pronounded 'LOO-ah') means &quot;Moon&quot; in Portuguese, and was created back in 1993 by a team at PUC-Rio as a language that could extend various software applications.">
 <meta name="generator" content="eleventy">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/lua-basics/lua/">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="Lua">
-<meta property="og:description" content="Lua is the programming language that LÖVE uses.">
+<meta property="og:description" content="Lua is the programming language that LÖVE uses! Lua (pronounded 'LOO-ah') means &quot;Moon&quot; in Portuguese, and was created back in 1993 by a team at PUC-Rio as a language that could extend various software applications.">
 <meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta property="og:image:alt" content="LÖVE Cookbook">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/lua-basics/lua/">
 <meta name="twitter:title" content="Lua">
-<meta name="twitter:description" content="Lua is the programming language that LÖVE uses.">
+<meta name="twitter:description" content="Lua is the programming language that LÖVE uses! Lua (pronounded 'LOO-ah') means &quot;Moon&quot; in Portuguese, and was created back in 1993 by a team at PUC-Rio as a language that could extend various software applications.">
 <meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta name="twitter:image:alt" content="LÖVE Cookbook">
 <link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/lua-basics/lua/">
@@ -143,9 +143,48 @@
   <h1 class="title">Lua</h1>
 </header>
 
-<p>Lua is the <strong>programming language</strong> that LÖVE uses.</p>
+<p>Lua is the programming language that LÖVE uses! Lua (pronounded 'LOO-ah') means &quot;Moon&quot; in Portuguese, and was created back in 1993 by a team at <a href="https://www.puc-rio.br/english/">PUC-Rio</a> as a language that could extend various software applications.</p>
+<p>The idea was to create a language that gave all the basic functionality needed but not get too complicated or domain-specific, instead allowing developers to extend and customise as needed.</p>
 <div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>Lua is a name, <ins>not</ins> an abbreviation. Writing it as <em>LUA</em> is therefore <ins>wrong</ins>.</p>
 </div>
+<p>A small piece of example code in Lua:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- a comment!</span>
+
+<span class="token keyword">local</span> data <span class="token operator">=</span> <span class="token punctuation">{</span>
+  name <span class="token operator">=</span> <span class="token string">"Toast"</span><span class="token punctuation">,</span>
+  counter <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  data<span class="token punctuation">.</span>counter <span class="token operator">=</span> data<span class="token punctuation">.</span>counter <span class="token operator">+</span> <span class="token number">1</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">for</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100</span> <span class="token keyword">do</span>
+  <span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'Done!'</span><span class="token punctuation">,</span> data<span class="token punctuation">.</span>counter<span class="token punctuation">)</span>
+</code></pre>
+<h2 id="learning-lua" tabindex="-1">Learning Lua <a class="anchor" href="#learning-lua">#</a></h2>
+<p>To get started with LÖVE, it's recommended to have some basic understanding of Lua first. Here are some resources that can help get you started:</p>
+<p><strong>LÖVE Cookbook</strong><br>
+You're already reading it! This Lua Basics section has a bunch of sections that will take you through the syntax, variables, functions, datatypes and general gotchas.<br>
+https://diminim.github.io/love-cookbook/guides/lua-basics/variables/</p>
+<p><strong>Sheepolution's &quot;How To LÖVE&quot;</strong><br>
+This is a general guide to using LÖVE, but starts by introducing the concepts of Lua first.<br>
+https://sheepolution.com/learn/book/contents</p>
+<p><strong>Programming In Lua</strong><br>
+This is the official programming guide for Lua, by the creators themselves. It can be a bit heavy in some places, but does showcase everything Lua has to offer (which can be overkill for what you need).<br>
+https://www.lua.org/pil/1.html</p>
+<p><strong>Learn X in Y minutes</strong><br>
+A 'cheatsheet' type guide showcasing the main syntax and features of Lua and explaining how it works, useful once you've already started using Lua as a quick reference to things.
+https://learnxinyminutes.com/lua/</p>
+<p><strong>Lua Reference Manual</strong><br>
+This is the manual for the programming language, and so covers all the syntax and functions available. It's a long read, and while it would probably benefit you to read through it all one day, for now it is better to use as a lookup when you want to learn more about something specific, like functions or metatables.<br>
+https://www.lua.org/manual/5.0/</p>
+<h2 id="luajit" tabindex="-1">LuaJIT <a class="anchor" href="#luajit">#</a></h2>
+<p>LÖVE uses a version of Lua called <a href="https://luajit.org/">LuaJIT</a>, a 'Just-In-Time' compiler that converts the your written Lua code into machine code at runtime. This allows the code to be executed extremely fast (and Lua is very fast to begin with!).</p>
+<p>LuaJIT uses Lua version 5.1, but does implement a couple of 5.2 features, as such keep in mind the Lua version when looking up documentation as there are newer Lua versions and features not available in LuaJIT.</p>
 
 
 <footer class="guide-footer">
@@ -153,6 +192,8 @@
 
   <p>By:
   
+      <em>ellraiser</em>
+    
   </p>
 </footer>
       </article>

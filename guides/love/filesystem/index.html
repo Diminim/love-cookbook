@@ -12,20 +12,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Filesystem</title>
 <meta name="title" content="Filesystem">
-<meta name="author" content="">
-<meta name="description" content="Not yet written: contribute to this page on GitHub.">
+<meta name="author" content="ellraiser">
+<meta name="description" content="*not yet anyway - in LÖVE 12 you can though!">
 <meta name="generator" content="eleventy">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/love/filesystem/">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="Filesystem">
-<meta property="og:description" content="Not yet written: contribute to this page on GitHub.">
+<meta property="og:description" content="*not yet anyway - in LÖVE 12 you can though!">
 <meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta property="og:image:alt" content="LÖVE Cookbook">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/love/filesystem/">
 <meta name="twitter:title" content="Filesystem">
-<meta name="twitter:description" content="Not yet written: contribute to this page on GitHub.">
+<meta name="twitter:description" content="*not yet anyway - in LÖVE 12 you can though!">
 <meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta name="twitter:image:alt" content="LÖVE Cookbook">
 <link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/love/filesystem/">
@@ -143,7 +143,150 @@
   <h1 class="title">Filesystem</h1>
 </header>
 
-<p>Not yet written: contribute to this page on <a href="https://github.com/Diminim/love-cookbook">GitHub</a>.</p>
+<p>A common requirement in any game is being able to load and save files to the device.<br>
+LÖVE has a variety of methods available under the <code>love.filesystem</code> module that can help you do this.</p>
+<h2 id="saving-files" tabindex="-1">Saving Files <a class="anchor" href="#saving-files">#</a></h2>
+<p>LÖVE uses a specific folder for writing files - you can't write to the source folder where your game code is*
+Instead, each platform has a special folder where your data will be written to:</p>
+<ul>
+<li>Windows =&gt; <code>%appdata%/LOVE</code> (<code>C:\Users\user\AppData\Roaming\LOVE</code>)</li>
+<li>MacOS =&gt; <code>/Users/user/Library/Application Support/LOVE/</code></li>
+<li>Linux =&gt; <code>$XDG_DATA_HOME/love/</code> (<code>~/.local/share/love/</code>)</li>
+</ul>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>*not yet anyway - in LÖVE 12 you can though!</p>
+</div>
+<p>To view our save folder, we can use the following function to open the path:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>system<span class="token punctuation">.</span><span class="token function">openURL</span><span class="token punctuation">(</span><span class="token string">"file://"</span><span class="token operator">..</span>love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">getSaveDirectory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<p>This will open the save location in your file explorer.</p>
+<p>Let's take an example for this chapter to help you understand what you can do with <code>filesystem</code>.</p>
+<p>Say we have a game where the player can have multiple file saves or 'slots' for the game, as well as various mods.<br>
+We'll want a generic <code>settings</code> file, a folder for our <code>saves</code> and a folder for our <code>mods</code>.</p>
+<p>If you wanted to setup the <code>saves</code> or <code>mods</code> folder, you can create a directory using <a href="https://love2d.org/wiki/love.filesystem.createDirectory" target="_blank"><code>love.filesystem.createDirectory</code></a></p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> create_saves <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">createDirectory</span><span class="token punctuation">(</span><span class="token string">'saves'</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> create_mods <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">createDirectory</span><span class="token punctuation">(</span><span class="token string">'mods'</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>create_saves<span class="token punctuation">,</span> create_mods<span class="token punctuation">)</span> <span class="token comment">-- will return true if created or already exists</span>
+</code></pre>
+<p>To save data, we can use <a href="https://love2d.org/wiki/love.filesystem.write" target="_blank"><code>love.filesystem.write</code></a> to write to a file:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> success<span class="token punctuation">,</span> err <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">'saves/save1.txt'</span><span class="token punctuation">,</span> <span class="token string">'My Save Data!'</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token keyword">not</span> success <span class="token keyword">then</span>
+  <span class="token function">print</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token comment">-- if file didn't write successfully</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Note that we specified the <code>saves/</code> path here - this means LÖVE will check for a folder called <code>saves</code> in the save directory, and if we hadn't already created one it would create it for us!</p>
+<p>If we don't specify a path then the file will get written to the root of the save folder instead:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> success<span class="token punctuation">,</span> err <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">'settings.txt'</span><span class="token punctuation">,</span> <span class="token string">'Settings File!'</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token keyword">not</span> success <span class="token keyword">then</span>
+  <span class="token function">print</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token comment">-- if file didn't write successfully</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>One thing to keep in mind is that <a href="https://love2d.org/wiki/love.filesystem.write" target="_blank"><code>love.filesystem.write</code></a> will wipe the previous contents of the file - if you want to add to a file without clearing the existing data you can use <a href="https://love2d.org/wiki/love.filesystem.append" target="_blank"><code>love.filesystem.append</code></a> instead:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">'somefile.txt'</span><span class="token punctuation">,</span> <span class="token string">'Hello '</span><span class="token punctuation">)</span>
+love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">'somefile.txt'</span><span class="token punctuation">,</span> <span class="token string">'World!'</span><span class="token punctuation">)</span>
+<span class="token comment">-- file will now contain 'Hello World!'</span>
+</code></pre>
+<p>You will have noticed we're setting the file extension simply by putting it as the name of the file to be saved, i.e. <code>settings.txt</code> is going to make a <code>.txt</code> file.<br>
+LÖVE doesn't care what filename and extension you use with what data you pass in, so it's up to you to make sure that the data you write is valid data for the file you are saving.</p>
+<p>This also means you can easily create your own 'fake' format/extensions as LÖVE doesn't actually take the extension into consideration when reading, it always just returns the actual bytes of the file.</p>
+<h2 id="reading-files" tabindex="-1">Reading Files <a class="anchor" href="#reading-files">#</a></h2>
+<p>To read back our data we can use <a href="https://love2d.org/wiki/love.filesystem.read" target="_blank"><code>love.filesystem.read</code></a>:</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">'saves/save1.txt'</span><span class="token punctuation">,</span> <span class="token string">'My Save Data!'</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> data<span class="token punctuation">,</span> size <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token string">'saves/save1.txt'</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> size<span class="token punctuation">)</span> <span class="token comment">-- will print 'My Save Data!' and 13 (the number of bytes)</span>
+</code></pre>
+<p>If the file doesn't exist then <code>data</code> will be <code>nil</code>, and the <code>size</code> variable will instead contain an error message.</p>
+<p>You can check if a file exists first using <a href="https://love2d.org/wiki/love.filesystem.exists" target="_blank"><code>love.filesystem.exists</code></a> - this can be useful for checking if a file exists without needing to try reading the whole file, say if you wanted to quickly check what file 'slots' exist for rendering a file select menu.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> file2_exists <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token string">'saves/save2.txt'</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token keyword">not</span> file2_exists <span class="token keyword">then</span>
+  <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'no file for slot 2'</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>If you wanted to read a directory instead of a file, you can use <a href="https://love2d.org/wiki/love.filesystem.getDirectoryItems" target="_blank"><code>love.filesystem.getDirectoryItems</code></a>.<br>
+For example, we could check the mods folder for any files inside:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> mod1 <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">'mods/mod1.lua'</span><span class="token punctuation">,</span> <span class="token string">'print("Hello World!")'</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> files <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">getDirectoryItems</span><span class="token punctuation">(</span><span class="token string">'mods'</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> f<span class="token operator">=</span><span class="token operator">#</span>files <span class="token keyword">do</span>
+  <span class="token function">print</span><span class="token punctuation">(</span>files<span class="token punctuation">[</span>f<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">-- will print 'mod1.txt', note: without the /mods/ path!</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>If you was running through a large directory with nested folders, you can use <a href="https://love2d.org/wiki/love.filesystem.getInfo" target="_blank"><code>love.filesystem.getInfo</code></a> to check specific if something is a file, directory, or a symlink:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> <span class="token function">readFiles</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+  <span class="token keyword">local</span> files <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">getDirectoryItems</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+  <span class="token keyword">for</span> f<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">#</span>files <span class="token keyword">do</span>
+    <span class="token keyword">local</span> info <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">getInfo</span><span class="token punctuation">(</span>path <span class="token operator">..</span> <span class="token string">'/'</span> <span class="token operator">..</span> files<span class="token punctuation">[</span>f<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">-- note we need to append the path too</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>files<span class="token punctuation">[</span>f<span class="token punctuation">]</span><span class="token punctuation">,</span> info<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token comment">-- i.e. 'mod1.lua', 'file'</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+<span class="token function">readFiles</span><span class="token punctuation">(</span><span class="token string">'mods'</span><span class="token punctuation">)</span>
+</code></pre>
+<p>If <code>info.type</code> was <code>directory</code> you could then run the function recursively to list any files in those folders too.</p>
+<p>For some files you might want to read the data line by line instead of getting it in one big string - this can be useful for file types such as <code>.ini</code> files or <code>.csv</code> files, or just for files containing simple lists of data, like highscores.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- write some highscores</span>
+<span class="token keyword">local</span> highscores <span class="token operator">=</span> <span class="token string">''</span>
+<span class="token keyword">for</span> a<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span> <span class="token keyword">do</span>
+  highscores <span class="token operator">=</span> highscores <span class="token operator">..</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">10000</span><span class="token punctuation">)</span> <span class="token operator">..</span> <span class="token string">'\n'</span> <span class="token comment">-- '\n' is a special string that makes a new line or 'return'</span>
+<span class="token keyword">end</span>
+love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">'highscores.txt'</span><span class="token punctuation">,</span> highscores<span class="token punctuation">)</span>
+
+<span class="token comment">-- later read them back</span>
+<span class="token keyword">for</span> line <span class="token keyword">in</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">lines</span><span class="token punctuation">(</span><span class="token string">'highscores.txt'</span><span class="token punctuation">)</span> <span class="token keyword">do</span>
+  <span class="token function">print</span><span class="token punctuation">(</span>line<span class="token punctuation">)</span> <span class="token comment">-- will give 10 prints, 1 for each score</span>
+<span class="token keyword">end</span>
+</code></pre>
+<h2 id="running-files" tabindex="-1">Running Files <a class="anchor" href="#running-files">#</a></h2>
+<p>Reading files is not the same as running them - if you were to read the contents of one of our 'mod' <code>.lua</code> files you'd just get the raw contents back.</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">'mods/mod1.lua'</span><span class="token punctuation">,</span> <span class="token string">'print("Hello World!")'</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> data <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token string">'mods/mod1.lua'</span><span class="token punctuation">)</span>
+<span class="token function">print</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token comment">-- will just print 'print("Hello World!")'</span>
+</code></pre>
+<p>If we wanted to run a <code>.lua</code> file instead of just reading the raw contents, we can use <a href="https://love2d.org/wiki/love.filesystem.load" target="_blank"><code>love.filesystem.load</code></a>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span>love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">'mods/mod1.lua'</span><span class="token punctuation">,</span> <span class="token string">'print("Hello World!")'</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> chunk <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">'mods/mod1.lua'</span><span class="token punctuation">)</span> <span class="token comment">-- loads the .lua file but doesn't execute it yet</span>
+<span class="token function">chunk</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">-- executes our file, which will then print 'Hello World!'</span>
+</code></pre>
+<p>This can be useful for executing mod code, player-written code, or for loading data from your game directly.</p>
+<div class="markdown-alert markdown-alert-warning"><p class="markdown-alert-title"><svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p><p>You should be careful not to directly execute external code without some form of sandboxing or restrictions
+The code you run with love.filesystem.load() has the same access and functional capability as your own
+This could be abused by players in the context of modding code or multiplayer functionality</p>
+</div>
+<p>While you can't write to the source directory where your game code is, <a href="https://love2d.org/wiki/love.filesystem.read" target="_blank"><code>love.filesystem.read</code></a> is allowed to read from it!<br>
+Using this you can create files that are part of your game's source code, and read them in when the game runs.</p>
+<h2 id="loading-from-source" tabindex="-1">Loading From Source <a class="anchor" href="#loading-from-source">#</a></h2>
+<p>To read from the source folder you don't need any new methods - <a href="https://love2d.org/wiki/love.filesystem.read" target="_blank"><code>love.filesystem.read</code></a> is already the one you need!</p>
+<p>You can test that by using <code>love.filesystem.getDirectoryItems('')</code> and iterating over the result - this will list not only the folders and files in the save directory, but also in the source folder that your <code>main.lua</code> is in!</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- running this will list all items in all folders for both the savedir and the sourcedir</span>
+<span class="token keyword">function</span> <span class="token function">readFiles</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+  <span class="token keyword">local</span> files <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">getDirectoryItems</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+  <span class="token keyword">for</span> f<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">#</span>files <span class="token keyword">do</span>
+    <span class="token keyword">local</span> info <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">getInfo</span><span class="token punctuation">(</span>path <span class="token operator">..</span> <span class="token string">'/'</span> <span class="token operator">..</span> files<span class="token punctuation">[</span>f<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">-- note we need to append the path too</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>path <span class="token operator">..</span> <span class="token string">'/'</span> <span class="token operator">..</span> files<span class="token punctuation">[</span>f<span class="token punctuation">]</span><span class="token punctuation">,</span> info<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token comment">-- i.e. 'mod1.lua', 'file'</span>
+    <span class="token keyword">if</span> info<span class="token punctuation">.</span>type <span class="token operator">==</span> <span class="token string">'directory'</span> <span class="token keyword">then</span>
+      <span class="token function">readFiles</span><span class="token punctuation">(</span>files<span class="token punctuation">[</span>f<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+<span class="token function">readFiles</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+</code></pre>
+<p>LÖVE will prioritise the save directory over the source one - so if you have a folder called <code>saves</code> in both directories and use <code>love.filesystem.getDirectoryItems('saves')</code> LÖVE will read the one in the save directory. You should keep this in mind when naming save directory folders vs source directory ones!</p>
+<p>A common use for loading files from source is having datafiles for the game as seperate files to make it easier to manage.<br>
+For example say you had a <code>text.lua</code> that contained a table with all your text entries inside a <code>resources</code> folder in the source directory that looked like this:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token comment">-- resources/text.lua</span>
+<span class="token keyword">return</span> <span class="token punctuation">{</span>
+  name <span class="token operator">=</span> <span class="token string">'LÖVE'</span><span class="token punctuation">,</span>
+  type <span class="token operator">=</span> <span class="token string">'Framework'</span><span class="token punctuation">,</span>
+  awesome <span class="token operator">=</span> <span class="token keyword">true</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>You can call this in your <code>main.lua</code> when the game starts easily enough with <a href="https://love2d.org/wiki/love.filesystem.load" target="_blank"><code>love.filesystem.load</code></a> to load in the file contents as <code>.lua</code>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span>game<span class="token punctuation">.</span>g<span class="token punctuation">.</span>text <span class="token operator">=</span> love<span class="token punctuation">.</span>filesystem<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">'resources/text.lua'</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">-- note the () right after to execute the loaded chunk</span>
+<span class="token function">print</span><span class="token punctuation">(</span>game<span class="token punctuation">.</span>g<span class="token punctuation">.</span>text<span class="token punctuation">.</span>name<span class="token punctuation">)</span> <span class="token comment">-- prints 'LÖVE'</span>
+</code></pre>
+<p>This will first look for a <code>resources/text.lua</code> in the save directory, then if it doesn't find one there it will look for it in the source directory (where it then finds it).</p>
+<h2 id="other-file-formats" tabindex="-1">Other File Formats <a class="anchor" href="#other-file-formats">#</a></h2>
+<p><code>love.filesystem</code> itself does not provide any functionality for writing specific types of files, like <code>.json</code> or <code>.csv</code>.
+You will need to find third-party libraries to do this, such as <a href="https://github.com/rxi/json.lua">rxi's JSON library</a>.</p>
+<p>These libraries are usually straight forward, and simply convert given lua table data into the correct format, which you can then pass straight into <a href="https://love2d.org/wiki/love.filesystem.write" target="_blank"><code>love.filesystem.write</code></a>.  There are even libraries that let you write a <code>.lua</code> table and it's contents directly, meaning you can read/write lua tables without having to convert anything!</p>
+<p>For more info on this, see the 'Saving And Loading' chapter later in the cookbook.</p>
 
 
 <footer class="guide-footer">
@@ -151,6 +294,8 @@
 
   <p>By:
   
+      <em>ellraiser</em>
+    
   </p>
 </footer>
       </article>

@@ -12,20 +12,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LÖVE</title>
 <meta name="title" content="LÖVE">
-<meta name="author" content="">
-<meta name="description" content="Not yet written: contribute to this page on GitHub.">
+<meta name="author" content="ellraiser">
+<meta name="description" content="To get started with LÖVE, first things first you need to download it!">
 <meta name="generator" content="eleventy">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/installation/love/">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="LÖVE">
-<meta property="og:description" content="Not yet written: contribute to this page on GitHub.">
+<meta property="og:description" content="To get started with LÖVE, first things first you need to download it!">
 <meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta property="og:image:alt" content="LÖVE Cookbook">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/installation/love/">
 <meta name="twitter:title" content="LÖVE">
-<meta name="twitter:description" content="Not yet written: contribute to this page on GitHub.">
+<meta name="twitter:description" content="To get started with LÖVE, first things first you need to download it!">
 <meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
 <meta name="twitter:image:alt" content="LÖVE Cookbook">
 <link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/installation/love/">
@@ -143,8 +143,90 @@
   <h1 class="title">LÖVE</h1>
 </header>
 
-<p>Not yet written: contribute to this page on <a href="https://github.com/Diminim/love-cookbook">GitHub</a>.</p>
-<p><em>Should contain installation instructions for LOVE on all supported platforms</em></p>
+<p>To get started with LÖVE, first things first you need to download it!</p>
+<p>You can get the download link for your platform from the website:<br>
+https://love2d.org/#download</p>
+<p>Once downloaded, see the following section for your platform for steps to install, then jump to the &quot;Running Your Code&quot; for Windows/MacOS/Linux section.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Just running the LÖVE executable will give you the famous 'No Game' screen!<br>
+You need to actually write code for LÖVE to run (we'll get to that later)<br>
+There is no game editor with LÖVE, everything has to be coded by you (that's the fun part!)</p>
+</div>
+<h2 id="windows" tabindex="-1">Windows <a class="anchor" href="#windows">#</a></h2>
+<p>On Windows, you can download either the 'installer' or the 'zipped' version.</p>
+<p><strong>Installation</strong><br>
+The installer will allow you to install LÖVE, meaning you will be able to run <code>love</code> in your terminal.
+When you've installed , you should now be able to run the following command in a terminal:<br>
+<code>love --version</code><br>
+If successful this will show you a message like below:<br>
+<code>LOVE 11.5 (Mysterious Mysteries)</code></p>
+<p><strong>Standalone</strong><br>
+The zipped version contains the <code>lovec.exe</code> that you can run directly by clicking on it, or in a terminal using the path to the <code>.exe</code>, i.e.:<br>
+<code>PATH/TO/lovec.exe --version</code><br>
+Note: There is both a <code>love.exe</code> and a <code>lovec.exe</code> executable. The <code>lovec.exe</code> is the one you should use during development as it will output logs to your terminal.</p>
+<h2 id="macos" tabindex="-1">MacOS <a class="anchor" href="#macos">#</a></h2>
+<p>On MacOS, inside the zip file you'll find the <code>love.app</code> which you can then put into your Applications folder.<br>
+From here you could just run LÖVE by clicking on it, or through the applications path:<br>
+<code>/Applications/love.app/Contents/MacOS/love --version</code></p>
+<p>However if you're feeling fancy you could make an alias!<br>
+First we need to edit the alias file, using:<br>
+<code>open -a TextEdit ~/.zshrc</code><br>
+You can then add the following new line to the list:<br>
+<code>alias love=/Applications/love.app/Contents/MacOS/love</code></p>
+<p>Restart the terminal and then you'll be able to run LÖVE using the alias:<br>
+<code>love --version</code></p>
+<h2 id="linux" tabindex="-1">Linux <a class="anchor" href="#linux">#</a></h2>
+<p>For Linux, installation can vary per flavour, so it's recommended to download the AppImage as this contains all the depencies required inside itself.<br>
+Once you have the AppImage downloaded be sure to set the correct permissions first with:<br>
+<code>chmod a+x love-11.5-linux.AppImage</code> (change version to be the version you're using if needed)</p>
+<p>You can then run the AppImage with:<br>
+<code>love-11.5-linux.AppImage --version</code></p>
+<p>Depending on your distro you might want to add this to your PATH.<br>
+You could also create an alias, to do so you'd first need to edit the alias file. This will differ per distro, for Ubuntu you can edit your <code>~/.bashrc</code> file:<br>
+<code>gedit ~/.bashrc</code><br>
+You can then add the following new line to the file at the end:<br>
+<code>alias love=&quot;PATH/TO/love-11.5-linux.AppImage&quot;</code></p>
+<p>Restart your terminal and you'll now be able to run <code>love</code> as a standlone command, i.e:<br>
+<code>love --version</code></p>
+<h2 id="android" tabindex="-1">Android <a class="anchor" href="#android">#</a></h2>
+<p>As long as you have LÖVE for Android APK sideloaded from the official site, the following methods will work:</p>
+<ol>
+<li>
+<p>Transfer your game folder to <code>/sdcard/Android/data/org.love2d.android/files/games/lovegame</code> (<code>/sdcard/lovegame</code> also works in Pie and earlier) where <code>main.lua</code> is found at <code>/sdcard/Android/data/org.love2d.android/files/games/lovegame/main.lua</code>. In Android 11 or later, these directories only accessible through MTP in PC. Then run LÖVE for Android.</p>
+</li>
+<li>
+<p>Transfer/download a .love of your game to the device and click on it. Some file explorers will run the .love using LÖVE for Android. If it does not you can install ES File Explorer which will. If you use Dropbox, you can use that to open .love files. If that doesn't work, use LÖVE Loader and pick the .love file there.</p>
+</li>
+</ol>
+<p>Be sure to check the <a href="https://github.com/love2d/love-android/wiki/FAQ---Frequently-Asked-Questions">Android FAQs</a> for more info.</p>
+<h2 id="ios" tabindex="-1">iOS <a class="anchor" href="#ios">#</a></h2>
+<p>In order to run LÖVE for iOS, it must first be compiled and installed. To do that, you’ll need macOS, Xcode 7 or newer, and the LÖVE for iOS source code downloadable from the home page.</p>
+<ul>
+<li>If the libraries folder isn't present in the <code>love/platform/xcode/ios</code> folder, download the iOS libraries from the homepage, and place the <code>iOS/libraries</code> folder from the zip there. They contain the third-party library dependencies used by LÖVE.</li>
+<li>Open the Xcode project found at <code>love/platform/xcode/love.xcodeproj</code> and select the <code>love-ios</code> target in the dropdown menu at the top of the window.</li>
+<li>You may want to change the Build Configuration from Debug to Release for better performance, by opening the &quot;Edit Scheme...&quot; menu from the same dropdown selection.</li>
+<li>Choose either an iOS Simulator device or your plugged-in iOS device in the dropdown selection to the right of the previous one, and click the Build-and-Run (▶︎) button to the left, which will install LÖVE on the target device after compiling it.</li>
+</ul>
+<p>LÖVE on iOS includes a simple list interface of games that are installed (until you fuse a .love to it for distribution.)</p>
+<ul>
+<li>To put a <code>.love</code> file on the iOS Simulator after LÖVE is installed, drag the file onto the iOS Simulator’s window while it’s open. LÖVE will launch if it’s not running already. If another game is currently active you may need to quit LÖVE for the new game to show up (press Shift-Command-H twice to open the App Switcher menu on the iOS Simulator.)</li>
+<li>To put a <code>.love</code> file or game folder on your iOS device after LÖVE is installed, you can either download it with the Safari, or transfer it from your computer through iTunes when your device is connected: open iTunes, go to the iOS device which has LÖVE installed, go to the ‘Apps’ section and scroll down and find LÖVE, and add the .love file or game folder to LÖVE’s Documents section. On more recent iOS and Mac versions, you can use Airdrop to transfer your <code>.love</code> file from your Mac to where LÖVE is installed.</li>
+</ul>
+<h2 id="running-your-code-(windows%2C-macos%2C-linux)" tabindex="-1">Running Your Code (Windows, MacOS, Linux) <a class="anchor" href="#running-your-code-(windows%2C-macos%2C-linux)">#</a></h2>
+<p>Once you have a way of running LÖVE and seeing the version using the section above for your platform, you can then use it on the folder that contains your code.<br>
+LÖVE will look for a <code>main.lua</code> file as an entrypoint.</p>
+<p>Go and create a new folder somewhere named <code>learninglove</code> and inside that folder create a <code>main.lua</code> file with the following text:</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'Hello LÖVE!'</span><span class="token punctuation">)</span>
+</code></pre>
+<p>You can run your code in two ways - you could drop the <code>main.lua</code> file onto the <code>.exe</code> and it'll run the <code>.exe</code> and pass in the <code>main.lua</code> file.</p>
+<p>Or you can run this code by using your terminal command, pointing to the folder you created using the commands shown above for your specific platform.<br>
+For example on Windows you would do:<br>
+<code>love PATH/TO/learninglove</code><br>
+or<br>
+<code>PATH/TO/lovec.exe PATH/TO/learninglove</code><br>
+While the drag-and-drop approach is quick, the terminal version will be faster during development once you're using an IDE for coding.</p>
+<p>If all is successful a window will launch showing a black screen instead of the 'No Game' screen, and you'll see 'Hello LÖVE!' printed in the terminal you ran it from.</p>
+<p><img src="/love-cookbook/assets/img/love/blank_screen.png" alt=""></p>
+<p>Now you're ready to start learning Lua and LÖVE!</p>
 
 
 <footer class="guide-footer">
@@ -152,6 +234,8 @@
 
   <p>By:
   
+      <em>ellraiser</em>
+    
   </p>
 </footer>
       </article>

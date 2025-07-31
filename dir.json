@@ -62,12 +62,6 @@
       },
     
       {
-        "title": "LÖVE",
-        "url": "/guides/installation/love/",
-        "abstract": ""
-      },
-    
-      {
         "title": "VSCode",
         "url": "/guides/installation/vscode/",
         "abstract": ""
@@ -104,21 +98,9 @@
       },
     
       {
-        "title": "Filesystem",
-        "url": "/guides/love/filesystem/",
-        "abstract": ""
-      },
-    
-      {
         "title": "Functions",
         "url": "/guides/lua-basics/functions/",
         "abstract": "A callback is a function that is passed to another function. The latter function will, at some point, call the callback, often while passing useful information."
-      },
-    
-      {
-        "title": "Lua",
-        "url": "/guides/lua-basics/lua/",
-        "abstract": ""
       },
     
       {
@@ -292,6 +274,24 @@
       {
         "title": "Screen resizing",
         "url": "/guides/recipes/screen-resizing/",
+        "abstract": ""
+      },
+    
+      {
+        "title": "LÖVE",
+        "url": "/guides/installation/love/",
+        "abstract": ""
+      },
+    
+      {
+        "title": "Filesystem",
+        "url": "/guides/love/filesystem/",
+        "abstract": ""
+      },
+    
+      {
+        "title": "Lua",
+        "url": "/guides/lua-basics/lua/",
         "abstract": ""
       },
     
