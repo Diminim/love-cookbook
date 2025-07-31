@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LÖVE Cookbook | Screen resizing</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Screen resizing</title>
+<meta name="title" content="Screen resizing">
+<meta name="author" content="Sheepolution">
+<meta name="description" content="Most games allow the screen to be resized. We can do this in LÖVE by enabling t.window.resizable = true.">
+<meta name="generator" content="eleventy">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://diminim.github.io/love-cookbook/guides/recipes/screen-resizing/">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Screen resizing">
+<meta property="og:description" content="Most games allow the screen to be resized. We can do this in LÖVE by enabling t.window.resizable = true.">
+<meta property="og:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta property="og:image:alt" content="LÖVE Cookbook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="https://diminim.github.io/love-cookbook/guides/recipes/screen-resizing/">
+<meta name="twitter:title" content="Screen resizing">
+<meta name="twitter:description" content="Most games allow the screen to be resized. We can do this in LÖVE by enabling t.window.resizable = true.">
+<meta name="twitter:image" content="https://diminim.github.io/love-cookbook/assets/logo.png">
+<meta name="twitter:image:alt" content="LÖVE Cookbook">
+<link rel="canonical" href="https://diminim.github.io/love-cookbook/guides/recipes/screen-resizing/">
+
+    <script src="/love-cookbook/assets/js/codeblock.js"></script>
+    <script src="/love-cookbook/assets/js/hover_preview.js"></script>
+    <script src="/love-cookbook/assets/js/mobile.js"></script>
+
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/fonts.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/main.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/prism.css">
+    <link rel="stylesheet" href="/love-cookbook/assets/styles/markdown.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" rel="stylesheet">
+  </head>
+  <body>
+    <div class="sidebar">
+      <header>
+        <a href="/love-cookbook/">
+            <div class="logo">
+                <img class="logo-unhover-img" src="/love-cookbook/assets/logo.png">
+                <img class="logo-hover-img" src="/love-cookbook/assets/logo_hover.png">
+            </div>
+
+            <h1>LÖVE Cookbook</h1>
+        </a>
+      </header>
+
+      <nav class="table-of-contents">
+        <ul class="chapters"><li class="group-header"><ul class="guides"><li><a class="" href="/love-cookbook/guides/getting-started/">Getting started</a>
+                  </li><li><a class="" href="/love-cookbook/guides/fiddle/">Fiddle</a>
+                  </li></ul>
+
+            </li><li class="group-header">Installation<ul class="guides"><li><a class="" href="/love-cookbook/guides/installation/love/">LÖVE</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/vscode/">VSCode</a>
+                  </li><li><a class="" href="/love-cookbook/guides/installation/neovim/">Neovim</a>
+                  </li></ul>
+
+            </li><li class="group-header">Lua Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-basics/lua/">Lua</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/variables/">Variables</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/functions/">Functions</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/if-statements/">If-statements</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/tables/">Tables and for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/gotchas/">Gotchas</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-basics/recap/">Recap</a>
+                  </li></ul>
+
+            </li><li class="group-header">Lua Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/lua-intermediate/require/">Require</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/scope/">Scope</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/modulo/">Modulo</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/nested-for-loops/">Nested for-loops</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/standard-library/">Standard library</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/string-patterns/">String patterns</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/ternary-operators/">Ternary operators</a>
+                  </li><li><a class="" href="/love-cookbook/guides/lua-intermediate/metatables/">Metatables</a>
+                  </li></ul>
+
+            </li><li class="group-header">LÖVE Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/love/drawing-image/">Drawing an image</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/drawing-shapes/">Drawing shapes</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/playing-audio/">Playing audio</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/input/">Input</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/filesystem/">Filesystem</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/deltatime/">Deltatime</a>
+                  </li><li><a class="" href="/love-cookbook/guides/love/reading-errors/">Reading errors</a>
+                  </li></ul>
+
+            </li><li class="group-header">Basics<ul class="guides"><li><a class="" href="/love-cookbook/guides/basic/aabb/">AABB</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/angle-and-distance/">Angle &amp; distance</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/tiles/">Tiles</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/animation/">Animation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/saving-and-loading/">Saving &amp; loading</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/canvases/">Canvases</a>
+                  </li><li><a class="" href="/love-cookbook/guides/basic/stencil-modes/">Stencil modes</a>
+                  </li></ul>
+
+            </li><li class="group-header">Intermediate<ul class="guides"><li><a class="" href="/love-cookbook/guides/intermediate/oop/">OOP</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/collision-resolving/">Collision resolution</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/stencil-states/">Stencil states</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/coroutines/">Coroutines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/shaders/">Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/compute-shaders/">Compute Shaders</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/box-blur/">Box Blur</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/outlines/">Outlines</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/palette/">Palette</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/pixelation/">Pixelation</a>
+                  </li><li><a class="" href="/love-cookbook/guides/intermediate/vertex-shaders/">Vertex Shaders</a>
+                  </li></ul>
+
+            </li><li class="group-header">Advanced<ul class="guides"><li><a class="" href="/love-cookbook/guides/advanced/physics/">Physics</a>
+                  </li><li><a class="" href="/love-cookbook/guides/advanced/threads/">Threads</a>
+                  </li></ul>
+
+            </li><li class="group-header">Recipes<ul class="guides"><li><a class="active" href="/love-cookbook/guides/recipes/screen-resizing/">Screen resizing</a>
+                  </li><li><a class="" href="/love-cookbook/guides/recipes/steam/">Steam</a>
+                  </li></ul>
+
+            </li></ul>
+
+      </nav>
+    </div>
+
+    <main>
+      <article class="guide">
+        
+<header class="guide-header">
+  <button type="button" class="menu-button">
+    <i class="material-symbols-outlined">menu</i>
+  </button>
+
+  <h1 class="title">Screen resizing</h1>
+</header>
+
+<p>Most games allow the screen to be resized. We can do this in LÖVE by enabling <code>t.window.resizable = true</code>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">conf</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+    t<span class="token punctuation">.</span>version <span class="token operator">=</span> <span class="token string">"12.0"</span>
+    t<span class="token punctuation">.</span>window<span class="token punctuation">.</span>title <span class="token operator">=</span> <span class="token string">"My game"</span>
+    t<span class="token punctuation">.</span>window<span class="token punctuation">.</span>width <span class="token operator">=</span> <span class="token number">960</span>
+    t<span class="token punctuation">.</span>window<span class="token punctuation">.</span>height <span class="token operator">=</span> <span class="token number">540</span>
+    t<span class="token punctuation">.</span>window<span class="token punctuation">.</span>resizable <span class="token operator">=</span> <span class="token keyword">true</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>But what you will notice is that as you resize your game's window, it won't resize the game with it. What you draw on the screen is not influenced by the size of the window. But, with a canvas and basic math, we can make this happen.</p>
+<p>Create a new file called <code>screen.lua</code>. In this file we create a new local table. We'll give it a function to initalize a new <code>Canvas</code> and a <code>Transform</code>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> screen <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">)</span>
+    screen<span class="token punctuation">.</span>width <span class="token operator">=</span> width
+    screen<span class="token punctuation">.</span>height <span class="token operator">=</span> height
+    screen<span class="token punctuation">.</span>canvas <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newCanvas</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">)</span>
+    screen<span class="token punctuation">.</span>transform <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">newTransform</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">return</span> screen
+</code></pre>
+<p>In your <code>main.lua</code>, require the file, and call <code>screen.init</code>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> screen <span class="token operator">=</span> require <span class="token string">"screen"</span>
+
+screen<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token number">960</span><span class="token punctuation">,</span> <span class="token number">540</span><span class="token punctuation">)</span>
+</code></pre>
+<p>The width and height you pass are the width and height of your game. In our case, if the window was at resolution <em>1920x1080</em>, the game should be drawn twice as big.</p>
+<p>Back to our <code>screen.lua</code> we need to write some more functions. We want to capture everything that needs to be resized in our canvas. Finally, after everything has been drawn, we draw our canvas.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">capture</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Push the current state (including the main canvas) onto the stack.</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"all"</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Set our canvas. From now on everything will be drawn on our canvas.</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setCanvas</span><span class="token punctuation">(</span>screen<span class="token punctuation">.</span>canvas<span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Pop the state, back to the main canvas.</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Draw our canvas using the transform.</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>screen<span class="token punctuation">.</span>canvas<span class="token punctuation">,</span> screen<span class="token punctuation">.</span>transform<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">return</span> screen
+</code></pre>
+<p>Now all that's left is to change the transform (the scaling and translation) based on the size of our window. Let's create a new function that we will call when the window has resized.</p>
+<p>We can resize our window in any way we like, meaning we can have a different aspect ratio than 16:9. Because of this, we need to calculate the smallest ratio. Do we change the scaling of our game based on the width or height of our window?</p>
+<p>Next will use this scaling to shift the position of our canvas, because want our game to be drawn in the center of the window. We will apply this information to our transform.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> h<span class="token punctuation">)</span>
+    <span class="token keyword">local</span> scale <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>w <span class="token operator">/</span> screen<span class="token punctuation">.</span>width<span class="token punctuation">,</span> h <span class="token operator">/</span> screen<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+    <span class="token keyword">local</span> x <span class="token operator">=</span> <span class="token punctuation">(</span>w <span class="token operator">-</span> screen<span class="token punctuation">.</span>width <span class="token operator">*</span> scale<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+    <span class="token keyword">local</span> y <span class="token operator">=</span> <span class="token punctuation">(</span>h <span class="token operator">-</span> screen<span class="token punctuation">.</span>height <span class="token operator">*</span> scale<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+
+    screen<span class="token punctuation">.</span>transform<span class="token punctuation">:</span><span class="token function">setTransformation</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> scale<span class="token punctuation">,</span> scale<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">return</span> screen
+</code></pre>
+<p>Back in main.lua we need to call our new functions.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> screen <span class="token operator">=</span> require <span class="token string">"screen"</span>
+
+screen<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token number">960</span><span class="token punctuation">,</span> <span class="token number">540</span><span class="token punctuation">)</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    screen<span class="token punctuation">.</span><span class="token function">capture</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Draw your game</span>
+    screen<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> h<span class="token punctuation">)</span>
+    <span class="token comment">-- Upon resizing the window, pass the new width and height.</span>
+    screen<span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> h<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Now our game will be resized along with our window. There is a slight problem, however. When we draw something based on the position of our mouse, you will see that it doesn't match your mouse's position.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    screen<span class="token punctuation">.</span><span class="token function">capture</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">local</span> x<span class="token punctuation">,</span> y <span class="token operator">=</span> love<span class="token punctuation">.</span>mouse<span class="token punctuation">.</span><span class="token function">getPosition</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+
+    screen<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>This is because originally it is drawn on our mouse position, but then as the window resizes and shifts, so does the circle we drew. To fix this, we can add a function to get our actual mouse position, or rather what would be the mouse position after the scaling and translating is applied.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">getMousePosition</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">local</span> x<span class="token punctuation">,</span> y <span class="token operator">=</span> love<span class="token punctuation">.</span>mouse<span class="token punctuation">.</span><span class="token function">getPosition</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> screen<span class="token punctuation">.</span>transform<span class="token punctuation">:</span><span class="token function">inverseTransformPoint</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>The function <code>inverseTransformPoint</code> inverses the transformation we apply. The <code>x</code> and <code>y</code> it gives us are where we need to draw our circle if we want it to appear at the original <code>x</code> and <code>y</code> after the transformation has been applied.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> love<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    screen<span class="token punctuation">.</span><span class="token function">capture</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">local</span> x<span class="token punctuation">,</span> y <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getMousePosition</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">circle</span><span class="token punctuation">(</span><span class="token string">"fill"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+
+    screen<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Now our circle draws on the correct position!</p>
+<h2 id="pixel-art" tabindex="-1">Pixel art <a class="anchor" href="#pixel-art">#</a></h2>
+<p>You might notice that your game looks fuzzy when you scale it. This is especially noticable with <em>pixel art</em>. To fix this, we can change the <ins>filtering</ins> to <code>nearest</code>. Let's do this based on a third parameter, <code>pixelArt</code>.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">,</span> pixelArt<span class="token punctuation">)</span>
+    screen<span class="token punctuation">.</span>width <span class="token operator">=</span> width
+    screen<span class="token punctuation">.</span>height <span class="token operator">=</span> height
+    screen<span class="token punctuation">.</span>canvas <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newCanvas</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> pixelArt <span class="token keyword">then</span>
+        screen<span class="token punctuation">.</span>canvas<span class="token punctuation">:</span><span class="token function">setFilter</span><span class="token punctuation">(</span><span class="token string">"nearest"</span><span class="token punctuation">)</span>
+        screen<span class="token punctuation">.</span>pixelArt <span class="token operator">=</span> <span class="token keyword">true</span> <span class="token comment">-- We will use this in a moment.</span>
+    <span class="token keyword">end</span>
+    screen<span class="token punctuation">.</span>transform <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">newTransform</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>Another thing you might want to add is add flooring to our scaling. This way we will only scale whole numbers (2x, 3x, etc.). This way our pixel art stays looking proper.</p>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> h<span class="token punctuation">)</span>
+    <span class="token keyword">local</span> scale <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>w <span class="token operator">/</span> screen<span class="token punctuation">.</span>width<span class="token punctuation">,</span> h <span class="token operator">/</span> screen<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> screen<span class="token punctuation">.</span>pixelArt <span class="token keyword">then</span>
+        scale <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>scale<span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+
+    <span class="token keyword">local</span> x <span class="token operator">=</span> <span class="token punctuation">(</span>w <span class="token operator">-</span> screen<span class="token punctuation">.</span>width <span class="token operator">*</span> scale<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+    <span class="token keyword">local</span> y <span class="token operator">=</span> <span class="token punctuation">(</span>h <span class="token operator">-</span> screen<span class="token punctuation">.</span>height <span class="token operator">*</span> scale<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+
+    screen<span class="token punctuation">.</span>transform<span class="token punctuation">:</span><span class="token function">setTransformation</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> scale<span class="token punctuation">,</span> scale<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre>
+<p>If we make a pixel art game, we can now init the screen with passing <code>true</code> as third argument.</p>
+<pre><code class="language-lua"><span data-attrs=""></span>screen<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token number">960</span><span class="token punctuation">,</span> <span class="token number">540</span><span class="token punctuation">,</span> <span class="token keyword">true</span><span class="token punctuation">)</span>
+</code></pre>
+<h2 id="libraries" tabindex="-1">Libraries <a class="anchor" href="#libraries">#</a></h2>
+<p>For more advanced options, check out the libraries <a href="https://github.com/Ulydev/push">push</a> and <a href="https://github.com/Oval-Tutu/shove">shove</a>.</p>
+<h2 id="full-code" tabindex="-1">Full code <a class="anchor" href="#full-code">#</a></h2>
+<pre><code class="language-lua"><span data-attrs=""></span><span class="token keyword">local</span> screen <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">,</span> pixelArt<span class="token punctuation">)</span>
+    screen<span class="token punctuation">.</span>width <span class="token operator">=</span> width
+    screen<span class="token punctuation">.</span>height <span class="token operator">=</span> height
+    screen<span class="token punctuation">.</span>canvas <span class="token operator">=</span> love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">newCanvas</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> pixelArt <span class="token keyword">then</span>
+        screen<span class="token punctuation">.</span>canvas<span class="token punctuation">:</span><span class="token function">setFilter</span><span class="token punctuation">(</span><span class="token string">"nearest"</span><span class="token punctuation">)</span>
+        screen<span class="token punctuation">.</span>pixelArt <span class="token operator">=</span> <span class="token keyword">true</span>
+    <span class="token keyword">end</span>
+
+    screen<span class="token punctuation">.</span>transform <span class="token operator">=</span> love<span class="token punctuation">.</span>math<span class="token punctuation">.</span><span class="token function">newTransform</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">capture</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Push the current state (including the main canvas) onto the stack.</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"all"</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Set our canvas. From now on everything will be drawn on our canvas.</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">setCanvas</span><span class="token punctuation">(</span>screen<span class="token punctuation">.</span>canvas<span class="token punctuation">)</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Pop the state, back to the main canvas.</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">-- Draw our canvas using the transform.</span>
+    love<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>screen<span class="token punctuation">.</span>canvas<span class="token punctuation">,</span> screen<span class="token punctuation">.</span>transform<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> h<span class="token punctuation">)</span>
+    <span class="token keyword">local</span> scale <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>w <span class="token operator">/</span> screen<span class="token punctuation">.</span>width<span class="token punctuation">,</span> h <span class="token operator">/</span> screen<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> screen<span class="token punctuation">.</span>pixelArt <span class="token keyword">then</span>
+        scale <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>scale<span class="token punctuation">)</span>
+    <span class="token keyword">end</span>
+
+    <span class="token keyword">local</span> x <span class="token operator">=</span> <span class="token punctuation">(</span>w <span class="token operator">-</span> screen<span class="token punctuation">.</span>width <span class="token operator">*</span> scale<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+    <span class="token keyword">local</span> y <span class="token operator">=</span> <span class="token punctuation">(</span>h <span class="token operator">-</span> screen<span class="token punctuation">.</span>height <span class="token operator">*</span> scale<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+
+    screen<span class="token punctuation">.</span>transform<span class="token punctuation">:</span><span class="token function">setTransformation</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> scale<span class="token punctuation">,</span> scale<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">function</span> screen<span class="token punctuation">.</span><span class="token function">getMousePosition</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">local</span> x<span class="token punctuation">,</span> y <span class="token operator">=</span> love<span class="token punctuation">.</span>mouse<span class="token punctuation">.</span><span class="token function">getPosition</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> screen<span class="token punctuation">.</span>transform<span class="token punctuation">:</span><span class="token function">inverseTransformPoint</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">return</span> screen
+</code></pre>
+
+
+<footer class="guide-footer">
+  <p></p>
+
+  <p>By:
+  
+      <em>Sheepolution</em>
+    
+  </p>
+</footer>
+      </article>
+    </main>
+
+  </body>
+</html>
