@@ -27,7 +27,7 @@ end
 
 We call `require("arithmetics")`, which executes the file `arithmetics.lua`. Note that we don't need to add `.lua` in our require call.
 
-Because the file has been executed, the <ins>global</ins> functions `add` and `abstract` have been created, which we can then use in our `main.lua`.
+Because the file has been executed, the <ins>global</ins> functions `add` and `subtract` have been created, which we can then use in our `main.lua`.
 
 > [!TIP]
 > When passing a single argument, and that single argument is a string or a table (not a variable but a [literal](https://en.wikipedia.org/wiki/Literal_(computer_programming))), then it is optional to add parentheses to the function call.
