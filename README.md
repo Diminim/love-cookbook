@@ -1,6 +1,6 @@
 # LÖVE cookbook
 This is the repository for the LÖVE cookbook project.
-Find it here: https://diminim.github.io/love-cookbook/
+Find it here: https://diminiminim.github.io/love-cookbook/
 
 ```
 npm install
@@ -26,4 +26,4 @@ heres how you do things
 * Write your cool new page (be sure to follow [the style guide](/style-guide.md)!)
 
 ## Features
-See the [demo page](https://diminim.github.io/love-cookbook/demo) for a reference on how to use various embed features.
+See the [demo page](https://diminiminim.github.io/love-cookbook/demo) for a reference on how to use various embed features.
